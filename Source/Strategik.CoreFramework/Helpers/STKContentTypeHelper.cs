@@ -23,15 +23,13 @@
 #endregion License
 
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Entities;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik;
 using Strategik.Definitions.Configuration;
 using Strategik.Definitions.ContentTypes;
 using Strategik.Definitions.Fields;
 using Strategik.CoreFramework.Configuration;
 using System;
 using System.Collections.Generic;
-
+using OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik;
 
 namespace Strategik.CoreFramework.Helpers
 {

@@ -24,11 +24,11 @@
 
 using System;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik;
 using Strategik.Definitions.Configuration;
 using Strategik.Definitions.Libraries;
 using Strategik.Definitions.Lists;
 using System.Collections.Generic;
+using OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik;
 
 namespace Strategik.CoreFramework.Helpers
 {

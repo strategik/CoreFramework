@@ -27,7 +27,6 @@ using Strategik.Definitions.Sites;
 using Strategik.Definitions.Features;
 using System;
 using Strategik.CoreFramework.Configuration;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik;
 using Strategik.Definitions.Configuration;
 
 namespace Strategik.CoreFramework.Helpers

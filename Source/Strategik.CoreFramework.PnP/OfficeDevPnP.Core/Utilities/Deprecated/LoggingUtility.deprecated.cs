@@ -1,0 +1,3 @@
+﻿namespace OfficeDevPnP.Core.Utilities
+{
+}

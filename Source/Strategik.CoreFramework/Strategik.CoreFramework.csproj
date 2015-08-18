@@ -184,7 +184,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Strategik.PnP.Extension\Strategik.CoreFramework.PnP\Strategik.CoreFramework.PnP.csproj">
+    <ProjectReference Include="..\Strategik.CoreFramework.PnP\Strategik.CoreFramework.PnP.csproj">
       <Project>{b9bcf2cd-da0c-4b11-89a1-1ae362fc0b1b}</Project>
       <Name>Strategik.CoreFramework.PnP</Name>
     </ProjectReference>
