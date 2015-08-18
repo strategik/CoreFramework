@@ -9,7 +9,7 @@ At Strategik, we have taken the view that there is little commercial value in cr
 
 Thus we have created the Strategik Core Framework, our open source library for defining our solutions (in code), provisioning and helper code for SharePoint 2013 and Office 365. It is the foundation of our solution development efforts, containing much of the plumbing that we would otherwise need to create for every custom solution we build. It is available for others to use in the MIT License.
 
- ![Image]("https://raw.githubusercontent.com/strategik/CoreFramework/dev/Media/Images/StrategikStack.png" alt="Strategik Stack")
+ ![Strategik Stack]("https://raw.githubusercontent.com/strategik/CoreFramework/dev/Media/Images/StrategikStack.png")
 
 The Core Framework encapsulates much of the plumbing required to create solutions on Office 365. It provides a set of simple C# classes that can be used to create definitions of the solutions and all their artefacts that need to be deployed, along with extension methods and helper that wrap up client object model and Office 365 calls. 
 
