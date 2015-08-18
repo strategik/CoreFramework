@@ -1,5 +1,6 @@
+
 ![alt text][logo]
-[logo]: https://github.com/strategik/CoreFramework/tree/dev/Media/Images/strategik.png "Strategik Logo"
+[logo]: https://raw.githubusercontent.com/strategik/CoreFramework/dev/Media/Images/strategik.png "Strategik logo"
 # CoreFramework
 Strategik build complex information management solutions for Office 365. These solutions require definition in code. They require the ability to provision and de-provision Office 365 artefacts in response to business events throughout their lifecycle, the ability to analyze and update customer installation remotely and support for simple, scalable application lifecycle management.
 
