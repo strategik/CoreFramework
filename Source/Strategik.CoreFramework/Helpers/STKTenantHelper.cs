@@ -1,4 +1,7 @@
-﻿#region License
+﻿
+#if v16
+
+#region License
 
 //
 // Copyright (c) 2015 Strategik Pty Ltd,
@@ -104,8 +107,11 @@ namespace Strategik.CoreFramework.Helpers
                     Url = fullUrl
                 };
 
+#if v16
                 Guid siteId = _tenant.CreateSiteCollection(siteEntity, true, true);
                 site.UniqueId = siteId;
+#endif
+
             }
             else 
             {
@@ -139,6 +145,7 @@ namespace Strategik.CoreFramework.Helpers
         {
             String fullUrl = _sharePointUrl + site.TenantRelativeURL;
             String status = "Active";
+
             return (_tenant.CheckIfSiteExists(fullUrl, status)) ? true : false;
         }
 
@@ -158,9 +165,9 @@ namespace Strategik.CoreFramework.Helpers
             return spSite;
         }
 
-        #endregion Public Methods
+#endregion Public Methods
 
-        #region Provisioning
+#region Provisioning
 
         /// <summary>
         /// Provisions a Strategik solution to an Office 365 tennant
@@ -204,13 +211,13 @@ namespace Strategik.CoreFramework.Helpers
             }
         }
 
-        #endregion
+#endregion
 
-        #region Permissions Checks
+#region Permissions Checks
 
-        #endregion
+#endregion
 
-        #region Delete Sites
+#region Delete Sites
 
         public void DeleteSite(STKSite site, bool useRecycleBin)
         {
@@ -222,18 +229,18 @@ namespace Strategik.CoreFramework.Helpers
             }
         }
 
-        #endregion
+#endregion
 
-        #region Get Site Properties
+#region Get Site Properties
 
         public List<STKSiteProperties> GetAllSitesProperties()
         {
             return _siteProperties;
         }
 
-        #endregion
+#endregion
 
-        #region Implementation
+#region Implementation
 
         private void Initialise() 
         {
@@ -311,8 +318,10 @@ namespace Strategik.CoreFramework.Helpers
             }
         }
 
-        #endregion Implementation
+#endregion Implementation
     }
 
     
 }
+
+#endif

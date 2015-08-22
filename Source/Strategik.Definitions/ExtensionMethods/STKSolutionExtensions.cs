@@ -22,6 +22,7 @@
 
 #endregion License
 
+using Strategik.Definitions.Sites;
 using System;
 
 namespace Strategik.Definitions.Solutions
@@ -58,6 +59,10 @@ namespace Strategik.Definitions.Solutions
             if (String.IsNullOrEmpty(solution.Name)) throw new Exception("Solution Name is empty " + solution.UniqueId);
 
             // TODO: Complete solution validation
+            foreach(STKSite site in solution.Sites)
+            {
+                site.Validate();
+            }
         }
 
         #endregion Validation

@@ -54,9 +54,11 @@ namespace Strategik.Definitions.Sites
             if (site == null) throw new ArgumentNullException("site");
             if (site.UniqueId == Guid.Empty) throw new Exception("Site Id is empty");
             if (String.IsNullOrEmpty(site.Name)) throw new Exception("Site Name is empty");
+            if (site.RootWeb == null) throw new Exception("Root web is null");
 
             // We require a site template, owner and tennant relative URL as a minimum
             //site.Template
+            site.RootWeb.Validate();
         }
 
         #endregion 

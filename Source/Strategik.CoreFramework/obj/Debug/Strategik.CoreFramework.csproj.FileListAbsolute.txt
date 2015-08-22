@@ -6,7 +6,6 @@ C:\Github\CoreFramework\Source\Strategik.CoreFramework\bin\Debug\Microsoft.Ident
 C:\Github\CoreFramework\Source\Strategik.CoreFramework\bin\Debug\Microsoft.IdentityModel.Extensions.dll
 C:\Github\CoreFramework\Source\Strategik.CoreFramework\bin\Debug\Microsoft.Office.Client.Policy.dll
 C:\Github\CoreFramework\Source\Strategik.CoreFramework\bin\Debug\Microsoft.Office.Client.TranslationServices.dll
-C:\Github\CoreFramework\Source\Strategik.CoreFramework\bin\Debug\Microsoft.Office.SharePoint.Tools.dll
 C:\Github\CoreFramework\Source\Strategik.CoreFramework\bin\Debug\Microsoft.Online.SharePoint.Client.Tenant.dll
 C:\Github\CoreFramework\Source\Strategik.CoreFramework\bin\Debug\Microsoft.SharePoint.Client.dll
 C:\Github\CoreFramework\Source\Strategik.CoreFramework\bin\Debug\Microsoft.SharePoint.Client.DocumentManagement.dll

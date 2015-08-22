@@ -4,3 +4,4 @@ C:\Github\CoreFramework\Source\Strategik.Definitions\bin\Debug\Strategik.Definit
 C:\Github\CoreFramework\Source\Strategik.Definitions\bin\Debug\Strategik.Definitions.dll.lastcodeanalysissucceeded
 C:\Github\CoreFramework\Source\Strategik.Definitions\obj\Debug\Strategik.Definitions.dll
 C:\Github\CoreFramework\Source\Strategik.Definitions\obj\Debug\Strategik.Definitions.pdb
+C:\Github\CoreFramework\Source\Strategik.Definitions\obj\Debug\Strategik.Definitions.csprojResolveAssemblyReference.cache

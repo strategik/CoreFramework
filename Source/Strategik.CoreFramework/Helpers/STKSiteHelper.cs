@@ -87,6 +87,12 @@ namespace Strategik.CoreFramework.Helpers
             }
         }
 
+        public void Provision(STKSite site) 
+        {
+            STKProvisioningConfiguration config = new STKProvisioningConfiguration();
+            Provision(site, config);
+        }
+
         #endregion
 
         #region Read Definition
@@ -94,7 +100,9 @@ namespace Strategik.CoreFramework.Helpers
         public STKSite ReadDefinition() 
         {
             _clientContext.Load(_site.Owner, o => o.LoginName);
+#if V16
             _clientContext.Load(_site.SecondaryContact);
+#endif
             _clientContext.ExecuteQueryRetry();
 
             STKSite site = new STKSite() 
@@ -109,14 +117,14 @@ namespace Strategik.CoreFramework.Helpers
                 ReadOnly = _site.ReadOnly,
                 SiteOwnerLogin = _site.Owner.LoginName,
             };
-
+#if V16
             if (_site.SecondaryContact != null && _site.SecondaryContact.ServerObjectIsNull == false) site.SecondaryContact = _site.SecondaryContact.LoginName;
-
+#endif
             return site;
         }
 
-        #endregion
+#endregion
 
-        #endregion Methods
+#endregion Methods
     }
 }
