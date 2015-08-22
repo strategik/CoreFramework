@@ -55,15 +55,8 @@ namespace Strategik.CoreFramework.Helpers
         {
             if (web == null) throw new ArgumentNullException("web");
             if (config == null) config = new STKProvisioningConfiguration();
-            
-            STKPnPHelper pnpHelper = null;
-            if (config.UsePnP)
-            {
-                pnpHelper = new STKPnPHelper(_clientContext);
-                //pnpHelper.Provision() //TODO - features - one level up?
-            }
-        
-            // Deactivate web features
+
+            // Deactivate web features - Should be in an helper
             foreach (Guid featureId in web.FeaturesToDeactivate)
             {
                 _web.DeactivateFeature(featureId);
@@ -79,48 +72,17 @@ namespace Strategik.CoreFramework.Helpers
             STKSiteColumnHelper siteColumnHelper = new STKSiteColumnHelper(_clientContext);
 
             // Ensure Site Columns & Content Types
-            if (config.UsePnP && config.UsePnpForSiteColumns)
-            {
-                pnpHelper.Provision(web.SiteColumns, config);
-            }
-            else
-            {
-               // siteColumnHelper.EnsureSiteColumns(web.SiteColumns, config);
-            }
+            siteColumnHelper.EnsureSiteColumns(web.SiteColumns, config);
+            contentTypeHelper.EnsureContentTypes(web.ContentTypes, config);
 
-            if (config.UsePnP && config.UsePnPForContentTypes)
-            {
-                pnpHelper.Provision(web.ContentTypes, config);
-            }
-            else
-            {
-               // contentTypeHelper.EnsureContentTypes(web.ContentTypes, config);
-            }
-
-            // Ensure lists & libraries
-            if (config.UsePnP && config.UsePnPForLists)
-            {
-                pnpHelper.Provision(web.Lists, config);
-            }
-            else
-            {
-                STKListsHelper listHelper = new STKListsHelper(_clientContext);
-                listHelper.EnsureLists(web.Lists, config);
-            }
+            STKListsHelper listHelper = new STKListsHelper(_clientContext);
+            listHelper.EnsureLists(web.Lists, config);
 
             STKPageHelper pageHelper = new STKPageHelper(_clientContext);
-            // Ensure pages
-          //  if (config.UsePnP && config.UsePnPForPublishingPages)
-          //  {
-                  //PNP doesnt do our pages yet  
-           // }
-          //  else
-          //  {
-                pageHelper.EnsurePages(web.PublishingPages, config);
-                pageHelper.EnsurePages(web.WebPartPages, config);
-                pageHelper.EnsurePages(web.WikiPages, config);
-           // }
-
+            pageHelper.EnsurePages(web.PublishingPages, config);
+            pageHelper.EnsurePages(web.WebPartPages, config);
+            pageHelper.EnsurePages(web.WikiPages, config);
+         
             // Ensure Content - TODO
 
             // Recursively provision subwebs
