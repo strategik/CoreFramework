@@ -1,7 +1,0 @@
-C:\Github\CoreFramework\Source\Strategik.Definitions.TestModel\bin\Debug\Strategik.Definitions.TestModel.dll
-C:\Github\CoreFramework\Source\Strategik.Definitions.TestModel\bin\Debug\Strategik.Definitions.TestModel.pdb
-C:\Github\CoreFramework\Source\Strategik.Definitions.TestModel\bin\Debug\Strategik.Definitions.dll
-C:\Github\CoreFramework\Source\Strategik.Definitions.TestModel\bin\Debug\Strategik.Definitions.pdb
-C:\Github\CoreFramework\Source\Strategik.Definitions.TestModel\obj\Debug\Strategik.Definitions.TestModel.csprojResolveAssemblyReference.cache
-C:\Github\CoreFramework\Source\Strategik.Definitions.TestModel\obj\Debug\Strategik.Definitions.TestModel.dll
-C:\Github\CoreFramework\Source\Strategik.Definitions.TestModel\obj\Debug\Strategik.Definitions.TestModel.pdb
