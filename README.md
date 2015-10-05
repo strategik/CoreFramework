@@ -17,3 +17,5 @@ Thus we have created the Strategik Core Framework, our open source library for d
 The Core Framework encapsulates much of the plumbing required to create solutions on Office 365. It provides a set of simple C# classes that can be used to create definitions of the solutions and all their artefacts that need to be deployed, along with extension methods and helper that wrap up client object model and Office 365 calls. 
   <br>
 The core framework wraps around the latest Office Dev PnP code framework, calling that code wherever possible. A PnP extension, designed to allow the Strategik models to be deployed using the PnP provisioning engine is provided.
+
+To get startred with the Core Framework - please refer to the doucmention in our <a href="https://github.com/strategik/CoreFramework/wiki"> wiki</a>
