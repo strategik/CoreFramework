@@ -38,9 +38,9 @@ namespace Strategik.CoreFramework.Tests
 {
         public static class STKUnitTestHelper
         {
-            public static String oUserName = @"adrian@infocounting.onmicrosoft.com";
-            private static String oPassword = "692186Iddy";
-            private static String oTestSiteUrl = "https://infocounting.sharepoint.com/sites/CoreFrameworkUnitTests";
+            public static String oUserName = @"*";
+            private static String oPassword = "*";
+            private static String oTestSiteUrl = "*";
 
             public static String userName = @"dev\strategikspdev";
             private static String password = "stPassword1";
