@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C9DB6221-1DEC-4001-B672-BBC0345BA9D4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Strategik.Definitions</RootNamespace>
+    <AssemblyName>Strategik.Definitions</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PartialBuild|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\PartialBuild\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_OnPremise13|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug_OnPremise13\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_OnPremise13|AnyCPU'">
+    <OutputPath>bin\Release_OnPremise13\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ngDebug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ngDebug\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ngDebug_Update_SPApp|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ngDebug_Update_SPApp\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.IdentityModel, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base\STKDefinitionBase.cs" />
+    <Compile Include="Configuration\STKProvisioningConfiguration.cs" />
+    <Compile Include="ContentTypes\STKAnnouncement.cs" />
+    <Compile Include="ContentTypes\STKContact.cs" />
+    <Compile Include="ContentTypes\STKContentType.cs" />
+    <Compile Include="ContentTypes\STKDocument.cs" />
+    <Compile Include="ContentTypes\STKEvent.cs" />
+    <Compile Include="ContentTypes\STKFieldLink.cs" />
+    <Compile Include="ContentTypes\STKFolder.cs" />
+    <Compile Include="ContentTypes\STKIssue.cs" />
+    <Compile Include="ContentTypes\STKItem.cs" />
+    <Compile Include="ContentTypes\STKLink.cs" />
+    <Compile Include="ContentTypes\STKMessage.cs" />
+    <Compile Include="ContentTypes\STKTask.cs" />
+    <Compile Include="ContentTypes\STKDocumentLink.cs" />
+    <Compile Include="Data\STKData.cs" />
+    <Compile Include="Data\STKDataItem.cs" />
+    <Compile Include="EventHandlers\STKEventReceiverType.cs" />
+    <Compile Include="EventHandlers\STKListItemEventHandler.cs" />
+    <Compile Include="EventHandlers\STKListEventHandler.cs" />
+    <Compile Include="EventHandlers\STKSharePointEventHandler.cs" />
+    <Compile Include="ExtensionMethods\STKContentTypeExtensions.cs" />
+    <Compile Include="ExtensionMethods\STKFieldExtensions.cs" />
+    <Compile Include="ExtensionMethods\STKListExtensions.cs" />
+    <Compile Include="ExtensionMethods\STKSolutionExtensions.cs" />
+    <Compile Include="ExtensionMethods\STKPageExtensions.cs" />
+    <Compile Include="ExtensionMethods\STKSecurityExtensions.cs" />
+    <Compile Include="ExtensionMethods\STKSiteColumnExtentions.cs" />
+    <Compile Include="ExtensionMethods\STKSiteExtensions.cs" />
+    <Compile Include="ExtensionMethods\STKTaxonomyExtensions.cs" />
+    <Compile Include="ExtensionMethods\STKWebExtensions.cs" />
+    <Compile Include="Features\STKFeature.cs" />
+    <Compile Include="Features\STKFeatures.cs" />
+    <Compile Include="Fields\STKBooleanField.cs" />
+    <Compile Include="Fields\STKChoiceField.cs" />
+    <Compile Include="Fields\STKDateField.cs" />
+    <Compile Include="Fields\STKFieldConstants.cs" />
+    <Compile Include="Fields\STKFieldType.cs" />
+    <Compile Include="Fields\STKGuidField.cs" />
+    <Compile Include="Fields\STKHyperlinkField.cs" />
+    <Compile Include="Fields\STKLookupField.cs" />
+    <Compile Include="Fields\STKMultiChoiceField.cs" />
+    <Compile Include="Fields\STKNumberField.cs" />
+    <Compile Include="Fields\STKParentField.cs" />
+    <Compile Include="Fields\STKRichTextField.cs" />
+    <Compile Include="Fields\STKField.cs" />
+    <Compile Include="Fields\STKTaxonomyField.cs" />
+    <Compile Include="Fields\STKTextField.cs" />
+    <Compile Include="Fields\STKUserField.cs" />
+    <Compile Include="Libraries\STKDocumentLibrary.cs" />
+    <Compile Include="Libraries\STKPictureLibrary.cs" />
+    <Compile Include="Lists\STKAnnouncementsList.cs" />
+    <Compile Include="Lists\STKEventsList.cs" />
+    <Compile Include="Lists\STKContactList.cs" />
+    <Compile Include="Lists\STKDiscussionForum.cs" />
+    <Compile Include="Lists\STKFolder.cs" />
+    <Compile Include="Lists\STKIssueTracking.cs" />
+    <Compile Include="Lists\STKLinksList.cs" />
+    <Compile Include="Lists\STKListAction.cs" />
+    <Compile Include="Lists\STKListItem.cs" />
+    <Compile Include="Lists\STKListType.cs" />
+    <Compile Include="Lists\STKListView.cs" />
+    <Compile Include="Lists\STKProjectTaskList.cs" />
+    <Compile Include="Lists\STKList.cs" />
+    <Compile Include="Lists\STKTaskList.cs" />
+    <Compile Include="Lists\SKUserInformationList.cs" />
+    <Compile Include="Pages\STKPage.cs" />
+    <Compile Include="Pages\STKPublishingPage.cs" />
+    <Compile Include="Pages\STKWebPartPage.cs" />
+    <Compile Include="Pages\STKWikiPage.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Search\STKResultSource.cs" />
+    <Compile Include="Search\STKResultTemplate.cs" />
+    <Compile Include="Search\STKSearchConfig.cs" />
+    <Compile Include="Security\Roles\STKAdministratorRole.cs" />
+    <Compile Include="Security\Roles\STKContributorNoDeleteRole.cs" />
+    <Compile Include="Security\Roles\STKContributorRole.cs" />
+    <Compile Include="Security\Roles\STKDesignerRole.cs" />
+    <Compile Include="Security\Roles\STKGuestRole.cs" />
+    <Compile Include="Security\Roles\STKReaderRole.cs" />
+    <Compile Include="Security\STKGroup.cs" />
+    <Compile Include="Security\STKListAccess.cs" />
+    <Compile Include="Security\STKRoleAssignment.cs" />
+    <Compile Include="Security\STKRole.cs" />
+    <Compile Include="Security\STKSecurityDefinition.cs" />
+    <Compile Include="Security\STKUser.cs" />
+    <Compile Include="Shared\STKDefinitionConstants.cs" />
+    <Compile Include="Shared\STKDeploymentTarget.cs" />
+    <Compile Include="Shared\STKRegistrationType.cs" />
+    <Compile Include="Shared\STKScope.cs" />
+    <Compile Include="Shared\STKSPWebTemplate.cs" />
+    <Compile Include="Shared\STKViewStyle.cs" />
+    <Compile Include="Shared\STKViewType.cs" />
+    <Compile Include="Sites\STKSite.cs" />
+    <Compile Include="Sites\STKSiteProperties.cs" />
+    <Compile Include="Sites\STKWeb.cs" />
+    <Compile Include="Solutions\STKSolutionAsset.cs" />
+    <Compile Include="Solutions\STKSolution.cs" />
+    <Compile Include="Solutions\STKSolutionConfiguration.cs" />
+    <Compile Include="Features\STKSandboxSolution.cs" />
+    <Compile Include="Solutions\STKSolutionType.cs" />
+    <Compile Include="Taxonomy\STKTerm.cs" />
+    <Compile Include="Taxonomy\STKTermGroup.cs" />
+    <Compile Include="Taxonomy\STKTermSet.cs" />
+    <Compile Include="Taxonomy\STKTaxonomy.cs" />
+    <Compile Include="Tenant\STKTenantCustomisations.cs" />
+    <Compile Include="UserInterface\STKComposedLook.cs" />
+    <Compile Include="UserInterface\STKCustomAction.cs" />
+    <Compile Include="UserInterface\STKCustomActionRegistrationType.cs" />
+    <Compile Include="UserInterface\STKCustomActions.cs" />
+    <Compile Include="Workflows\STKWorkflow.cs" />
+    <Compile Include="Yammer\STKYammerCustomisations.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mail\" />
+    <Folder Include="OneDrive\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
