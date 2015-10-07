@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{6968225B-2604-4300-A06C-60D657925B47}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployment", "Deployment", "{86904086-DA85-4043-8DB4-304A06BE6703}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenetik.Deployment.SP2013", "Frenetik.DeploymentApplication\Frenetik.Deployment.SP2013.csproj", "{7E73E51D-87C3-4155-B1DD-10C80FB5B67F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenetik.Deployment.O365", "Frenetik.Deployment.Cloud\Frenetik.Deployment.O365.csproj", "{17442D8B-90AB-4C7B-BE03-59C4CBC8E4F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenetik.Model.Phase1", "Frenetik.Model.Phase1\Frenetik.Model.Phase1.csproj", "{89944DAD-1254-4DB5-BCFD-C4943C557243}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E73E51D-87C3-4155-B1DD-10C80FB5B67F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E73E51D-87C3-4155-B1DD-10C80FB5B67F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E73E51D-87C3-4155-B1DD-10C80FB5B67F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E73E51D-87C3-4155-B1DD-10C80FB5B67F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17442D8B-90AB-4C7B-BE03-59C4CBC8E4F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17442D8B-90AB-4C7B-BE03-59C4CBC8E4F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17442D8B-90AB-4C7B-BE03-59C4CBC8E4F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17442D8B-90AB-4C7B-BE03-59C4CBC8E4F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89944DAD-1254-4DB5-BCFD-C4943C557243}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89944DAD-1254-4DB5-BCFD-C4943C557243}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89944DAD-1254-4DB5-BCFD-C4943C557243}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89944DAD-1254-4DB5-BCFD-C4943C557243}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7E73E51D-87C3-4155-B1DD-10C80FB5B67F} = {86904086-DA85-4043-8DB4-304A06BE6703}
+		{17442D8B-90AB-4C7B-BE03-59C4CBC8E4F5} = {86904086-DA85-4043-8DB4-304A06BE6703}
+		{89944DAD-1254-4DB5-BCFD-C4943C557243} = {6968225B-2604-4300-A06C-60D657925B47}
+	EndGlobalSection
+EndGlobal
