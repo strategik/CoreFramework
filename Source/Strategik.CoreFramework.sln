@@ -25,10 +25,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strategik.Dependencies", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strategik.CoreFramework.Tests", "Strategik.CoreFramework.Tests\Strategik.CoreFramework.Tests.csproj", "{0C05CF1B-17B7-4F8A-93C1-C4638FAF67DC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PnP", "PnP", "{8BFA78B3-84A6-4FCB-BE20-4FC4EB04D87F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficeDevPnP.Core", "..\..\..\Users\StrategikSPDev\Documents\GitHubVisualStudio\PnP-Sites-Core\Core\OfficeDevPnP.Core\OfficeDevPnP.Core.csproj", "{F2077977-8EBF-409D-BBF4-8EFB328928A8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug_OnPremise13|Any CPU = Debug_OnPremise13|Any CPU
@@ -109,18 +105,6 @@ Global
 		{0C05CF1B-17B7-4F8A-93C1-C4638FAF67DC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0C05CF1B-17B7-4F8A-93C1-C4638FAF67DC}.Release15|Any CPU.ActiveCfg = Release|Any CPU
 		{0C05CF1B-17B7-4F8A-93C1-C4638FAF67DC}.Release15|Any CPU.Build.0 = Release|Any CPU
-		{F2077977-8EBF-409D-BBF4-8EFB328928A8}.Debug_OnPremise13|Any CPU.ActiveCfg = Debug15|Any CPU
-		{F2077977-8EBF-409D-BBF4-8EFB328928A8}.Debug_OnPremise13|Any CPU.Build.0 = Debug15|Any CPU
-		{F2077977-8EBF-409D-BBF4-8EFB328928A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F2077977-8EBF-409D-BBF4-8EFB328928A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F2077977-8EBF-409D-BBF4-8EFB328928A8}.Debug15|Any CPU.ActiveCfg = Debug15|Any CPU
-		{F2077977-8EBF-409D-BBF4-8EFB328928A8}.Debug15|Any CPU.Build.0 = Debug15|Any CPU
-		{F2077977-8EBF-409D-BBF4-8EFB328928A8}.Release_OnPremise13|Any CPU.ActiveCfg = Release15|Any CPU
-		{F2077977-8EBF-409D-BBF4-8EFB328928A8}.Release_OnPremise13|Any CPU.Build.0 = Release15|Any CPU
-		{F2077977-8EBF-409D-BBF4-8EFB328928A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F2077977-8EBF-409D-BBF4-8EFB328928A8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F2077977-8EBF-409D-BBF4-8EFB328928A8}.Release15|Any CPU.ActiveCfg = Release15|Any CPU
-		{F2077977-8EBF-409D-BBF4-8EFB328928A8}.Release15|Any CPU.Build.0 = Release15|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -132,6 +116,5 @@ Global
 		{0581EEFB-5525-44E8-9919-CEC8F97DD84B} = {02D07CAA-645D-4A85-B09B-05F8AFC0595F}
 		{2F75E9F1-5B03-4180-9830-EC8B97BEDCE9} = {74F192BF-685B-4096-B91A-1CD408908568}
 		{0C05CF1B-17B7-4F8A-93C1-C4638FAF67DC} = {02D07CAA-645D-4A85-B09B-05F8AFC0595F}
-		{F2077977-8EBF-409D-BBF4-8EFB328928A8} = {8BFA78B3-84A6-4FCB-BE20-4FC4EB04D87F}
 	EndGlobalSection
 EndGlobal

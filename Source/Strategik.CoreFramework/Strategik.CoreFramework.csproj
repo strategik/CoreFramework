@@ -198,6 +198,10 @@
       <Private>True</Private>
     </Reference>-->
     <!-- End -->
+    <Reference Include="OfficeDevPnP.Core, Version=1.7.1015.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OfficeDevPnPCore16.1.7.1015.1\lib\net45\OfficeDevPnP.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -256,10 +260,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Users\StrategikSPDev\Documents\GitHubVisualStudio\PnP-Sites-Core\Core\OfficeDevPnP.Core\OfficeDevPnP.Core.csproj">
-      <Project>{f2077977-8ebf-409d-bbf4-8efb328928a8}</Project>
-      <Name>OfficeDevPnP.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Strategik.CoreFramework.PnP\Strategik.CoreFramework.PnP.csproj">
       <Project>{b9bcf2cd-da0c-4b11-89a1-1ae362fc0b1b}</Project>
       <Name>Strategik.CoreFramework.PnP</Name>
