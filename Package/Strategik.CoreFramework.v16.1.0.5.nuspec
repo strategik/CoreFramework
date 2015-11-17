@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>Strategik.CoreFramework.v16</id>
+        <version>1.0.5</version>
+        <title>Strategik Core Framework</title>
+        <authors>Strategik Pty Ltd</authors>
+        <owners>Strategik Pty Ltd</owners>
+        <licenseUrl>https://raw.githubusercontent.com/strategik/CoreFramework/master/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/strategik/CoreFramework</projectUrl>
+        <iconUrl>https://raw.githubusercontent.com/strategik/CoreFramework/master/Media/Images/strategik96.png</iconUrl>
+        <requireLicenseAcceptance>true</requireLicenseAcceptance>
+        <description>Strategik's wrapper around the Office Dev PnP Core.</description>
+        <releaseNotes>Updated PnP dependency. Minor updates.</releaseNotes>
+        <copyright>Strategik Pty Ltd 2015</copyright>
+        <dependencies>
+            <dependency id="OfficeDevPnPCore16" version="1.7.1015.1" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="lib\Strategik.CoreFramework.dll" target="lib\Strategik.CoreFramework.dll" />
+        <file src="lib\Strategik.CoreFramework.PnP.dll" target="lib\Strategik.CoreFramework.PnP.dll" />
+        <file src="lib\Strategik.Definitions.dll" target="lib\Strategik.Definitions.dll" />
+    </files>
+</package>

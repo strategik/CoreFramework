@@ -174,4 +174,4 @@ UpgradeLog*.htm
 FakesAssemblies/
 
 # App.Config files
-[Aa]pp.[Cc]onfig
+#[Aa]pp.[Cc]onfig
