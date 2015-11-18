@@ -18,8 +18,8 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="lib\Strategik.CoreFramework.dll" target="lib\Strategik.CoreFramework.dll" />
-        <file src="lib\Strategik.CoreFramework.PnP.dll" target="lib\Strategik.CoreFramework.PnP.dll" />
-        <file src="lib\Strategik.Definitions.dll" target="lib\Strategik.Definitions.dll" />
+        <file src="..\Strategik.CoreFramework\bin\**\Strategik.CoreFramework.dll" target="lib\Strategik.CoreFramework.dll" />
+        <file src="..\Strategik.CoreFramework.PnP\bin\**\Strategik.CoreFramework.PnP.dll" target="lib\Strategik.CoreFramework.PnP.dll" />
+        <file src="..\Strategik.Definitions\bin\**\Strategik.Definitions.dll" target="lib\Strategik.Definitions.dll" />
     </files>
 </package>
