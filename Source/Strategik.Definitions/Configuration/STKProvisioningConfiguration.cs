@@ -52,7 +52,14 @@ namespace Strategik.Definitions.Configuration
         public bool UsePnPForSitePages { get; set; }
         public bool UsePnPForwebPartPages { get; set; }
         public bool UsePnPForPublishingPages { get; set; }
-
+        /// <summary>
+        /// Set to true to delete existing site collections during provisioning
+        /// </summary>
+        public bool DeleteExistingSite { get; set; }
+        /// <summary>
+        /// Set to true to call EnsureSite() once a new site collection has been created
+        /// </summary>
+        public bool EnsureSite { get; set; }
         #endregion
 
         public List<String> Messages { get; set; }

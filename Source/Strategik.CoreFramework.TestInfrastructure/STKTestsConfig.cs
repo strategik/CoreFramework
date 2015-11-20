@@ -40,14 +40,15 @@ using OfficeDevPnP.Core.Utilities;
 namespace Strategik.CoreFramework.Tests.Infrastructure
 {
     // Adapated from PnP Unit Tests - TestCommon
-    public static class STKTestsCommon
+    public static class STKTestsConfig
     {
         #region Constructor
-        static STKTestsCommon()
+        static STKTestsConfig()
         {
             // Read configuration data
             TenantUrl = ConfigurationManager.AppSettings["SPOTenantUrl"];
             DevSiteUrl = ConfigurationManager.AppSettings["SPODevSiteUrl"];
+
 
             if (string.IsNullOrEmpty(TenantUrl) || string.IsNullOrEmpty(DevSiteUrl))
             {
@@ -95,7 +96,8 @@ namespace Strategik.CoreFramework.Tests.Infrastructure
         #region Properties
         public static string TenantUrl { get; set; }
         public static string DevSiteUrl { get; set; }
-        static string UserName { get; set; }
+        public static String SharePointUrl { get; set; }
+        public static string UserName { get; set; }
         static SecureString Password { get; set; }
         public static ICredentials Credentials { get; set; }
         static string Realm { get; set; }

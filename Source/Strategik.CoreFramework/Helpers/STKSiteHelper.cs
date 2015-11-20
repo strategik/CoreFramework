@@ -31,6 +31,9 @@ using Strategik.Definitions.Configuration;
 
 namespace Strategik.CoreFramework.Helpers
 {
+    /// <summary>
+    /// Helper methods for working with Site Collections in SharePoint Online
+    /// </summary>
     public class STKSiteHelper : STKHelperBase
     {
         #region Constructors

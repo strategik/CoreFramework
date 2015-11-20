@@ -224,7 +224,6 @@ namespace Strategik.CoreFramework.Helpers
         private void InitialiseUserIdAndPassword(string adminUrl,string sharePointUrl,string userName,string password, string domain)
         {
  	        
-
             if(_target == STKTarget.Office_365)
             {
                 _tenantUrl = ValidateParameter(STK_TenantUrl, _tenantUrl, adminUrl, false);
@@ -239,12 +238,12 @@ namespace Strategik.CoreFramework.Helpers
             }
             else
             {
-                _onPremDeveloperSiteUrl= ValidateParameter(STK_OnPremDevSiteUrl, _onPremDeveloperSiteUrl, sharePointUrl);
-                _onPremDomain = ValidateParameter(STK_OnPremDomain, _onPremDomain, domain);
-                _onPremUserId = ValidateParameter(STK_OnPremUserId, _onPremUserId, userName);
-                _onPremPassword = ValidateParameter(STK_OnPremPassword, _onPremPassword, password);
+                //_onPremDeveloperSiteUrl= ValidateParameter(STK_OnPremDevSiteUrl, _onPremDeveloperSiteUrl, sharePointUrl);
+                //_onPremDomain = ValidateParameter(STK_OnPremDomain, _onPremDomain, domain);
+                //_onPremUserId = ValidateParameter(STK_OnPremUserId, _onPremUserId, userName);
+                //_onPremPassword = ValidateParameter(STK_OnPremPassword, _onPremPassword, password);
 
-                _authenticationMode = STKAuthenticationMode.OnPremiseCredentials;
+                //_authenticationMode = STKAuthenticationMode.OnPremiseCredentials;
             }
         }
 

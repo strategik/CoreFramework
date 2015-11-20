@@ -174,10 +174,10 @@
     <Compile Include="Helpers\STKSiteColumnHelperUnitTests.cs" />
     <Compile Include="Helpers\STKSiteHelperUnitTests.cs" />
     <Compile Include="Helpers\STKTaxonomyHelperUnitTests.cs" />
+    <Compile Include="Helpers\STKTenantHelperUnitTests.cs" />
     <Compile Include="Helpers\STKWebHelperUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="STKContstants.cs" />
-    <Compile Include="STKUnitTestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Strategik.CoreFramework.PnP\Strategik.CoreFramework.PnP.csproj">

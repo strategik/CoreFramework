@@ -32,6 +32,7 @@ using Strategik.CoreFramework.Helpers;
 using Strategik.Definitions.Lists;
 using System.Collections.Generic;
 using Strategik.Definitions.TestModel.Lists;
+using Strategik.CoreFramework.Tests.Infrastructure;
 
 namespace Strategik.CoreFramework.Tests.Helpers
 {
@@ -43,7 +44,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
         public void TestListHelperConnect()
         {
             // Check we are testing the the correct site
-            using (ClientContext context = STKUnitTestHelper.GetTestContext())
+            using (ClientContext context = STKTestsConfig.CreateClientContext())
             {
                 context.Load(context.Web);
                 context.ExecuteQueryRetry();
@@ -58,7 +59,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
         public void TestEnsureLists()
         {
             // Should execute without exception
-            using (ClientContext context = STKUnitTestHelper.GetTestContext())
+            using (ClientContext context = STKTestsConfig.CreateClientContext())
             {
                 STKListHelper helper = new STKListHelper(context);
                 List<STKList> allListsAndLibraries = STKTestLists.AllListsAndLibraries();
@@ -73,7 +74,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
             // Make sure the lists we need have been provisioned
            
 
-            using (ClientContext context = STKUnitTestHelper.GetTestContext())
+            using (ClientContext context = STKTestsConfig.CreateClientContext())
             {
                 STKListHelper helper = new STKListHelper(context);
                 List<STKList> lists = helper.ReadLists(true);

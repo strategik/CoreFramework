@@ -33,6 +33,7 @@ using System.Collections.Generic;
 using Strategik.Definitions.TestModel.Lists;
 using Strategik.Definitions.Fields;
 using Strategik.Definitions.TestModel.SiteColumns;
+using Strategik.CoreFramework.Tests.Infrastructure;
 
 namespace Strategik.CoreFramework.Tests.Helpers
 {
@@ -43,7 +44,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
         [TestCategory(STKTestConstants.CoreFramework_Helpers)]
         public void TestEnsureSiteColumns()
         {
-            using (ClientContext context = STKUnitTestHelper.GetTestContext())
+            using (ClientContext context = STKTestsConfig.CreateClientContext())
             {
                 STKSiteColumnHelper helper = new STKSiteColumnHelper(context);
                 List<STKField> allSiteColumns = STKTestSiteColumns.AllSiteColumns();
@@ -55,7 +56,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
         [TestCategory(STKTestConstants.CoreFramework_Helpers)]
         public void TestReadSiteColumns()
         {
-            using (ClientContext context = STKUnitTestHelper.GetTestContext())
+            using (ClientContext context = STKTestsConfig.CreateClientContext())
             {
                 STKSiteColumnHelper helper = new STKSiteColumnHelper(context);
                 List<STKField> allSiteColumns = helper.ReadSiteColumns();

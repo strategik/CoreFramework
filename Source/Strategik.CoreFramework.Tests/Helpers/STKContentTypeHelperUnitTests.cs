@@ -33,6 +33,7 @@ using Strategik.CoreFramework.Helpers;
 using Strategik.Definitions.ContentTypes;
 using Strategik.Definitions.TestModel.Content_Types;
 using System.Collections.Generic;
+using Strategik.CoreFramework.Tests.Infrastructure;
 
 namespace Strategik.CoreFramework.Tests.Helpers
 {
@@ -43,7 +44,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
         [TestCategory(STKTestConstants.CoreFramework_Helpers)]
         public void TestEnsureContentTypes()
         {
-            using (ClientContext context = STKUnitTestHelper.GetTestContext())
+            using (ClientContext context = STKTestsConfig.CreateClientContext())
             {
                 STKContentTypeHelper helper = new STKContentTypeHelper(context);
                 List<STKContentType> allContentTypes = STKTestContentTypes.GetAllContentTypes();
@@ -55,7 +56,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
         [TestCategory(STKTestConstants.CoreFramework_Helpers)]
         public void TestReadContentTypes()
         {
-            using (ClientContext context = STKUnitTestHelper.GetTestContext())
+            using (ClientContext context = STKTestsConfig.CreateClientContext())
             {
                 STKContentTypeHelper helper = new STKContentTypeHelper(context);
                 List<STKContentType> allContentTypes = helper.ReadContentTypes();

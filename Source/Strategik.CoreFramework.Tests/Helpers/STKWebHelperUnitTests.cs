@@ -30,6 +30,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.SharePoint.Client;
 using Strategik.CoreFramework.Helpers;
 using Strategik.Definitions.Sites;
+using Strategik.CoreFramework.Tests.Infrastructure;
 
 namespace Strategik.CoreFramework.Tests.Helpers
 {
@@ -47,7 +48,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
         [TestCategory(STKTestConstants.CoreFramework_Helpers)]
         public void TestReadWeb()
         {
-            using (ClientContext context = STKUnitTestHelper.GetTestContext())
+            using (ClientContext context = STKTestsConfig.CreateClientContext())
             {
                 STKWebHelper helper = new STKWebHelper(context);
                 STKWeb stkWeb = helper.ReadWeb();

@@ -35,6 +35,7 @@ using Microsoft.SharePoint.Client;
 using Strategik.CoreFramework.Helpers;
 using Strategik.Definitions.Security;
 using Strategik.Definitions.TestModel.Security;
+using Strategik.CoreFramework.Tests.Infrastructure;
 
 namespace Strategik.CoreFramework.Tests.Helpers
 {
@@ -45,7 +46,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
         [TestCategory(STKTestConstants.CoreFramework_Helpers)]
         public void TestEnsureSecurityGroups()
         {
-            using (ClientContext context = STKUnitTestHelper.GetTestContext())
+            using (ClientContext context = STKTestsConfig.CreateClientContext())
             {
                 STKSecurityHelper helper = new STKSecurityHelper(context);
                 List<STKGroup> allSiteGroups = STKTestSecurity.AllCustomGroups();
@@ -57,7 +58,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
         [TestCategory(STKTestConstants.CoreFramework_Helpers)]
         public void TestReadSecurityGroups()
         {
-            using (ClientContext context = STKUnitTestHelper.GetTestContext())
+            using (ClientContext context = STKTestsConfig.CreateClientContext())
             {
                 STKSecurityHelper helper = new STKSecurityHelper(context);
                 List<STKGroup> allSiteGroups = helper.ReadGroups();

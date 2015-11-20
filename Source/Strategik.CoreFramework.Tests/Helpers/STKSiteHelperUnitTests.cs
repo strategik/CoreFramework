@@ -29,6 +29,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.SharePoint.Client;
 using Strategik.CoreFramework.Helpers;
+using Strategik.CoreFramework.Tests.Infrastructure;
 
 namespace Strategik.CoreFramework.Tests.Helpers
 {
@@ -39,7 +40,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
         [TestCategory(STKTestConstants.CoreFramework_Helpers)]
         public void TestSiteHelperConnect()
         {
-            using (ClientContext context = STKUnitTestHelper.GetTestContext())
+            using (ClientContext context = STKTestsConfig.CreateClientContext())
             {
                 context.Load(context.Web);
                 context.ExecuteQueryRetry();

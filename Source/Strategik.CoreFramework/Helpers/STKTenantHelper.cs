@@ -1,6 +1,4 @@
 ﻿
-#if v16
-
 #region License
 
 //
@@ -46,8 +44,9 @@ namespace Strategik.CoreFramework.Helpers
     /// Helper class for manipulating O365 tenant
     /// </summary>
     /// <remarks>
-    /// To execute code at the tenant level the user id and password 
-    /// or app credentials supplied must have tenant admin permissions.
+    /// Use this helper for tenant level operations susch as creating or deleting site collections, retreiving lists
+    /// of the available site collections in a tenancy and so on.
+    /// To execute code at the tenant level the user id and password or app credentials supplied must have tenant admin permissions.
     /// </remarks>
     public class STKTenantHelper
     {
@@ -71,13 +70,22 @@ namespace Strategik.CoreFramework.Helpers
             _authHelper = new STKAuthenticationHelper(adminUrl, sharePointUrl, userName, password, STKTarget.Office_365);
             _adminUrl = adminUrl;
             _sharePointUrl = sharePointUrl;
-            Initialise();
+            Initialise(false);
+        }
+
+
+        public STKTenantHelper(String adminUrl, String sharePointUrl, ClientContext adminContext, bool loadSiteCollections)
+        {
+            _adminUrl = adminUrl;
+            _sharePointUrl = sharePointUrl;
+            _context = adminContext;
+            Initialise(loadSiteCollections);
         }
 
         public STKTenantHelper(STKAuthenticationHelper authHelper)
         {
             if (authHelper == null) throw new ArgumentNullException("authHelper");
-            Initialise();
+            Initialise(false);
         }
 
         #endregion Constructor
@@ -88,14 +96,33 @@ namespace Strategik.CoreFramework.Helpers
         /// Create the specified site collection or updates its contents if it already exists
         /// </summary>
         /// <param name="site">Strategik site definition</param>
-        public void EnsureSite(STKSite site, STKProvisioningConfiguration config = null)
+        /// <param name="config">Configuration options</param>
+        public void CreateSite(STKSite site, STKProvisioningConfiguration config = null)
         {
-            if (config == null) config = new STKProvisioningConfiguration();
-            String fullUrl = _sharePointUrl + site.TenantRelativeURL;
-            Site spSite = GetSharePointSite(site);
+            bool provisionSite = false;
 
-            if (spSite == null) 
+            if (config == null) config = new STKProvisioningConfiguration();
+
+            String fullUrl = _sharePointUrl + site.TenantRelativeURL;
+
+            // Check if this site already exists in the tenant
+            if (SiteExists(site))
             {
+                if(config.DeleteExistingSite)
+                {
+                    DeleteSite(site, false); // bye bye data !
+                    provisionSite = true; // we will need to recreate it
+                }
+            }
+            else
+            {
+                provisionSite = true; // It doesnt exist to create it
+            }
+           
+            // Provision the site
+            if (provisionSite) 
+            {
+                // The site does not exist so create it
                 SiteEntity siteEntity = new SiteEntity()
                 {
                     Description = site.Description,
@@ -107,22 +134,17 @@ namespace Strategik.CoreFramework.Helpers
                     Url = fullUrl
                 };
 
-#if v16
                 Guid siteId = _tenant.CreateSiteCollection(siteEntity, true, true);
                 site.UniqueId = siteId;
-#endif
-
             }
-            else 
+
+            // Update the site with our definition
+            if (config.EnsureSite)
             {
-               // site.UniqueId = spSite.Id; //TODO: The is isnt initialise by default
-
+                ClientContext context = _authHelper.GetClientContext(fullUrl);
+                STKSiteHelper siteHelper = new STKSiteHelper(context);
+                siteHelper.EnsureSite(site, config);
             }
-   
-            // Update the site 
-            ClientContext context = _authHelper.GetClientContext(fullUrl);
-            STKSiteHelper siteHelper = new STKSiteHelper(context);
-            siteHelper.Provision(site, config);
         }
       
         public void EnsureTenantCustomisations(STKTenantCustomisations tenantCustomisations, STKProvisioningConfiguration config = null) 
@@ -143,10 +165,20 @@ namespace Strategik.CoreFramework.Helpers
       
         public bool SiteExists(STKSite site) 
         {
+            bool exists = false;
+
             String fullUrl = _sharePointUrl + site.TenantRelativeURL;
             String status = "Active";
+            try
+            {
+                exists = (_tenant.CheckIfSiteExists(fullUrl, status)) ? true : false;
+            }
+            catch
+            {
+                exists = false;
+            }
 
-            return (_tenant.CheckIfSiteExists(fullUrl, status)) ? true : false;
+            return exists;
         }
 
         public Site GetSharePointSite(STKSite site) 
@@ -167,7 +199,7 @@ namespace Strategik.CoreFramework.Helpers
 
 #endregion Public Methods
 
-#region Provisioning
+        #region Provisioning
 
         /// <summary>
         /// Provisions a Strategik solution to an Office 365 tennant
@@ -207,17 +239,17 @@ namespace Strategik.CoreFramework.Helpers
             // Create each site collection specified in the solution
             foreach (STKSite site in solution.Sites)
             {
-                EnsureSite(site, config);
+                CreateSite(site, config);
             }
         }
 
 #endregion
 
-#region Permissions Checks
+        #region Permissions Checks
 
 #endregion
 
-#region Delete Sites
+        #region Delete Sites
 
         public void DeleteSite(STKSite site, bool useRecycleBin)
         {
@@ -231,7 +263,7 @@ namespace Strategik.CoreFramework.Helpers
 
 #endregion
 
-#region Get Site Properties
+        #region Get Site Properties
 
         public List<STKSiteProperties> GetAllSitesProperties()
         {
@@ -240,26 +272,26 @@ namespace Strategik.CoreFramework.Helpers
 
 #endregion
 
-#region Implementation
+        #region Implementation
 
-        private void Initialise() 
+        private void Initialise(bool loadSiteCollections) 
         {
-            if (_tenant == null) LoadO365Tenant(true);
+            if (_tenant == null) LoadO365Tenant(loadSiteCollections);
         }
 
         private void LoadO365Tenant(bool loadSiteCollections)
         {
+            if (_context == null)
+            {
+                _context = _authHelper.GetAdminContext();
+            }
+            _office365Tenant = new Office365Tenant(_context);
+            _context.Load(_office365Tenant);
+            _context.ExecuteQueryRetry();
 
-            ClientContext ctx = _authHelper.GetAdminContext();
-            _office365Tenant = new Office365Tenant(ctx);
-            ctx.Load(_office365Tenant);
-            ctx.ExecuteQueryRetry();
-
-            _tenant = new Tenant(ctx);
-            ctx.Load(_tenant);
-            ctx.ExecuteQueryRetry();
-
-            _context = ctx;
+            _tenant = new Tenant(_context);
+            _context.Load(_tenant);
+            _context.ExecuteQueryRetry();
 
             if (loadSiteCollections)
             {
@@ -320,8 +352,4 @@ namespace Strategik.CoreFramework.Helpers
 
 #endregion Implementation
     }
-
-    
 }
-
-#endif
