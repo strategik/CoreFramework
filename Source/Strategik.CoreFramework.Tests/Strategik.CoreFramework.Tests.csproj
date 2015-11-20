@@ -184,6 +184,10 @@
       <Project>{b9bcf2cd-da0c-4b11-89a1-1ae362fc0b1b}</Project>
       <Name>Strategik.CoreFramework.PnP</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Strategik.CoreFramework.TestInfrastructure\Strategik.CoreFramework.Tests.Infrastructure.csproj">
+      <Project>{643a8857-5d7f-44d1-9c9a-f56feac92cf6}</Project>
+      <Name>Strategik.CoreFramework.Tests.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Strategik.CoreFramework\Strategik.CoreFramework.csproj">
       <Project>{d48960ad-7ff8-4e3e-ae8f-478ec9872485}</Project>
       <Name>Strategik.CoreFramework</Name>
@@ -198,7 +202,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config.sample" />
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>

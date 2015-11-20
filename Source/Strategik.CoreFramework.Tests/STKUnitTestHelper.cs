@@ -38,31 +38,23 @@ namespace Strategik.CoreFramework.Tests
 {
         public static class STKUnitTestHelper
         {
+            //
+            // The properties we need for system testing
+            // read form an app config file (not commited to source control)
+            // see app.config.sample for the required format
+            //
             public static String oUserName = @"*";
             private static String oPassword = "*";
             private static String oTestSiteUrl = "*";
-
-            public static String userName = @"dev\strategikspdev";
-            private static String password = "stPassword1";
-            private static String testSiteUrl = "http://strategikspdev/sites/CoreFrameworkUnitTests";
-
-
+            private static String oTenantUrl = "*";
+            private static String oAdminUserName = "*";
+            private static String oAdminPassword = "*";
 
             public static ClientContext GetTestContext()
             {
-
-#if DEBUG
                 ClientContext context = new ClientContext(oTestSiteUrl);
                 context.Credentials = new SharePointOnlineCredentials(oUserName, GetSecurePassword(oPassword));
                 return context;
-#endif
-
-# if DEBUG_OnPremise13
-
-                ClientContext context = new ClientContext(testSiteUrl);
-                context.Credentials = new NetworkCredential(userName, GetSecurePassword(password));
-                return context;
-#endif
             }
 
             private static SecureString GetSecurePassword(String input)
