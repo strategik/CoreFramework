@@ -21,6 +21,6 @@
         <file src="..\Source\Strategik.CoreFramework\bin\debug\Strategik.CoreFramework.dll" target="lib\Strategik.CoreFramework.dll" />
         <file src="..\Source\Strategik.CoreFramework.PnP\bin\debug\Strategik.CoreFramework.PnP.dll" target="lib\Strategik.CoreFramework.PnP.dll" />
         <file src="..\Source\Strategik.Definitions\bin\debug\Strategik.Definitions.dll" target="lib\Strategik.Definitions.dll" />
-	<file src="..\Source\Strategik.CoreFramework.Tests.Infrastructure\bin\debug\Strategik.CoreFramework.Tests.Infrastructure.dll" target="lib\Strategik.CoreFramework.Tests.Infrastructure.dll" />
+	<file src="..\Source\Strategik.CoreFramework.TestInfrastructure\bin\debug\Strategik.CoreFramework.Tests.Infrastructure.dll" target="lib\Strategik.CoreFramework.Tests.Infrastructure.dll" />
     </files>
 </package>
