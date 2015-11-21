@@ -143,8 +143,8 @@ namespace Strategik.CoreFramework.Helpers
                 site.UniqueId = siteId;
             }
 
-            // Update the site with our definition
-            if (config.EnsureSite)
+            // Update the site with our definition (if we have one)
+            if (config.EnsureSite && site.RootWeb != null)
             {
                 ClientContext context = _authHelper.GetClientContext(fullUrl);
                 STKSiteHelper siteHelper = new STKSiteHelper(context);
