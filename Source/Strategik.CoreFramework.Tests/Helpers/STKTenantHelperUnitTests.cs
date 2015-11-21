@@ -30,7 +30,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
             STKTenantHelper helper = new STKTenantHelper(STKTestsConfig.TenantUrl, STKTestsConfig.DevSiteUrl, STKTestsConfig.CreateTenantClientContext(), false);
             STKSite site = STKTestSites.GetUnitTestSite();
             site.SiteOwnerLogin = STKTestsConfig.UserName;
-            STKProvisioningConfiguration config = new STKProvisioningConfiguration() { DeleteExistingSite = true, EnsureSite = false };
+            STKProvisioningConfiguration config = new STKProvisioningConfiguration() { DeleteExistingSites = true, EnsureSite = false };
 
             // Create it (force delete if already present / dont provision all the artefacts)
             helper.CreateSite(site, config);

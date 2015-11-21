@@ -113,7 +113,7 @@ namespace Strategik.CoreFramework.Helpers
             // Check if this site already exists in the tenant
             if (SiteExists(site))
             {
-                if(config.DeleteExistingSite)
+                if(config.DeleteExistingSites)
                 {
                     DeleteSite(site, false); // bye bye data !
                     provisionSite = true; // we will need to recreate it

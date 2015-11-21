@@ -59,7 +59,7 @@ namespace Strategik.Definitions.Configuration
         /// <summary>
         /// Set to true to delete existing site collections during provisioning
         /// </summary>
-        public bool DeleteExistingSite { get; set; }
+        public bool DeleteExistingSites { get; set; }
 
         public String PrimarySiteCollectionAdministrator { get; set; }
 
