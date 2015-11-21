@@ -130,12 +130,12 @@ namespace Strategik.CoreFramework.Helpers
                 // The site does not exist so create it
                 SiteEntity siteEntity = new SiteEntity()
                 {
+                    Title = (String.IsNullOrEmpty(site.DisplayName)) ? site.Name : site.DisplayName,
                     Description = site.Description,
                     Lcid = site.Lcid,
                     SiteOwnerLogin = site.SiteOwnerLogin,
                     Template = site.Template,
                     TimeZoneId = site.TimezoneId,
-                    Title = site.Name,
                     Url = fullUrl
                 };
 
