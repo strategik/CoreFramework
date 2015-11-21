@@ -10,7 +10,7 @@
         <projectUrl>https://github.com/strategik/CoreFramework</projectUrl>
         <iconUrl>https://raw.githubusercontent.com/strategik/CoreFramework/master/Media/Images/strategik96.png</iconUrl>
         <requireLicenseAcceptance>true</requireLicenseAcceptance>
-        <description>Strategik's wrapper around the Office Dev PnP Core.</description>
+        <description>Strategik's wrapper around the Office Dev PnP Core. Experimental (under active development)</description>
         <releaseNotes>Updated PnP dependency. Minor updates.</releaseNotes>
         <copyright>Strategik Pty Ltd 2015</copyright>
         <dependencies>
