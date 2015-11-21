@@ -52,14 +52,30 @@ namespace Strategik.Definitions.Configuration
         public bool UsePnPForSitePages { get; set; }
         public bool UsePnPForwebPartPages { get; set; }
         public bool UsePnPForPublishingPages { get; set; }
+
+        #endregion
+
+        #region Site Collection Overrides
         /// <summary>
         /// Set to true to delete existing site collections during provisioning
         /// </summary>
         public bool DeleteExistingSite { get; set; }
+
+        public String PrimarySiteCollectionAdministrator { get; set; }
+
+        public String SecondarySiteCollectionAdminsitrator { get; set;}
+
+        public String TenantRelativeUrl { get; set; }
+
+        public int? TimeZone { get; set; }
+
+        public uint? Locale { get; set; }
+
         /// <summary>
-        /// Set to true to call EnsureSite() once a new site collection has been created
+        /// Set to true to call EnsureSite() once a new site collection has been created - otherwise stops at empty site collections
         /// </summary>
         public bool EnsureSite { get; set; }
+
         #endregion
 
         public List<String> Messages { get; set; }
@@ -86,8 +102,22 @@ namespace Strategik.Definitions.Configuration
             UsePnpForSiteColumns = true;
             UsePnPForContentTypes = true;
             UsePnPForLists = true;
-
         }
+
+        public bool HasPrimarySiteCollectionAdministrator()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasTenantRelativeUrl()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region Has Property Checks
+
 
         #endregion
     }

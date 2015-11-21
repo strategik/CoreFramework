@@ -101,7 +101,12 @@ namespace Strategik.CoreFramework.Helpers
         {
             bool provisionSite = false;
 
+            // Apply the configuration
             if (config == null) config = new STKProvisioningConfiguration();
+            ApplyConfiguration(site, config);
+
+            // Validate the updated site definition
+            site.Validate();
 
             String fullUrl = _sharePointUrl + site.TenantRelativeURL;
 
@@ -146,7 +151,16 @@ namespace Strategik.CoreFramework.Helpers
                 siteHelper.EnsureSite(site, config);
             }
         }
-      
+
+        private void ApplyConfiguration(STKSite site, STKProvisioningConfiguration config)
+        {
+            // Overide various aspects of the definition with items specified in the configuration
+            if (!String.IsNullOrEmpty(config.PrimarySiteCollectionAdministrator)) site.SiteOwnerLogin = config.PrimarySiteCollectionAdministrator;
+            if (!String.IsNullOrEmpty(config.TenantRelativeUrl)) site.TenantRelativeURL = config.TenantRelativeUrl;
+            if(config.Locale.HasValue) site.Lcid = config.Locale.Value;
+            if(config.TimeZone.HasValue) site.TimezoneId = config.TimeZone.Value;
+        }
+
         public void EnsureTenantCustomisations(STKTenantCustomisations tenantCustomisations, STKProvisioningConfiguration config = null) 
         {
             if (tenantCustomisations == null) throw new ArgumentNullException("tennantCustomisations");
@@ -197,7 +211,7 @@ namespace Strategik.CoreFramework.Helpers
             return spSite;
         }
 
-#endregion Public Methods
+        #endregion Public Methods
 
         #region Provisioning
 
