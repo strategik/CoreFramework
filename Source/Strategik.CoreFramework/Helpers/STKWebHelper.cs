@@ -51,6 +51,8 @@ namespace Strategik.CoreFramework.Helpers
 
         #region Ensure Web
 
+        protected virtual void BeforeEnsureWeb(STKWeb web, STKProvisioningConfiguration config) { }
+
         public void EnsureWeb(STKWeb web)
         {
             EnsureWeb(web, new STKProvisioningConfiguration());
@@ -60,6 +62,8 @@ namespace Strategik.CoreFramework.Helpers
         {
             if (web == null) throw new ArgumentNullException("web");
             if (config == null) config = new STKProvisioningConfiguration();
+
+            BeforeEnsureWeb(web, config);
 
             // Deactivate web features - Should be in an helper
             foreach (Guid featureId in web.FeaturesToDeactivate)
@@ -96,11 +100,20 @@ namespace Strategik.CoreFramework.Helpers
                 ProvisionSubWeb(subWeb, config);
             }
 
+            AfterEnsureWeb(web, config);
         }
 
-        private void ProvisionSubWeb(STKWeb subWeb, STKProvisioningConfiguration config) 
+        protected virtual void AfterEnsureWeb(STKWeb web, STKProvisioningConfiguration config) { }
+
+        protected virtual void BeforeProvisionSubWeb(STKWeb subWeb, STKProvisioningConfiguration config) { }
+
+        protected void ProvisionSubWeb(STKWeb subWeb, STKProvisioningConfiguration config) 
         {
+
+            BeforeProvisionSubWeb(subWeb, config);
+
             if(subWeb.LeafUrl == null) throw new ArgumentNullException("subWeb", "Leaf Url must be specified to provision subweb");
+
             Web spSubWeb = _clientContext.Web.GetWeb(subWeb.LeafUrl);
             _clientContext.ExecuteQueryRetry();
 
@@ -127,8 +140,11 @@ namespace Strategik.CoreFramework.Helpers
             childContext.Credentials = _clientContext.Credentials;
             STKWebHelper childWebHelper = new STKWebHelper(childContext);
             childWebHelper.EnsureWeb(subWeb, config);
-           
+
+            AfterProvisionSubWeb(subWeb, config);
         }
+
+        protected virtual void AfterProvisionSubWeb(STKWeb subWeb, STKProvisioningConfiguration config) { }
 
         #endregion
 

@@ -48,6 +48,8 @@ namespace Strategik.CoreFramework.Helpers
 
         #region Ensure Site
 
+        protected virtual void BeforeEnsureSite(STKSite site, STKProvisioningConfiguration config) { }
+
         /// <summary>
         /// Provision the Site
         /// </summary>
@@ -63,6 +65,8 @@ namespace Strategik.CoreFramework.Helpers
         {
             if (site == null) throw new ArgumentNullException("site");
             if (config == null) config = new STKProvisioningConfiguration();
+
+            BeforeEnsureSite(site, config);
 
             // Deactivate and site scoped features requested
             foreach (Guid featureToDeactivate in site.SiteFeaturesToDeactivate)
@@ -88,6 +92,8 @@ namespace Strategik.CoreFramework.Helpers
                 STKWebHelper webHelper = new STKWebHelper(_clientContext);
                 webHelper.EnsureWeb(site.RootWeb, config);
             }
+
+            AfterEnsureSite(site, config);
         }
 
         public void EnsureSite(STKSite site) 
@@ -96,6 +102,8 @@ namespace Strategik.CoreFramework.Helpers
             EnsureSite(site, config);
         }
 
+        protected virtual void AfterEnsureSite(STKSite site, STKProvisioningConfiguration config) { }
+
         #endregion
 
         #region Read Site
@@ -103,9 +111,8 @@ namespace Strategik.CoreFramework.Helpers
         public STKSite ReadSite() 
         {
             _clientContext.Load(_site.Owner, o => o.LoginName);
-#if V16
             _clientContext.Load(_site.SecondaryContact);
-#endif
+
             _clientContext.ExecuteQueryRetry();
 
             STKSite site = new STKSite() 
@@ -120,14 +127,14 @@ namespace Strategik.CoreFramework.Helpers
                 ReadOnly = _site.ReadOnly,
                 SiteOwnerLogin = _site.Owner.LoginName,
             };
-#if V16
+
             if (_site.SecondaryContact != null && _site.SecondaryContact.ServerObjectIsNull == false) site.SecondaryContact = _site.SecondaryContact.LoginName;
-#endif
+
             return site;
         }
 
-#endregion
+        #endregion
 
-#endregion Methods
+        #endregion Methods
     }
 }

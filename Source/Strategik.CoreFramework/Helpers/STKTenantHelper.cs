@@ -93,17 +93,30 @@ namespace Strategik.CoreFramework.Helpers
         #region Public Methods
 
         /// <summary>
+        /// Extension point 
+        /// </summary>
+        /// <param name="site"></param>
+        /// <param name="config"></param>
+        protected virtual void BeforeCreateSite(STKSite site, STKProvisioningConfiguration config)
+        {
+            // Extend this class and do whatever you want here
+        }
+
+        /// <summary>
         /// Create the specified site collection or updates its contents if it already exists
         /// </summary>
         /// <param name="site">Strategik site definition</param>
         /// <param name="config">Configuration options</param>
         public void CreateSite(STKSite site, STKProvisioningConfiguration config = null)
         {
+           
             bool provisionSite = false;
 
             // Apply the configuration
             if (config == null) config = new STKProvisioningConfiguration();
             ApplyConfiguration(site, config);
+
+            BeforeCreateSite(site, config);
 
             // Validate the updated site definition
             site.Validate();
@@ -150,15 +163,13 @@ namespace Strategik.CoreFramework.Helpers
                 STKSiteHelper siteHelper = new STKSiteHelper(context);
                 siteHelper.EnsureSite(site, config);
             }
+
+            AfterCreateSite(site, config);
         }
 
-        private void ApplyConfiguration(STKSite site, STKProvisioningConfiguration config)
+        protected virtual void AfterCreateSite(STKSite site, STKProvisioningConfiguration config)
         {
-            // Overide various aspects of the definition with items specified in the configuration
-            if (!String.IsNullOrEmpty(config.PrimarySiteCollectionAdministrator)) site.SiteOwnerLogin = config.PrimarySiteCollectionAdministrator;
-            if (!String.IsNullOrEmpty(config.TenantRelativeUrl)) site.TenantRelativeURL = config.TenantRelativeUrl;
-            if(config.Locale.HasValue) site.Lcid = config.Locale.Value;
-            if(config.TimeZone.HasValue) site.TimezoneId = config.TimeZone.Value;
+            // Extend this class and do whatever you want here
         }
 
         public void EnsureTenantCustomisations(STKTenantCustomisations tenantCustomisations, STKProvisioningConfiguration config = null) 
@@ -215,6 +226,10 @@ namespace Strategik.CoreFramework.Helpers
 
         #region Provisioning
 
+        protected virtual void BeforeInstallSolution(STKSolution solution, STKProvisioningConfiguration config)
+        {
+        }
+
         /// <summary>
         /// Provisions a Strategik solution to an Office 365 tennant
         /// </summary>
@@ -226,9 +241,11 @@ namespace Strategik.CoreFramework.Helpers
         /// <param name="solution">The definition of the solution to provision</param>
         /// <param name="config">Configuration to apply during provisioning</param>
         /// <returns>True if the solution is provisioned successfully</returns>
-        public void Provision(STKSolution solution, STKProvisioningConfiguration config = null) 
+        public void Install(STKSolution solution, STKProvisioningConfiguration config = null) 
         {
             if (config == null) config = new STKProvisioningConfiguration();
+
+            BeforeInstallSolution(solution, config);
 
             // Ensures we have been passed a valid solution definition
             solution.Validate();
@@ -255,13 +272,19 @@ namespace Strategik.CoreFramework.Helpers
             {
                 CreateSite(site, config);
             }
+
+            AfterInstallSolution(solution, config);
         }
 
-#endregion
+        protected virtual void AfterInstallSolution(STKSolution solution, STKProvisioningConfiguration config)
+        {
+        }
+
+        #endregion
 
         #region Permissions Checks
 
-#endregion
+        #endregion
 
         #region Delete Sites
 
@@ -275,7 +298,7 @@ namespace Strategik.CoreFramework.Helpers
             }
         }
 
-#endregion
+        #endregion
 
         #region Get Site Properties
 
@@ -284,7 +307,7 @@ namespace Strategik.CoreFramework.Helpers
             return _siteProperties;
         }
 
-#endregion
+        #endregion
 
         #region Implementation
 
@@ -364,6 +387,15 @@ namespace Strategik.CoreFramework.Helpers
             }
         }
 
-#endregion Implementation
+        private void ApplyConfiguration(STKSite site, STKProvisioningConfiguration config)
+        {
+            // Overide various aspects of the definition with items specified in the configuration
+            if (!String.IsNullOrEmpty(config.PrimarySiteCollectionAdministrator)) site.SiteOwnerLogin = config.PrimarySiteCollectionAdministrator;
+            if (!String.IsNullOrEmpty(config.TenantRelativeUrl)) site.TenantRelativeURL = config.TenantRelativeUrl;
+            if (config.Locale.HasValue) site.Lcid = config.Locale.Value;
+            if (config.TimeZone.HasValue) site.TimezoneId = config.TimeZone.Value;
+        }
+
+        #endregion Implementation
     }
 }

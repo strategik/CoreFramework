@@ -23,7 +23,7 @@
 #endregion License
 
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Utilities;
+using OfficeDevPnP.Core.Diagnostics;
 using Strategik.Definitions.ContentTypes;
 using Strategik.Definitions.Fields;
 using Strategik.Definitions.Sites;
