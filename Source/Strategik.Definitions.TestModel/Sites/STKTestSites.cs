@@ -62,7 +62,7 @@ namespace Strategik.Definitions.TestModel.Sites
                 SolutionId = new Guid("{d3d18a76-4e21-4fba-892e-f2e002f3ea4f}")
             };
 
-            site.Solutions.Add(bindTuningSolution);
+            site.SandboxSolutions.Add(bindTuningSolution);
 
             STKWeb rootWeb = new STKWeb()
             {

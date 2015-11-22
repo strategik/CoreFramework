@@ -28,6 +28,7 @@ using Strategik.Definitions.Features;
 using System;
 using Strategik.CoreFramework.Configuration;
 using Strategik.Definitions.Configuration;
+using System.Collections.Generic;
 
 namespace Strategik.CoreFramework.Helpers
 {
@@ -68,24 +69,10 @@ namespace Strategik.CoreFramework.Helpers
 
             BeforeEnsureSite(site, config);
 
-            // Deactivate and site scoped features requested
-            foreach (Guid featureToDeactivate in site.SiteFeaturesToDeactivate)
-            {
-                _site.DeactivateFeature(featureToDeactivate);
-            }
-
-            //Activate any site scoped features request
-            foreach (Guid featureToActivate in site.SiteFeaturesToActivate)
-            {
-                _site.ActivateFeature(featureToActivate);
-            }
-
-            // Activate any Sandboxed solutions
-            foreach (STKSandboxSolution solution in site.Solutions)
-            {
-                _site.InstallSandboxSolution(solution);
-            }
-
+            DeactivateSiteFeatures(site.SiteFeaturesToDeactivate);
+            ActivateSiteFeatures(site.SiteFeaturesToActivate);
+            InstallSandboxedSolutions(site.SandboxSolutions);
+            
             // Provision the root web (and then down to subWebs)
             if (site.RootWeb != null)
             {
@@ -136,5 +123,34 @@ namespace Strategik.CoreFramework.Helpers
         #endregion
 
         #endregion Methods
+
+        #region Implementation Methods
+
+        protected void DeactivateSiteFeatures(List<Guid> siteFeaturesToDeactivate)
+        {
+            // Deactivate and site scoped features requested
+            foreach (Guid featureToDeactivate in siteFeaturesToDeactivate)
+            {
+                _site.DeactivateFeature(featureToDeactivate);
+            }
+        }
+        protected void ActivateSiteFeatures(List<Guid> siteFeaturesToActivate)
+        {
+            // Deactivate and site scoped features requested
+            foreach (Guid featureToActivate in siteFeaturesToActivate)
+            {
+                _site.ActivateFeature(featureToActivate);
+            }
+        }
+        protected void InstallSandboxedSolutions(List<STKSandboxSolution> solutions)
+        {
+            // Activate any Sandboxed solutions
+            foreach (STKSandboxSolution solution in solutions)
+            {
+                _site.InstallSandboxSolution(solution);
+            }
+        }
+
+        #endregion
     }
 }

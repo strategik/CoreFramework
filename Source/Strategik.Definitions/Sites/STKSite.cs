@@ -39,7 +39,6 @@ namespace Strategik.Definitions.Sites
     public class STKSite : STKDefinitionBase
     {
         #region Properties
-
         public bool AllowCreateDeclarativeWorkflow { get; set; }
         public bool AllowDesigner { get; set; }
         public bool AllowMasterPageEditing { get; set; }
@@ -53,7 +52,7 @@ namespace Strategik.Definitions.Sites
         public STKWeb RootWeb { get; set; }
 
         //   public List<STKSubWeb> SubWebs { get; set; }
-        public List<STKSandboxSolution> Solutions { get; set; }
+        public List<STKSandboxSolution> SandboxSolutions { get; set; }
 
         public String TenantRelativeURL { get; set; }
 
@@ -83,7 +82,7 @@ namespace Strategik.Definitions.Sites
             Lcid = 1033; // US (Australia gives a not supported exception)
             TimezoneId = 18; // brisvegas
             //  SubWebs = new List<STKSubWeb>();
-            Solutions = new List<STKSandboxSolution>();
+            SandboxSolutions = new List<STKSandboxSolution>();
             SiteFeaturesToActivate = new List<Guid>();
             SiteFeaturesToDeactivate = new List<Guid>();
             RootWebFeaturesToActivate = new List<Guid>();
