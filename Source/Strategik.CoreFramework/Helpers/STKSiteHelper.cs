@@ -76,7 +76,7 @@ namespace Strategik.CoreFramework.Helpers
             // Provision the root web (and then down to subWebs)
             if (site.RootWeb != null)
             {
-                STKWebHelper webHelper = new STKWebHelper(_clientContext);
+                STKWebHelper webHelper = GetWebHelper(_clientContext);
                 webHelper.EnsureWeb(site.RootWeb, config);
             }
 
@@ -87,6 +87,11 @@ namespace Strategik.CoreFramework.Helpers
         {
             STKProvisioningConfiguration config = new STKProvisioningConfiguration();
             EnsureSite(site, config);
+        }
+
+        protected virtual STKWebHelper GetWebHelper(ClientContext context)
+        {
+            return new STKWebHelper(_clientContext);
         }
 
         protected virtual void AfterEnsureSite(STKSite site, STKProvisioningConfiguration config) { }

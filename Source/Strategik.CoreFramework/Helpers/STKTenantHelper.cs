@@ -160,11 +160,16 @@ namespace Strategik.CoreFramework.Helpers
             if (config.EnsureSite && site.RootWeb != null)
             {
                 ClientContext context = _authHelper.GetClientContext(fullUrl);
-                STKSiteHelper siteHelper = new STKSiteHelper(context);
+                STKSiteHelper siteHelper = GetSiteHelper(context);
                 siteHelper.EnsureSite(site, config);
             }
 
             AfterCreateSite(site, config);
+        }
+
+        protected virtual STKSiteHelper GetSiteHelper(ClientContext context)
+        {
+            return new STKSiteHelper(context);
         }
 
         protected virtual void AfterCreateSite(STKSite site, STKProvisioningConfiguration config)
