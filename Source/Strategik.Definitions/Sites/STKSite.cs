@@ -72,6 +72,8 @@ namespace Strategik.Definitions.Sites
 
         public List<Guid> RootWebFeaturesToDeactivate { get; set; }
 
+        public bool IsEmbedded { get; set; }
+
         #endregion Properties
 
         #region Constructors
