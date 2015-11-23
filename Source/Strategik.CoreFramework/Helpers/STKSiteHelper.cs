@@ -1,5 +1,4 @@
 ﻿#region License
-
 //
 // Copyright (c) 2015 Strategik Pty Ltd,
 //
@@ -26,9 +25,12 @@ using Microsoft.SharePoint.Client;
 using Strategik.Definitions.Sites;
 using Strategik.Definitions.Features;
 using System;
+using System.Linq;
 using Strategik.CoreFramework.Configuration;
 using Strategik.Definitions.Configuration;
 using System.Collections.Generic;
+using OfficeDevPnP.Core.Diagnostics;
+using System.Threading;
 
 namespace Strategik.CoreFramework.Helpers
 {
@@ -37,6 +39,8 @@ namespace Strategik.CoreFramework.Helpers
     /// </summary>
     public class STKSiteHelper : STKHelperBase
     {
+        private const String LogSource = "STKSiteHelper";
+
         #region Constructors
 
         public STKSiteHelper(ClientContext context)
@@ -49,7 +53,10 @@ namespace Strategik.CoreFramework.Helpers
 
         #region Ensure Site
 
-        protected virtual void BeforeEnsureSite(STKSite site, STKProvisioningConfiguration config) { }
+        protected virtual void BeforeEnsureSite(STKSite site, STKProvisioningConfiguration config)
+        {
+            Log.Debug(LogSource, "Before EnsureSite");
+        }
 
         /// <summary>
         /// Provision the Site
@@ -64,6 +71,7 @@ namespace Strategik.CoreFramework.Helpers
         /// <param name="site"></param>
         public void EnsureSite(STKSite site, STKProvisioningConfiguration config)
         {
+            Log.Debug(LogSource, "Start Ensure Site");
             if (site == null) throw new ArgumentNullException("site");
             if (config == null) config = new STKProvisioningConfiguration();
 
@@ -81,6 +89,7 @@ namespace Strategik.CoreFramework.Helpers
             }
 
             AfterEnsureSite(site, config);
+            Log.Debug(LogSource, "End EnsureSite");
         }
 
         public void EnsureSite(STKSite site) 
@@ -94,7 +103,10 @@ namespace Strategik.CoreFramework.Helpers
             return new STKWebHelper(_clientContext);
         }
 
-        protected virtual void AfterEnsureSite(STKSite site, STKProvisioningConfiguration config) { }
+        protected virtual void AfterEnsureSite(STKSite site, STKProvisioningConfiguration config)
+        {
+            Log.Debug(LogSource, "After EnsureSite");
+        }
 
         #endregion
 
@@ -136,22 +148,34 @@ namespace Strategik.CoreFramework.Helpers
             // Deactivate and site scoped features requested
             foreach (Guid featureToDeactivate in siteFeaturesToDeactivate)
             {
+                Log.Debug(LogSource, "Deactivating site feature " + featureToDeactivate);
                 _site.DeactivateFeature(featureToDeactivate);
             }
         }
+
         protected void ActivateSiteFeatures(List<Guid> siteFeaturesToActivate)
         {
             // Deactivate and site scoped features requested
             foreach (Guid featureToActivate in siteFeaturesToActivate)
             {
+                Log.Debug(LogSource, "Activating site feature " + featureToActivate);
                 _site.ActivateFeature(featureToActivate);
+                
+                // Block until the feature is activated - otherwise we will have problems with any dependent features e.g. publishing web
+                while(_site.IsFeatureActive(featureToActivate) == false)
+                {
+                    Log.Debug(LogSource, "Feature " + featureToActivate + " is still activating - pausing for 5 seconds");
+                    Thread.Sleep(5000);
+                }
             }
         }
+
         protected void InstallSandboxedSolutions(List<STKSandboxSolution> solutions)
         {
             // Activate any Sandboxed solutions
             foreach (STKSandboxSolution solution in solutions)
             {
+                Log.Debug(LogSource, "Installing Sandbox solution " + solution.FileName);
                 _site.InstallSandboxSolution(solution);
             }
         }
