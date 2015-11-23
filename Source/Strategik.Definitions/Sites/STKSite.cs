@@ -73,6 +73,7 @@ namespace Strategik.Definitions.Sites
         public List<Guid> RootWebFeaturesToDeactivate { get; set; }
 
         public bool IsEmbedded { get; set; }
+        public List<STKSite> EmbeddedSites { get; set; }
 
         #endregion Properties
 
@@ -89,6 +90,7 @@ namespace Strategik.Definitions.Sites
             SiteFeaturesToDeactivate = new List<Guid>();
             RootWebFeaturesToActivate = new List<Guid>();
             RootWebFeaturesToDeactivate = new List<Guid>();
+            EmbeddedSites = new List<STKSite>();
         }
 
         #endregion Constructors
