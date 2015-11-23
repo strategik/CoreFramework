@@ -52,6 +52,11 @@ namespace Strategik.Definitions.Solutions
         #region Properties
 
         /// <summary>
+        /// Any Configufiguration to applied while deploying this solution
+        /// </summary>
+        public STKSolutionConfiguration O365Configuration { get; set; }
+
+        /// <summary>
         /// Tenant wide customisations included in this solution (Office 365)
         /// </summary>
         public STKTenantCustomisations TennantCustomisations { get; set; }

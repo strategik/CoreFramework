@@ -28,7 +28,6 @@ using Strategik.Definitions.Features;
 using System;
 using System.Diagnostics;
 using Strategik.Definitions.Solutions;
-using Strategik.Definitions.Configuration;
 
 namespace Strategik.CoreFramework.Helpers
 {
@@ -42,20 +41,18 @@ namespace Strategik.CoreFramework.Helpers
     {
         #region Data
 
-        protected STKSolution _solution;
-        protected STKProvisioningConfiguration _config;
+        private STKSolution _solution;
 
         #endregion Data
 
         #region Constructor
 
-        public STKSolutionHelper(STKSolution solution, STKProvisioningConfiguration config)
+        public STKSolutionHelper(STKSolution solution)
         {
             Debug.WriteLine(STKConstants.LoggingSource, "Creating Solution helper");
 
              solution.Validate();
             _solution = solution;
-            _config = config;
 
             Debug.WriteLine(STKConstants.LoggingSource, "Solution helper created");
         }
@@ -67,10 +64,18 @@ namespace Strategik.CoreFramework.Helpers
         public virtual void InstallSolution(String adminUrl, String sharePointURL, String userName, String password)
         {
 
+#if v16
             STKTenantHelper helper = new STKTenantHelper(adminUrl, sharePointURL, userName, password);
-            helper.Install(_solution, _config);
+            helper.Provision(_solution);
+#endif
+
         }
 
-        #endregion Methods
+        public virtual void UninstallSolution()
+        {
+            //TODO:
+        }
+
+#endregion Methods
     }
 }

@@ -42,7 +42,7 @@ namespace Strategik.Definitions.Configuration
     {
         #region Properties
 
-        #region PnP Switches - redundant to be removed
+        #region PnP Switches - redundant
         public bool UsePnP { get; set; }
         public bool UsePnPForTaxonomy { get; set; }
         public bool UsePnPForSecurity { get; set; }

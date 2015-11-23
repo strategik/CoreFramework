@@ -198,6 +198,7 @@
     <Compile Include="Sites\STKWeb.cs" />
     <Compile Include="Solutions\STKSolutionAsset.cs" />
     <Compile Include="Solutions\STKSolution.cs" />
+    <Compile Include="Solutions\STKSolutionConfiguration.cs" />
     <Compile Include="Features\STKSandboxSolution.cs" />
     <Compile Include="Solutions\STKSolutionType.cs" />
     <Compile Include="Taxonomy\STKTerm.cs" />
