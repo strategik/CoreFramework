@@ -23,6 +23,7 @@
 #endregion License
 
 using Microsoft.SharePoint.Client;
+using OfficeDevPnP.Core.Diagnostics;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik;
 using Strategik.Definitions.Configuration;
 using Strategik.Definitions.ContentTypes;
@@ -39,6 +40,8 @@ namespace Strategik.CoreFramework.Helpers
     /// </summary>
     public class STKWebHelper : STKHelperBase
     {
+        private const String LogSource = "STKWebHelper";
+
         #region Constructor
 
         public STKWebHelper(ClientContext context)
@@ -68,12 +71,14 @@ namespace Strategik.CoreFramework.Helpers
             // Deactivate web features - Should be in an helper
             foreach (Guid featureId in web.FeaturesToDeactivate)
             {
+                Log.Info(LogSource, "Deactivating web feature {0}", featureId);
                 _web.DeactivateFeature(featureId);
             }
 
             // Activate web features
             foreach (Guid featureId in web.FeaturesToActivate)
             {
+                Log.Info(LogSource, "Activating web feature {0}", featureId);
                 _web.ActivateFeature(featureId);
             }
 
@@ -84,9 +89,11 @@ namespace Strategik.CoreFramework.Helpers
             siteColumnHelper.EnsureSiteColumns(web.SiteColumns, config);
             contentTypeHelper.EnsureContentTypes(web.ContentTypes, config);
 
+            // Ensure Lists
             STKListHelper listHelper = new STKListHelper(_clientContext);
             listHelper.EnsureLists(web.Lists, config);
 
+            // Ensure Pages
             STKPageHelper pageHelper = new STKPageHelper(_clientContext);
             pageHelper.EnsurePages(web.PublishingPages, config);
             pageHelper.EnsurePages(web.WebPartPages, config);
@@ -109,6 +116,7 @@ namespace Strategik.CoreFramework.Helpers
 
         protected void ProvisionSubWeb(STKWeb subWeb, STKProvisioningConfiguration config) 
         {
+            Log.Info(LogSource, "Provisioning subweb {0}", subWeb.Name);
 
             BeforeProvisionSubWeb(subWeb, config);
 
@@ -144,7 +152,8 @@ namespace Strategik.CoreFramework.Helpers
             AfterProvisionSubWeb(subWeb, config);
         }
 
-        protected virtual void AfterProvisionSubWeb(STKWeb subWeb, STKProvisioningConfiguration config) { }
+        protected virtual void AfterProvisionSubWeb(STKWeb subWeb, STKProvisioningConfiguration config)
+        { }
 
         #endregion
 

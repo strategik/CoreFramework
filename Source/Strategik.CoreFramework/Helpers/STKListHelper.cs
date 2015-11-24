@@ -30,11 +30,14 @@ using Strategik.Definitions.Lists;
 using System.Collections.Generic;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik;
 using Strategik.Definitions.Fields;
+using OfficeDevPnP.Core.Diagnostics;
 
 namespace Strategik.CoreFramework.Helpers
 {
     public class STKListHelper : STKHelperBase
     {
+        private const String LogSource = "STKListHelper";
+
         #region Constructor
 
         public STKListHelper(ClientContext context)
@@ -61,8 +64,9 @@ namespace Strategik.CoreFramework.Helpers
             if (list == null) throw new ArgumentNullException("list"); 
             if (config == null) config = new STKProvisioningConfiguration();
          
-            list.Validate(); 
+            list.Validate();
 
+            Log.Info("Provisioning list {0}", list.Name);
             STKPnPHelper pnpHelper = new STKPnPHelper(_clientContext);
             pnpHelper.Provision(list, config);
 

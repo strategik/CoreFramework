@@ -72,6 +72,7 @@ namespace Strategik.CoreFramework.Helpers
         public void EnsureSite(STKSite site, STKProvisioningConfiguration config)
         {
             Log.Debug(LogSource, "Start Ensure Site");
+
             if (site == null) throw new ArgumentNullException("site");
             if (config == null) config = new STKProvisioningConfiguration();
 
@@ -89,6 +90,7 @@ namespace Strategik.CoreFramework.Helpers
             }
 
             AfterEnsureSite(site, config);
+
             Log.Debug(LogSource, "End EnsureSite");
         }
 

@@ -27,6 +27,7 @@
 #endregion License
 
 using Microsoft.SharePoint.Client;
+using OfficeDevPnP.Core.Diagnostics;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik;
 using Strategik.CoreFramework.Helpers;
 using Strategik.Definitions.Configuration;
@@ -41,6 +42,8 @@ namespace Strategik.CoreFramework.Helpers
 {
     public class STKSiteColumnHelper: STKHelperBase
     {
+        private const String LogSource = "STKSiteColumnHelper";
+
         #region Constructor
 
         public STKSiteColumnHelper(ClientContext clientContext)
@@ -69,6 +72,7 @@ namespace Strategik.CoreFramework.Helpers
           
             siteColumn.Validate();
 
+            Log.Info("Provisioning site column {0}", siteColumn.Name);
             STKPnPHelper pnpHelper = new STKPnPHelper(_clientContext);
             pnpHelper.Provision(siteColumn, config);
         }

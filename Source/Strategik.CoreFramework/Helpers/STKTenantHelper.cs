@@ -37,6 +37,7 @@ using Strategik.CoreFramework.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using OfficeDevPnP.Core.Diagnostics;
 
 namespace Strategik.CoreFramework.Helpers
 {
@@ -50,6 +51,8 @@ namespace Strategik.CoreFramework.Helpers
     /// </remarks>
     public class STKTenantHelper
     {
+        private const String LogSource = "STKTenantHelper";
+
         #region Data
 
         protected Office365Tenant _office365Tenant;
@@ -109,6 +112,8 @@ namespace Strategik.CoreFramework.Helpers
         /// <param name="config">Configuration options</param>
         public void CreateSite(STKSite site, STKProvisioningConfiguration config = null)
         {
+
+            if (site == null) throw new ArgumentNullException("STKSite");
            
             bool provisionSite = false;
 
@@ -122,6 +127,8 @@ namespace Strategik.CoreFramework.Helpers
             site.Validate();
 
             String fullUrl = _sharePointUrl + site.TenantRelativeURL;
+
+            Log.Info(LogSource, "Creating site {0} at URL {1}", site.Name, fullUrl);
 
             // Check if this site already exists in the tenant
             if (SiteExists(site))
@@ -140,6 +147,8 @@ namespace Strategik.CoreFramework.Helpers
             // Provision the site
             if (provisionSite) 
             {
+                Log.Debug(LogSource, "Creating new site");
+
                 // The site does not exist so create it
                 SiteEntity siteEntity = new SiteEntity()
                 {
@@ -159,6 +168,8 @@ namespace Strategik.CoreFramework.Helpers
             // Update the site with our definition (if we have one)
             if (config.EnsureSite && site.RootWeb != null)
             {
+                Log.Debug(LogSource, "Applying root web configuration");
+
                 ClientContext context = _authHelper.GetClientContext(fullUrl);
                 STKSiteHelper siteHelper = GetSiteHelper(context);
                 siteHelper.EnsureSite(site, config);

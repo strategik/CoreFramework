@@ -30,11 +30,14 @@ using Strategik.CoreFramework.Configuration;
 using System;
 using System.Collections.Generic;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik;
+using OfficeDevPnP.Core.Diagnostics;
 
 namespace Strategik.CoreFramework.Helpers
 {
     public class STKContentTypeHelper : STKHelperBase
     {
+        private const String LogSource = "STKContentTypeHelper";
+
         #region Data
 
         private STKSiteColumnHelper _siteColumnHelper;
@@ -65,7 +68,7 @@ namespace Strategik.CoreFramework.Helpers
 
         public void EnsureContentType(STKContentType contentType, STKProvisioningConfiguration config = null)
         {
-            if (contentType == null) throw new ArgumentNullException("contentColumn");
+            if (contentType == null) throw new ArgumentNullException("contentType");
             if (config == null) config = new STKProvisioningConfiguration();
 
             contentType.Validate();
@@ -73,8 +76,13 @@ namespace Strategik.CoreFramework.Helpers
             // If the content type exists we do not update it (for now)
             // as the PnP code appears to be throwing a duplicate content type exception
             ContentType spContentType = _web.GetContentTypeById(contentType.SharePointContentTypeId);
-            if (spContentType != null) return;
+            if (spContentType != null)
+            {
+                Log.Info(LogSource, "Content type {0} already exists - no action taken", contentType.Name);
+                return;
+            }
 
+            Log.Info(LogSource, "Provisioning content type {0}", contentType.Name);
             STKPnPHelper pnpHelper = new STKPnPHelper(_clientContext);
             pnpHelper.Provision(contentType, config);
         } 
@@ -84,7 +92,7 @@ namespace Strategik.CoreFramework.Helpers
         #region Read Content Types
 
         /// <summary>
-        /// Reads the defintions for all the site columsn in the current site
+        /// Reads the defintions for all the site columns in the current site
         /// </summary>
         /// <returns></returns>
         public List<STKContentType> ReadContentTypes()
