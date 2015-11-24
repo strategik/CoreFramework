@@ -202,6 +202,11 @@ namespace Strategik.CoreFramework.Helpers
             try
             {
                 exists = (_tenant.CheckIfSiteExists(fullUrl, status)) ? true : false;
+
+                if(! exists)
+                {
+                    // TODO: Check other status
+                }
             }
             catch
             {

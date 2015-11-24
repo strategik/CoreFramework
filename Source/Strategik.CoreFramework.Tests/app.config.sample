@@ -1,5 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configuration>
+  <configSections>
+    <sectionGroup name="pnp">
+      <section name="tracing" type="OfficeDevPnP.Core.Diagnostics.LogConfigurationTracingSection, OfficeDevPnP.Core" allowLocation="true" allowDefinition="Everywhere" />
+    </sectionGroup>
+    <!-- Other <section> and <sectionGroup> elements. -->
+  </configSections>
   <runtime>
     <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
       <dependentAssembly>
@@ -28,4 +34,9 @@
       </dependentAssembly>
     </assemblyBinding>
   </runtime>
+  <pnp>
+    <tracing logLevel="Debug">
+      <logger type="OfficeDevPnP.Core.Diagnostics.TraceLogger, OfficeDevPnP.Core, Culture=neutral, PublicKeyToken=null" />
+    </tracing>
+  </pnp>
 </configuration>
