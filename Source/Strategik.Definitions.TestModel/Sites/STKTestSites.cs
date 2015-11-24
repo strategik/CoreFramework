@@ -46,23 +46,23 @@ namespace Strategik.Definitions.TestModel.Sites
 
             // Set up features - enable publishing and disable MDS
             site.SiteFeaturesToActivate.Add(STKFeatures.PublishingSiteFeature);
-            site.RootWebFeaturesToDeactivate.Add(STKFeatures.MDSFeature);
-            site.RootWebFeaturesToActivate.Add(STKFeatures.PublishingWebFeature);
+        //    site.RootWebFeaturesToDeactivate.Add(STKFeatures.MDSFeature);
+        //    site.RootWebFeaturesToActivate.Add(STKFeatures.PublishingWebFeature);
 
             // Add the BindTuning branding solution to be provisioned
-            STKSandboxSolution bindTuningSolution = new STKSandboxSolution()
-            {
-                Activate = true,
-                FileName = "RACQSPC.SPO2013.wsp",
-                Location = "Strategik.O365.CoreFramework.Tests",
-                Path = "Strategik.O365.CoreFramework.Tests.Solutions.RACQSPC.SPO2013.wsp",
-                LocationType = STKSolutionLocationType.Assembly,
-                MajorVersion = 1,
-                MinorVersion = 0,
-                SolutionId = new Guid("{d3d18a76-4e21-4fba-892e-f2e002f3ea4f}")
-            };
+            //STKSandboxSolution bindTuningSolution = new STKSandboxSolution()
+            //{
+            //    Activate = true,
+            //    FileName = "RACQSPC.SPO2013.wsp",
+            //    Location = "Strategik.O365.CoreFramework.Tests",
+            //    Path = "Strategik.O365.CoreFramework.Tests.Solutions.RACQSPC.SPO2013.wsp",
+            //    LocationType = STKSolutionLocationType.Assembly,
+            //    MajorVersion = 1,
+            //    MinorVersion = 0,
+            //    SolutionId = new Guid("{d3d18a76-4e21-4fba-892e-f2e002f3ea4f}")
+            //};
 
-            site.SandboxSolutions.Add(bindTuningSolution);
+            //site.SandboxSolutions.Add(bindTuningSolution);
 
             STKWeb rootWeb = new STKWeb()
             {
@@ -72,10 +72,13 @@ namespace Strategik.Definitions.TestModel.Sites
 
             // Test Site Columns
             rootWeb.SiteColumns.AddRange(STKTestSiteColumns.AllSiteColumns());
-
+            rootWeb.FeaturesToActivate.Add(STKFeatures.PublishingWebFeature);
+            rootWeb.FeaturesToDeactivate.Add(STKFeatures.MDSFeature);
             // Test Content Type
-            rootWeb.ContentTypes.Add(STKTestContentTypes.ItemContentType());
-            rootWeb.ContentTypes.Add(STKTestContentTypes.DocumentContentType());
+           // rootWeb.ContentTypes.Add(STKTestContentTypes.ItemContentType());
+          //  rootWeb.ContentTypes.Add(STKTestContentTypes.DocumentContentType());
+
+            site.RootWeb = rootWeb;
 
             return site;
         }

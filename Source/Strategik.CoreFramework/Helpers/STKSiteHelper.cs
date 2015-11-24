@@ -159,14 +159,24 @@ namespace Strategik.CoreFramework.Helpers
             foreach (Guid featureToActivate in siteFeaturesToActivate)
             {
                 Log.Debug(LogSource, "Activating site feature " + featureToActivate);
-                _site.ActivateFeature(featureToActivate);
-                
-                // Block until the feature is activated - otherwise we will have problems with any dependent features e.g. publishing web
-                while(_site.IsFeatureActive(featureToActivate) == false)
-                {
-                    Log.Debug(LogSource, "Feature " + featureToActivate + " is still activating - pausing for 5 seconds");
-                    Thread.Sleep(5000);
-                }
+                 _site.ActivateFeature(featureToActivate); 
+
+               // FeatureCollection features = _site.Features;
+               // features.Context.Load(features);
+               // features.Context.ExecuteQueryRetry();
+
+               // features.Add(featureToActivate, true, FeatureDefinitionScope.Farm);
+               // features.Context.ExecuteQueryRetry();
+
+               // features.Context.Load(features);
+               // features.Context.ExecuteQueryRetry();
+
+               //// Block until the feature is activated - otherwise we will have problems with any dependent features e.g. publishing web
+               // while (_site.IsFeatureActive(featureToActivate) == false)
+               // {
+               //     Log.Debug(LogSource, "Feature " + featureToActivate + " is still activating - pausing for 5 seconds");
+               //     Thread.Sleep(5000);
+               // }
             }
         }
 

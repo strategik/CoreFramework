@@ -36,6 +36,7 @@ namespace Strategik.CoreFramework.Tests
     public static class STKTestConstants
     {
         public const String CoreFramework_Helpers = "CoreFramework.Helpers";
+        public const String CoreFramework_Helpers_TenantHelper = "CoreFramework.Helpers.TenantHelper";
         public const String TestNotImplemented = "Unit Test not implemented";
     }
 }

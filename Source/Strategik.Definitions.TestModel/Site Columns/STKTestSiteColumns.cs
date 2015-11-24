@@ -186,7 +186,7 @@ namespace Strategik.Definitions.TestModel.SiteColumns
             siteColumns.Add(TextSiteColumn());
             siteColumns.Add(RichTextSiteColumn());
             siteColumns.Add(UserSiteColumn());
-            siteColumns.Add(TaxonomySiteColumn());
+           // siteColumns.Add(TaxonomySiteColumn());
 
             return siteColumns;
         }

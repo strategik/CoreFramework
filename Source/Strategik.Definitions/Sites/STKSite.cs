@@ -68,9 +68,9 @@ namespace Strategik.Definitions.Sites
 
         public List<Guid> SiteFeaturesToDeactivate { get; set; }
 
-        public List<Guid> RootWebFeaturesToActivate { get; set; }
+   //     public List<Guid> RootWebFeaturesToActivate { get; set; }
 
-        public List<Guid> RootWebFeaturesToDeactivate { get; set; }
+   //     public List<Guid> RootWebFeaturesToDeactivate { get; set; }
 
         public bool IsEmbedded { get; set; }
         public List<STKSite> EmbeddedSites { get; set; }
@@ -88,8 +88,8 @@ namespace Strategik.Definitions.Sites
             SandboxSolutions = new List<STKSandboxSolution>();
             SiteFeaturesToActivate = new List<Guid>();
             SiteFeaturesToDeactivate = new List<Guid>();
-            RootWebFeaturesToActivate = new List<Guid>();
-            RootWebFeaturesToDeactivate = new List<Guid>();
+        //    RootWebFeaturesToActivate = new List<Guid>();
+        //    RootWebFeaturesToDeactivate = new List<Guid>();
             EmbeddedSites = new List<STKSite>();
         }
 

@@ -48,6 +48,7 @@ namespace Strategik.CoreFramework.Tests.Infrastructure
             // Read configuration data
             TenantUrl = ConfigurationManager.AppSettings["SPOTenantUrl"];
             DevSiteUrl = ConfigurationManager.AppSettings["SPODevSiteUrl"];
+            oPassword = ConfigurationManager.AppSettings["SPOPassword"];
 
 
             if (string.IsNullOrEmpty(TenantUrl) || string.IsNullOrEmpty(DevSiteUrl))
@@ -98,6 +99,9 @@ namespace Strategik.CoreFramework.Tests.Infrastructure
         public static string DevSiteUrl { get; set; }
         public static String SharePointUrl { get; set; }
         public static string UserName { get; set; }
+
+        public static String oPassword { get; set; }
+
         static SecureString Password { get; set; }
         public static ICredentials Credentials { get; set; }
         static string Realm { get; set; }

@@ -26,9 +26,9 @@
 #endregion License
 
 using Microsoft.SharePoint.Client;
+using OfficeDevPnP.Core.Diagnostics;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
-using OfficeDevPnP.Core.Utilities;
 using Strategik.Definitions.Configuration;
 using Strategik.Definitions.ContentTypes;
 using Strategik.Definitions.Features;
@@ -57,12 +57,13 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
     /// </remarks>
     public class STKPnPHelper
     {
+     
         #region Data
 
         protected ClientContext _clientContext;
         protected Web _web;
         protected Site _site;
-
+        
         #endregion Data
 
         #region Constructor
@@ -80,7 +81,7 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
             _web = _clientContext.Web;
             _site = _clientContext.Site;
 
-            Log.Info(STKConstants.LOGGING_SOURCE, "Initialised helper {0}. Target web is {1} located at {2}", this.GetType().Name, _web.Title, _web.Url);
+            Log.Info(STKConstants.LOGGING_SOURCE, "Initialised PnP helper {0}. Target web is {1} located at {2}", this.GetType().Name, _web.Title, _web.Url);
         }
 
         #endregion Constructor
@@ -133,6 +134,8 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
             if (field == null) throw new ArgumentNullException("field");
             if (config == null) config = new STKProvisioningConfiguration();
 
+            Log.Info(STKConstants.LOGGING_SOURCE, "Provisioning {0} field {1}", field.GetType().Name, field.Name);
+
             // Check we have a valid definition 
             field.Validate();
 
@@ -148,7 +151,6 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
 
             template.SiteFields.Add(field.GeneratePnPTemplate());
 
-            
             _web.ApplyProvisioningTemplate(template);
             
 

@@ -196,12 +196,11 @@ namespace Strategik.CoreFramework.Helpers
         public bool SiteExists(STKSite site) 
         {
             bool exists = false;
-
             String fullUrl = _sharePointUrl + site.TenantRelativeURL;
-            String status = "Active";
+           
             try
             {
-                exists = (_tenant.CheckIfSiteExists(fullUrl, status)) ? true : false;
+                exists = (_tenant.SiteExists(fullUrl)) ? true : false;
 
                 if(! exists)
                 {
@@ -306,6 +305,8 @@ namespace Strategik.CoreFramework.Helpers
             {
                 _tenant.DeleteSiteCollection(fullUrl, useRecycleBin);
             }
+
+
         }
 
         #endregion
