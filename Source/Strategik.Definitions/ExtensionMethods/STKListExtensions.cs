@@ -102,9 +102,9 @@ namespace Strategik.Definitions.Lists
             return (!String.IsNullOrEmpty(list.DisplayName));
         }
 
-        public static bool HasEventHandlers(this STKList list)
+        public static bool HasEventReceivers(this STKList list)
         {
-            return list.EventHandlers.Count > 0;
+            return list.EventReceivers.Count > 0;
         }
 
         public static bool HasFolders(this STKList list)

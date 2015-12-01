@@ -24,7 +24,7 @@
 
 using Strategik.Definitions.Base;
 using Strategik.Definitions.ContentTypes;
-using Strategik.Definitions.EventHandlers;
+using Strategik.Definitions.Events;
 using Strategik.Definitions.Fields;
 using Strategik.Definitions.Security;
 using Strategik.Definitions.Workflows;
@@ -87,7 +87,7 @@ namespace Strategik.Definitions.Lists
         public bool EnableMinorVersions { get; set; }
         public bool EnableModeration { get; set; }
         public bool EnableVersioning { get; set; }
-        public List<STKListItemEventHandler> EventHandlers { get; set; }
+        public List<STKListItemEventReceiver> EventReceivers { get; set; }
         public List<STKField> Fields { get; set; }
         public List<STKFieldLink> FieldLinks { get; set; }
         public List<STKFolder> Folders { get; set; }
@@ -129,7 +129,7 @@ namespace Strategik.Definitions.Lists
             FieldLinks = new List<STKFieldLink>();
             SiteColumns = new List<STKField>();
             Views = new List<STKListView>();
-            EventHandlers = new List<STKListItemEventHandler>();
+            EventReceivers = new List<STKListItemEventReceiver>();
             Workflows = new List<STKWorkflow>();
             OnQuickLaunch = true;
             EnableVersioning = false;

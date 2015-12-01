@@ -31,6 +31,8 @@ using System.Collections.Generic;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik;
 using Strategik.Definitions.Fields;
 using OfficeDevPnP.Core.Diagnostics;
+using Strategik.Definitions.Events;
+using Microsoft.SharePoint.Client.EventReceivers;
 
 namespace Strategik.CoreFramework.Helpers
 {
@@ -72,12 +74,36 @@ namespace Strategik.CoreFramework.Helpers
 
             // Apply the display name fix if required
             FixUpDisplayName(list);
-           
+
+            // Register any remote event receivers defined for the current list
+            if(list.HasEventReceivers()) RegisterRemoteEventReceivers(list, config);
+
+
             // Add any data defined in the template (experimental)
             //if(list.Items.Count > 0)
             //{
             //    AddListData(list, list.Items);
             //}        
+        }
+
+        public void RegisterRemoteEventReceivers(STKList list, STKProvisioningConfiguration config)
+        {
+            // Note - remote event receivers registered in this way are called with no context token
+            if (_clientContext.Web.ListExists(list.Title))
+            {
+                List targetList = _clientContext.Web.GetListByTitle(list.Title);
+
+                foreach (STKListItemEventReceiver receiver in list.EventReceivers)
+                {
+                    EventReceiverSynchronization sync = (receiver.Synchronous) ? EventReceiverSynchronization.Synchronous : EventReceiverSynchronization.Asynchronous;
+
+                    foreach (STKEventReceiverType eventReceiverType in receiver.EventReceiverTypes)
+                    {
+                        EventReceiverType csomReceiverType = (EventReceiverType) Enum.Parse(typeof(EventReceiverType), eventReceiverType.ToString()); 
+                        targetList.AddRemoteEventReceiver(receiver.Name, receiver.Url, csomReceiverType, sync, true);
+                    }
+                }
+            }  
         }
 
         public void AddListData(STKList list, List<STKListItem> data)

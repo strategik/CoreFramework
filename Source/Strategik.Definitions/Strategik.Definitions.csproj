@@ -117,10 +117,11 @@
     <Compile Include="ContentTypes\STKDocumentLink.cs" />
     <Compile Include="Data\STKData.cs" />
     <Compile Include="Data\STKDataItem.cs" />
-    <Compile Include="EventHandlers\STKEventReceiverType.cs" />
-    <Compile Include="EventHandlers\STKListItemEventHandler.cs" />
-    <Compile Include="EventHandlers\STKListEventHandler.cs" />
-    <Compile Include="EventHandlers\STKSharePointEventHandler.cs" />
+    <Compile Include="Events\STKEventReceiverSynchronisation.cs" />
+    <Compile Include="Events\STKEventReceiverType.cs" />
+    <Compile Include="Events\STKListItemEventReceiver.cs" />
+    <Compile Include="Events\STKListEventReceiver.cs" />
+    <Compile Include="Events\STKRemoteEventReceiver.cs" />
     <Compile Include="ExtensionMethods\STKContentTypeExtensions.cs" />
     <Compile Include="ExtensionMethods\STKFieldExtensions.cs" />
     <Compile Include="ExtensionMethods\STKListExtensions.cs" />

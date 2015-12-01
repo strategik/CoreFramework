@@ -22,9 +22,35 @@
 
 #endregion License
 
-namespace Strategik.Definitions.EventHandlers
+using Strategik.Definitions.ContentTypes;
+using Strategik.Definitions.Lists;
+using Strategik.Definitions.Shared;
+using System;
+using System.Collections.Generic;
+
+namespace Strategik.Definitions.Events
 {
-    public class STKListEventHandler : STKSharePointEventHandler
+    public class STKListItemEventReceiver : STKRemoteEventReceiver
     {
+        public int ListId { get; set; }
+
+        public string ListName { get; set; }
+
+        public STKList TargetList { get; set; }
+
+        public List<String> ListNames { get; set; }
+
+        public STKContentType ContentType { get; set; }
+
+        public bool AllEvents { get; set; }
+
+
+        public STKListItemEventReceiver()
+        {
+            AllEvents = true;
+            // EventReceiverTypes = new List<SPEventReceiverType>();
+            ListNames = new List<string>();
+        }
+
     }
 }

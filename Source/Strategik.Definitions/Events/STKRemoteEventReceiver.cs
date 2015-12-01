@@ -22,14 +22,24 @@
 
 #endregion License
 
+using System;
 using Strategik.Definitions.Base;
+using System.Collections.Generic;
 
-namespace Strategik.Definitions.EventHandlers
+namespace Strategik.Definitions.Events
 {
     /// <summary>
-    /// Defined an event handler to be provisioned into sharepoint
+    /// Defines a remote event receiver to be provisioned to Office 365
     /// </summary>
-    public class STKSharePointEventHandler : STKDefinitionBase
+    public class STKRemoteEventReceiver : STKDefinitionBase
     {
+        public String Url { get; set; }
+        public List<STKEventReceiverType> EventReceiverTypes { get; set; }
+        public bool Synchronous { get; set; }
+
+        public STKRemoteEventReceiver()
+        {
+            EventReceiverTypes = new List<STKEventReceiverType>();
+        }
     }
 }
