@@ -36,7 +36,7 @@ namespace Strategik.Definitions.Solutions
     /// Defines a Strategik solution
     /// </summary>
     /// <remarks>
-    /// Solutions are deployed to Office 365 or SharePoint 2013 using the Core Framework.
+    /// Solutions are deployed to Office 365 using the Core Framework.
     /// 
     /// Solutions may have other solutions (aka dependencies) embedded within them. 
     /// Embedded solutions are always applied (in order) first.

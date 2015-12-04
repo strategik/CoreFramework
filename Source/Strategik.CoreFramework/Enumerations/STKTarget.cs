@@ -8,8 +8,6 @@ namespace Strategik.CoreFramework.Enumerations
 {
     public enum STKTarget
     {
-        Office_365,
-        SharePoint_2013,
-        SharePoint_2016
+        Office_365
     }
 }

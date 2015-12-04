@@ -33,7 +33,6 @@ namespace Strategik.CoreFramework.Helpers
 {
     public class STKFieldHelper: STKHelperBase
     {
-
         #region Constructor
 
         public STKFieldHelper(ClientContext clientContext)

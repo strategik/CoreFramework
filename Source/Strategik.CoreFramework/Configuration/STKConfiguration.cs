@@ -28,13 +28,11 @@ using System.Security;
 namespace Strategik.CoreFramework.Configuration
 {
     /// <summary>
-    /// Holds Office 365 or SP2013 configuration data
+    /// Holds Office 365 Configuration data
     /// </summary>
     public class STConfiguration
     {
         public bool O365 { get; set; }
-
-        public bool SP2013 { get; set; }
 
         public String Username { get; set; }
 

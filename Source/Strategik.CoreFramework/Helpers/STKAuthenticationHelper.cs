@@ -41,7 +41,7 @@ namespace Strategik.CoreFramework.Helpers
     /// </summary>
     /// <remarks>
     /// Provides a Client context for Office 365, OnPremise, App only and so on depending on how we 
-    /// configure it. Based on the code found in ther Unit test classes in the Office PnP
+    /// configure it. Based on the code found in the Unit test classes in the Office PnP
     /// </remarks>
     public class STKAuthenticationHelper
     {
@@ -185,9 +185,6 @@ namespace Strategik.CoreFramework.Helpers
                         context.Credentials = credentials;
                         break;
                     }
-
-                case STKAuthenticationMode.OnPremiseCredentials:
-                break;
                 
                 default:
                 break;

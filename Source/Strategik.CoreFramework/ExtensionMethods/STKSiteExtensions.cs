@@ -1,4 +1,4 @@
-﻿#region License
+﻿ #region License
 
 //
 // Copyright (c) 2015 Strategik Pty Ltd,

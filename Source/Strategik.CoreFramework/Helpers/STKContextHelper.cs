@@ -44,7 +44,6 @@ namespace Strategik.CoreFramework.Helpers
                 {
                     _devConfig = new STConfiguration()
                     {
-                        SP2013 = false,
                         O365 = true,
                         Username = "",
                         Password = "",

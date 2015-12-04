@@ -208,7 +208,6 @@
     <Compile Include="Helpers\STKWebHelper.cs" />
     <Compile Include="Helpers\STKWorkflowHelper.cs" />
     <Compile Include="STKConstants.cs" />
-    <Compile Include="ExtensionMethods\STKSiteColumnExtensions.cs" />
     <Compile Include="ExtensionMethods\STKStringExtensions.cs" />
     <Compile Include="ExtensionMethods\STKTaxonomyExtensions.cs" />
     <Compile Include="Helpers\STKContentTypeHelper.cs" />

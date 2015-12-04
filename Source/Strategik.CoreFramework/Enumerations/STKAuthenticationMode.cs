@@ -10,7 +10,6 @@ namespace Strategik.CoreFramework.Enumerations
     {
         AppOnly,
         ClientAuthFlow,
-        OnlineCredentials,
-        OnPremiseCredentials
+        OnlineCredentials
     }
 }

@@ -61,16 +61,6 @@ namespace Strategik.CoreFramework.Helpers
 
         #region Methods
 
-        public virtual void InstallSolution(String adminUrl, String sharePointURL, String userName, String password)
-        {
-
-#if v16
-            STKTenantHelper helper = new STKTenantHelper(adminUrl, sharePointURL, userName, password);
-            helper.Provision(_solution);
-#endif
-
-        }
-
         public virtual void UninstallSolution()
         {
             //TODO:

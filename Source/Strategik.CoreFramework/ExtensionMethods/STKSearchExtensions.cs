@@ -30,6 +30,12 @@ namespace Microsoft.SharePoint.Client
 {
     public static partial class STKSearchExtensions
     {
+        /// <summary>
+        /// Export the search settings from the current context
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="searchSettingsExportLevel"></param>
+        /// <returns></returns>
         public static String ExportSearchSettingsXML(this ClientContext context, SearchObjectLevel searchSettingsExportLevel)
         {
             String searchSettingsXML = String.Empty;
