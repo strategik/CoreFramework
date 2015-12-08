@@ -53,8 +53,8 @@ namespace Strategik.Definitions.Sites
 
         //   public List<STKSubWeb> SubWebs { get; set; }
         public List<STKSandboxSolution> SandboxSolutions { get; set; }
-
         public String TenantRelativeURL { get; set; }
+        public String FullUrl { get; set; }
 
         public uint Lcid { get; set; }
 

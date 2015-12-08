@@ -127,20 +127,22 @@ namespace Strategik.CoreFramework.Helpers
             site.Validate();
 
             String fullUrl = _sharePointUrl + site.TenantRelativeURL;
-
             Log.Info(LogSource, "Creating site {0} at URL {1}", site.Name, fullUrl);
 
             // Check if this site already exists in the tenant
             if (SiteExists(site))
             {
+
                 if(config.DeleteExistingSites)
                 {
+                    Log.Debug(LogSource, "Site {0} will be deleted", site.Name);
                     DeleteSite(site, false); // bye bye data !
                     provisionSite = true; // we will need to recreate it
                 }
             }
             else
             {
+                Log.Debug(LogSource, "Site {0} does not exist, it will be created", site.Name);
                 provisionSite = true; // It doesnt exist to create it
             }
            
@@ -163,19 +165,20 @@ namespace Strategik.CoreFramework.Helpers
 
                 Guid siteId = _tenant.CreateSiteCollection(siteEntity, true, true);
                 site.UniqueId = siteId;
+                site.FullUrl = fullUrl;
             }
 
             AfterCreateSite(site, config);
 
             // Update the site with our definition (if we have one)
-            if (config.EnsureSite && site.RootWeb != null)
-            {
-                Log.Debug(LogSource, "Applying root web configuration");
+            //if (config.EnsureSite && site.RootWeb != null)
+            //{
+            //    Log.Debug(LogSource, "Applying root web configuration");
 
-                ClientContext context = _authHelper.GetClientContext(fullUrl);
-                STKSiteHelper siteHelper = GetSiteHelper(context);
-                siteHelper.EnsureSite(site, config);
-            }
+            //    ClientContext context = _authHelper.GetClientContext(fullUrl);
+            //    STKSiteHelper siteHelper = GetSiteHelper(context);
+            //    siteHelper.EnsureSite(site, config);
+            //}
             
         }
 
