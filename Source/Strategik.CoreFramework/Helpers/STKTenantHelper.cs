@@ -165,6 +165,8 @@ namespace Strategik.CoreFramework.Helpers
                 site.UniqueId = siteId;
             }
 
+            AfterCreateSite(site, config);
+
             // Update the site with our definition (if we have one)
             if (config.EnsureSite && site.RootWeb != null)
             {
@@ -174,8 +176,7 @@ namespace Strategik.CoreFramework.Helpers
                 STKSiteHelper siteHelper = GetSiteHelper(context);
                 siteHelper.EnsureSite(site, config);
             }
-
-            AfterCreateSite(site, config);
+            
         }
 
         protected virtual STKSiteHelper GetSiteHelper(ClientContext context)
