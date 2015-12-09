@@ -38,6 +38,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using OfficeDevPnP.Core.Diagnostics;
+using System.Threading;
 
 namespace Strategik.CoreFramework.Helpers
 {
@@ -324,6 +325,15 @@ namespace Strategik.CoreFramework.Helpers
             {
                 _tenant.DeleteSiteCollection(fullUrl, useRecycleBin);
                 Log.Debug("Site {0} deleted", fullUrl);
+
+                try //pnp code may note address sites in recycle bin propery 
+                {
+                    _tenant.DeleteSiteCollectionFromRecycleBin(fullUrl, true);
+                }
+                catch { }
+
+                // We seem to get issues if we move on too quickly here so add a small delay
+                Thread.Sleep(10000); // take a break for 10 seconds - Give sharePoint a chance to catch up
             }
             else
             {
