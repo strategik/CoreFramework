@@ -107,7 +107,7 @@ namespace Strategik.CoreFramework.Helpers
             // Recursively provision subwebs
             foreach (STKWeb subWeb in web.SubWebs) 
             {
-                Log.Debug("Found subweb {0}, attemptng to provision", subWeb.Name);
+                Log.Debug(LogSource, "Found subweb {0}, attemptng to provision", subWeb.Name);
                 ProvisionSubWeb(subWeb, config);
             }
 
@@ -155,7 +155,7 @@ namespace Strategik.CoreFramework.Helpers
             }
             else
             {
-                Log.Debug("Subweb {0} already exists, skipping provisioning", subWeb.Name);
+                Log.Debug(LogSource,"Subweb {0} already exists, skipping provisioning", subWeb.Name);
             }
 
             ClientContext childContext = new ClientContext(spSubWeb.Url);

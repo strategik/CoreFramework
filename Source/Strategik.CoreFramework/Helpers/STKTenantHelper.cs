@@ -218,7 +218,7 @@ namespace Strategik.CoreFramework.Helpers
         {
             bool exists = false;
             String fullUrl = _sharePointUrl + site.TenantRelativeURL;
-            Log.Debug("Checking if site {0} exists", fullUrl);
+            Log.Debug(LogSource, "Checking if site {0} exists", fullUrl);
 
             try
             {
@@ -319,12 +319,12 @@ namespace Strategik.CoreFramework.Helpers
         {
             
             String fullUrl = _sharePointUrl + site.TenantRelativeURL;
-            Log.Debug("Preparing to delete site {0}, use recycle bin is set to {1} ", fullUrl, useRecycleBin);
+            Log.Debug(LogSource, "Preparing to delete site {0}, use recycle bin is set to {1} ", fullUrl, useRecycleBin);
 
             if (SiteExists(site))
             {
                 _tenant.DeleteSiteCollection(fullUrl, useRecycleBin);
-                Log.Debug("Site {0} deleted", fullUrl);
+                Log.Debug(LogSource, "Site {0} deleted", fullUrl);
 
                 try //pnp code may note address sites in recycle bin propery 
                 {
@@ -337,7 +337,7 @@ namespace Strategik.CoreFramework.Helpers
             }
             else
             {
-                Log.Debug("Site {0} does not exist, delete site skipped", fullUrl);
+                Log.Debug(LogSource, "Site {0} does not exist, delete site skipped", fullUrl);
             }
         }
 
