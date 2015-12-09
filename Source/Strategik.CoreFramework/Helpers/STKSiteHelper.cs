@@ -39,10 +39,14 @@ namespace Strategik.CoreFramework.Helpers
     /// </summary>
     public class STKSiteHelper : STKHelperBase
     {
-        private const String LogSource = "STKSiteHelper";
+        private const String LogSource = "CoreFramework.STKSiteHelper";
 
         #region Constructors
 
+        /// <summary>
+        /// Constructs the helper
+        /// </summary>
+        /// <param name="context">The context for the site collection to work against</param>
         public STKSiteHelper(ClientContext context)
             : base(context)
         { }
@@ -67,14 +71,18 @@ namespace Strategik.CoreFramework.Helpers
         /// artefacts, create an sub sites required and so on. 
         /// Applies insert semantics - its something is not present it is added, nothing is 
         /// deleted or overwriten.
+        /// 
+        /// The site must already exist. To create a site use the tenant helper class
         /// </remarks>
         /// <param name="site"></param>
         public void EnsureSite(STKSite site, STKProvisioningConfiguration config)
         {
-            Log.Debug(LogSource, "Start Ensure Site");
-
+            
             if (site == null) throw new ArgumentNullException("site");
             if (config == null) config = new STKProvisioningConfiguration();
+
+            site.Validate();
+            Log.Debug(LogSource, "Starting EnsureSite() with site {0}", site.Name);
 
             BeforeEnsureSite(site, config);
 
@@ -85,13 +93,14 @@ namespace Strategik.CoreFramework.Helpers
             // Provision the root web (and then down to subWebs)
             if (site.RootWeb != null)
             {
+                Log.Debug(LogSource, "Root Web detected, attempting to ensure root web features");
                 STKWebHelper webHelper = GetWebHelper(_clientContext);
                 webHelper.EnsureWeb(site.RootWeb, config);
             }
 
             AfterEnsureSite(site, config);
 
-            Log.Debug(LogSource, "End EnsureSite");
+            Log.Debug(LogSource, "EnsureSite() complete");
         }
 
         public void EnsureSite(STKSite site) 
@@ -160,9 +169,39 @@ namespace Strategik.CoreFramework.Helpers
             // Deactivate and site scoped features requested
             foreach (Guid featureToActivate in siteFeaturesToActivate)
             {
-                Log.Debug(LogSource, "Activating site feature " + featureToActivate);
-                 _site.ActivateFeature(featureToActivate); 
+                try
+                {
 
+                    Log.Debug(LogSource, "Activating site feature " + featureToActivate);
+                    _site.ActivateFeature(featureToActivate);
+                }
+                catch (Exception e)
+                {
+                    Log.Debug(LogSource, "Unexpected error activating site feature " + featureToActivate + " error message is " + e.Message);
+                    int retryCount = 0;
+                    while (retryCount < 3)
+                    { // an ugly hack
+                      //
+                      // We seem to get timeouts here on the publishing feature especiallly
+                      // Wait a while them try again - think the feature is activating in the
+                      // background
+                      //
+                        Thread.Sleep(10000);
+                        retryCount++;
+
+                        try
+                        {
+                            Log.Debug(LogSource, "Activating site feature " + featureToActivate + " retry count is " + retryCount);
+                            _site.ActivateFeature(featureToActivate);
+                            break; // we have success
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Debug(LogSource, "Unexpected error activating site feature " + featureToActivate + " error message is " + e.Message + " retry count is " + retryCount);
+                            if (retryCount == 3) throw ex; // Give up
+                        }
+                    }
+                }
                // FeatureCollection features = _site.Features;
                // features.Context.Load(features);
                // features.Context.ExecuteQueryRetry();

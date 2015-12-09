@@ -40,7 +40,7 @@ namespace Strategik.CoreFramework.Helpers
     /// </summary>
     public class STKWebHelper : STKHelperBase
     {
-        private const String LogSource = "STKWebHelper";
+        private const String LogSource = "CoreFramework.STKWebHelper";
 
         #region Constructor
 
@@ -65,20 +65,23 @@ namespace Strategik.CoreFramework.Helpers
         {
             if (web == null) throw new ArgumentNullException("web");
             if (config == null) config = new STKProvisioningConfiguration();
+            web.Validate();
+
+            Log.Debug(LogSource, "Starting EnsureWeb() for web {0}", web.Name);
 
             BeforeEnsureWeb(web, config);
 
             // Deactivate web features - Should be in an helper
             foreach (Guid featureId in web.FeaturesToDeactivate)
             {
-                Log.Info(LogSource, "Deactivating web feature {0}", featureId);
+                Log.Debug(LogSource, "Deactivating web feature {0}", featureId);
                 _web.DeactivateFeature(featureId);
             }
 
             // Activate web features
             foreach (Guid featureId in web.FeaturesToActivate)
             {
-                Log.Info(LogSource, "Activating web feature {0}", featureId);
+                Log.Debug(LogSource, "Activating web feature {0}", featureId);
                 _web.ActivateFeature(featureId);
             }
 
@@ -104,10 +107,12 @@ namespace Strategik.CoreFramework.Helpers
             // Recursively provision subwebs
             foreach (STKWeb subWeb in web.SubWebs) 
             {
+                Log.Debug("Found subweb {0}, attemptng to provision", subWeb.Name);
                 ProvisionSubWeb(subWeb, config);
             }
 
             AfterEnsureWeb(web, config);
+            Log.Debug(LogSource, "EnsureWeb() complete for web {0}", web.Name);
         }
 
         protected virtual void AfterEnsureWeb(STKWeb web, STKProvisioningConfiguration config) { }
@@ -116,7 +121,7 @@ namespace Strategik.CoreFramework.Helpers
 
         protected void ProvisionSubWeb(STKWeb subWeb, STKProvisioningConfiguration config) 
         {
-            Log.Info(LogSource, "Provisioning subweb {0}", subWeb.Name);
+            Log.Debug(LogSource, "Provisioning subweb {0}", subWeb.Name);
 
             BeforeProvisionSubWeb(subWeb, config);
 
@@ -137,11 +142,20 @@ namespace Strategik.CoreFramework.Helpers
                     WebTemplate = subWeb.template
                 };
 
+                Log.Debug(LogSource, "Subweb {0} does not exist, attempting to create with title = {1}, Description = {2}, Language = {3}, Url = {4}, UseSamePermissionsAsParentSite = {5}, WebTemplate = {6}",
+                                              subWeb.Name, subWeb.Title, subWeb.Description, subWeb.Language, subWeb.LeafUrl, subWeb.UseSamePermissionsAsParent, subWeb.template);
+
                 _clientContext.Web.Webs.Add(wci);
                 _clientContext.ExecuteQueryRetry();
 
-                spSubWeb = _clientContext.Web.GetWeb(subWeb.LeafUrl);
+                spSubWeb = _clientContext.Web.GetWeb(subWeb.LeafUrl); // why do we do this??
                 _clientContext.ExecuteQueryRetry();
+
+                Log.Debug(LogSource, "Subweb {0} created succeffully", spSubWeb.Url);
+            }
+            else
+            {
+                Log.Debug("Subweb {0} already exists, skipping provisioning", subWeb.Name);
             }
 
             ClientContext childContext = new ClientContext(spSubWeb.Url);

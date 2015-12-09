@@ -57,8 +57,10 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
     /// </remarks>
     public class STKPnPHelper
     {
-     
+
         #region Data
+
+        private const String LogSource = "CoreFramework.PnPHelper";
 
         protected ClientContext _clientContext;
         protected Web _web;
@@ -81,7 +83,7 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
             _web = _clientContext.Web;
             _site = _clientContext.Site;
 
-            Log.Info(STKConstants.LOGGING_SOURCE, "Initialised PnP helper {0}. Target web is {1} located at {2}", this.GetType().Name, _web.Title, _web.Url);
+            Log.Debug(LogSource, "Initialised PnP helper {0}. Target web is {1} located at {2}", this.GetType().Name, _web.Title, _web.Url);
         }
 
         #endregion Constructor
@@ -99,9 +101,13 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
         /// <param name="taxonomy">The definition of the taxonomy</param>
         public void Provision(STKTaxonomy taxonomy, STKProvisioningConfiguration config = null)
         {
+            Log.Debug(LogSource, "Starting provisioning for taxonomy {0}", taxonomy.UniqueId);
+
             ProvisioningTemplate template = new ProvisioningTemplate();
             template.TermGroups.AddRange(taxonomy.GeneratePnPTemplates());
             _web.ApplyProvisioningTemplate(template);
+
+            Log.Debug(LogSource, "Provisioning for taxonomy {0} complete", taxonomy.UniqueId);
         }
 
         #endregion
@@ -134,7 +140,7 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
             if (field == null) throw new ArgumentNullException("field");
             if (config == null) config = new STKProvisioningConfiguration();
 
-            Log.Info(STKConstants.LOGGING_SOURCE, "Provisioning {0} field {1}", field.GetType().Name, field.Name);
+            Log.Debug(LogSource, "Starting Provisioning {0} field {1}", field.GetType().Name, field.Name);
 
             // Check we have a valid definition 
             field.Validate();
@@ -171,6 +177,8 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
                     // oops
                 }
             }
+
+            Log.Debug(LogSource, "Provisioning {0} field {1} complete", field.GetType().Name, field.Name);
         }
 
         #endregion
@@ -212,6 +220,8 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
             // Check we have a valid definition
             contentType.Validate();
 
+            Log.Debug(LogSource, "Starting provisioning for content type {0}", contentType.Name);
+
             // Provision any new site columns defined in the content type
             Provision(contentType.SiteColumns);
 
@@ -221,6 +231,8 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
 
             // Provision the content type
             _web.ApplyProvisioningTemplate(template);
+
+            Log.Debug(LogSource, "Provisioning of content type {0} compelete", contentType.Name);
         }
 
         #endregion
@@ -238,6 +250,8 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
 
             // Check we have a valid definition
             list.Validate();
+
+            Log.Debug(LogSource, "Starting provisioning for list {0}", list.Name);
 
             // Check if this list already exists and adjust accordingly
             if (_web.ListExists(list.Title))
@@ -275,6 +289,8 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
 
             // Provision the list
             _web.ApplyProvisioningTemplate(template, info);
+
+            Log.Debug(LogSource, "Provisioning for list {0} complete", list.Name);
         }
 
         public void Provision(List<STKList> lists, STKProvisioningConfiguration config = null) 

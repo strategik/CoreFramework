@@ -51,7 +51,7 @@ namespace Strategik.CoreFramework.Helpers
     /// </remarks>
     public class STKTenantHelper
     {
-        private const String LogSource = "STKTenantHelper";
+        private const String LogSource = "CoreFramework.STKTenantHelper";
 
         #region Data
 
@@ -132,8 +132,9 @@ namespace Strategik.CoreFramework.Helpers
             // Check if this site already exists in the tenant
             if (SiteExists(site))
             {
+                Log.Debug(LogSource, "Site {0} already exists", site.Name);
 
-                if(config.DeleteExistingSites)
+                if (config.DeleteExistingSites)
                 {
                     Log.Debug(LogSource, "Site {0} will be deleted", site.Name);
                     DeleteSite(site, false); // bye bye data !
@@ -149,8 +150,6 @@ namespace Strategik.CoreFramework.Helpers
             // Provision the site
             if (provisionSite) 
             {
-                Log.Debug(LogSource, "Creating new site");
-
                 // The site does not exist so create it
                 SiteEntity siteEntity = new SiteEntity()
                 {
@@ -163,13 +162,19 @@ namespace Strategik.CoreFramework.Helpers
                     Url = fullUrl
                 };
 
+                Log.Debug(LogSource, "Provisioning new site. Title = {0}, Description = {1}, Lcid = {2}, SiteOwner = {3}, Template = {4}, TimeZone = {5}, URL = {6}",
+                          siteEntity.Title, siteEntity.Description, siteEntity.Lcid, siteEntity.SiteOwnerLogin, siteEntity.Template, siteEntity.TimeZoneId, siteEntity.Url);
+
                 Guid siteId = _tenant.CreateSiteCollection(siteEntity, true, true);
                 site.UniqueId = siteId;
                 site.FullUrl = fullUrl;
+
+                Log.Debug(LogSource, "Site {0} created successfully, site id is {1}", fullUrl, siteId);
             }
 
             AfterCreateSite(site, config);
 
+            // We cannot continue automatically as our context might not be valid
             // Update the site with our definition (if we have one)
             //if (config.EnsureSite && site.RootWeb != null)
             //{
@@ -212,19 +217,16 @@ namespace Strategik.CoreFramework.Helpers
         {
             bool exists = false;
             String fullUrl = _sharePointUrl + site.TenantRelativeURL;
-           
+            Log.Debug("Checking if site {0} exists", fullUrl);
+
             try
             {
                 exists = (_tenant.SiteExists(fullUrl)) ? true : false;
-
-                if(! exists)
-                {
-                    // TODO: Check other status
-                }
             }
             catch
             {
                 exists = false;
+                Log.Warning("The site exists check for site {0} thrw an exception, the returned result (false) may be unreliable", fullUrl);
             }
 
             return exists;
@@ -314,14 +316,19 @@ namespace Strategik.CoreFramework.Helpers
 
         public void DeleteSite(STKSite site, bool useRecycleBin)
         {
+            
             String fullUrl = _sharePointUrl + site.TenantRelativeURL;
+            Log.Debug("Preparing to delete site {0}, use recycle bin is set to {1} ", fullUrl, useRecycleBin);
 
             if (SiteExists(site))
             {
                 _tenant.DeleteSiteCollection(fullUrl, useRecycleBin);
+                Log.Debug("Site {0} deleted", fullUrl);
             }
-
-
+            else
+            {
+                Log.Debug("Site {0} does not exist, delete site skipped", fullUrl);
+            }
         }
 
         #endregion

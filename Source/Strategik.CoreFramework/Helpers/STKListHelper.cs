@@ -38,7 +38,7 @@ namespace Strategik.CoreFramework.Helpers
 {
     public class STKListHelper : STKHelperBase
     {
-        private const String LogSource = "STKListHelper";
+        private const String LogSource = "CoreFramework.STKListHelper";
 
         #region Constructor
 
@@ -65,10 +65,9 @@ namespace Strategik.CoreFramework.Helpers
         {
             if (list == null) throw new ArgumentNullException("list"); 
             if (config == null) config = new STKProvisioningConfiguration();
-         
             list.Validate();
 
-            Log.Info("Provisioning list {0}", list.Name);
+            Log.Debug(LogSource, "Starting EnsureList() for list {0}", list.Name);
             STKPnPHelper pnpHelper = new STKPnPHelper(_clientContext);
             pnpHelper.Provision(list, config);
 
@@ -83,27 +82,32 @@ namespace Strategik.CoreFramework.Helpers
             //if(list.Items.Count > 0)
             //{
             //    AddListData(list, list.Items);
-            //}        
+            //}
+
+            Log.Debug(LogSource, "EnsureList for List {0} complete", list.Name);        
         }
 
         public void RegisterRemoteEventReceivers(STKList list, STKProvisioningConfiguration config)
         {
-            // Note - remote event receivers registered in this way are called with no context token
-            if (_clientContext.Web.ListExists(list.Title))
+            if (list.HasEventReceivers())
             {
-                List targetList = _clientContext.Web.GetListByTitle(list.Title);
-
-                foreach (STKListItemEventReceiver receiver in list.EventReceivers)
+                // Note - remote event receivers registered in this way are called with no context token
+                if (_clientContext.Web.ListExists(list.Title))
                 {
-                    EventReceiverSynchronization sync = (receiver.Synchronous) ? EventReceiverSynchronization.Synchronous : EventReceiverSynchronization.Asynchronous;
+                    List targetList = _clientContext.Web.GetListByTitle(list.Title);
 
-                    foreach (STKEventReceiverType eventReceiverType in receiver.EventReceiverTypes)
+                    foreach (STKListItemEventReceiver receiver in list.EventReceivers)
                     {
-                        EventReceiverType csomReceiverType = (EventReceiverType) Enum.Parse(typeof(EventReceiverType), eventReceiverType.ToString()); 
-                        targetList.AddRemoteEventReceiver(receiver.Name, receiver.Url, csomReceiverType, sync, true);
+                        EventReceiverSynchronization sync = (receiver.Synchronous) ? EventReceiverSynchronization.Synchronous : EventReceiverSynchronization.Asynchronous;
+
+                        foreach (STKEventReceiverType eventReceiverType in receiver.EventReceiverTypes)
+                        {
+                            EventReceiverType csomReceiverType = (EventReceiverType)Enum.Parse(typeof(EventReceiverType), eventReceiverType.ToString());
+                            targetList.AddRemoteEventReceiver(receiver.Name, receiver.Url, csomReceiverType, sync, true);
+                        }
                     }
                 }
-            }  
+            }
         }
 
         public void AddListData(STKList list, List<STKListItem> data)
