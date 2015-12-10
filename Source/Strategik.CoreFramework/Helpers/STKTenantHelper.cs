@@ -166,7 +166,17 @@ namespace Strategik.CoreFramework.Helpers
                 Log.Debug(LogSource, "Provisioning new site. Title = {0}, Description = {1}, Lcid = {2}, SiteOwner = {3}, Template = {4}, TimeZone = {5}, URL = {6}",
                           siteEntity.Title, siteEntity.Description, siteEntity.Lcid, siteEntity.SiteOwnerLogin, siteEntity.Template, siteEntity.TimeZoneId, siteEntity.Url);
 
-                Guid siteId = _tenant.CreateSiteCollection(siteEntity, true, true);
+                Guid siteId = Guid.Empty;
+                try
+                {
+                    siteId = _tenant.CreateSiteCollection(siteEntity, true, true);
+                }
+                catch (Exception ex)
+                {
+                    Log.Debug(LogSource, "Provisioning new site. Title = {0} threw an exception {1}, retrying", siteEntity.Title, ex.Message);
+                    siteId = _tenant.CreateSiteCollection(siteEntity, true, true);
+                }
+
                 site.UniqueId = siteId;
                 site.FullUrl = fullUrl;
 
@@ -222,7 +232,7 @@ namespace Strategik.CoreFramework.Helpers
 
             try
             {
-                exists = (_tenant.SiteExists(fullUrl)) ? true : false;
+                exists = (_tenant.SiteExists(fullUrl)) ? true : false;  //TODO: is this checking the recycle bin?
             }
             catch
             {
