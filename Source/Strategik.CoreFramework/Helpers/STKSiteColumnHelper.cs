@@ -42,7 +42,7 @@ namespace Strategik.CoreFramework.Helpers
 {
     public class STKSiteColumnHelper: STKHelperBase
     {
-        private const String LogSource = "STKSiteColumnHelper";
+        private const String LogSource = "CoreFramework.STKSiteColumnHelper";
 
         #region Constructor
 

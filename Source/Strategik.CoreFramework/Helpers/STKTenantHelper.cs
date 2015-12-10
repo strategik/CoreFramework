@@ -332,9 +332,33 @@ namespace Strategik.CoreFramework.Helpers
                 }
                 catch { }
 
-                // We seem to get issues if we move on too quickly here so add a small delay
-                Thread.Sleep(10000); // take a break for 10 seconds - Give sharePoint a chance to catch up
-            }
+                int breakLoop = 0;
+                while (SiteExists(site))
+                {
+                    // this code smells
+                    breakLoop++;
+                    Log.Debug(LogSource, "CSOM still reports Site {0} exists even after it has been deleted - pausing for 10 seconds", fullUrl);
+                    // We seem to get issues if we move on too quickly here so add a small delay
+                    Thread.Sleep(10000); // take a break for 10 seconds - Give sharePoint a chance to catch up
+                    if (breakLoop > 10) // cant wait for ever
+                    {
+                        try
+                        {
+                            Log.Debug(LogSource, "Reissue delete to Site {0}", fullUrl);
+                            _tenant.DeleteSiteCollection(fullUrl, useRecycleBin);
+                            Log.Debug(LogSource, "Reissue delete from recycle bin to Site {0}", fullUrl);
+                            _tenant.DeleteSiteCollectionFromRecycleBin(fullUrl, true);
+                        }
+                        catch(Exception ex)
+                        {
+                            Log.Debug(LogSource, "Unexpected exception in reissued delete for Site {0} - message is {1}", fullUrl, ex.Message);
+                        }
+
+                        break;
+                    }
+                }
+
+                }
             else
             {
                 Log.Debug(LogSource, "Site {0} does not exist, delete site skipped", fullUrl);

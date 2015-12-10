@@ -36,7 +36,7 @@ namespace Strategik.CoreFramework.Helpers
 {
     public class STKContentTypeHelper : STKHelperBase
     {
-        private const String LogSource = "STKContentTypeHelper";
+        private const String LogSource = "Strategik.STKContentTypeHelper";
 
         #region Data
 
