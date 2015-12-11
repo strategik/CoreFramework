@@ -173,7 +173,8 @@ namespace Strategik.CoreFramework.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Log.Debug(LogSource, "Provisioning new site. Title = {0} threw an exception {1}, retrying", siteEntity.Title, ex.Message);
+                    Log.Debug(LogSource, "Provisioning new site. Title = {0} threw an exception {1}, deleting and retrying", siteEntity.Title, ex.Message);
+                    ForceDelete(site);
                     siteId = _tenant.CreateSiteCollection(siteEntity, true, true);
                 }
 
@@ -325,6 +326,16 @@ namespace Strategik.CoreFramework.Helpers
 
         #region Delete Sites
 
+        public void ForceDelete(STKSite site)
+        {
+            String fullUrl = _sharePointUrl + site.TenantRelativeURL;
+
+            try { _tenant.DeleteSiteCollectionFromRecycleBin(fullUrl, true); } catch { }
+            try { _tenant.DeleteSiteCollection(fullUrl, false); } catch { }
+            try { _tenant.DeleteSiteCollectionFromRecycleBin(fullUrl, true); } catch { }
+
+        }
+
         public void DeleteSite(STKSite site, bool useRecycleBin)
         {
             
@@ -336,7 +347,7 @@ namespace Strategik.CoreFramework.Helpers
                 _tenant.DeleteSiteCollection(fullUrl, useRecycleBin);
                 Log.Debug(LogSource, "Site {0} deleted", fullUrl);
 
-                try //pnp code may note address sites in recycle bin propery 
+                try //pnp code may note address sites in recycle bin properly 
                 {
                     _tenant.DeleteSiteCollectionFromRecycleBin(fullUrl, true);
                 }
@@ -368,7 +379,7 @@ namespace Strategik.CoreFramework.Helpers
                     }
                 }
 
-                }
+            }
             else
             {
                 Log.Debug(LogSource, "Site {0} does not exist, delete site skipped", fullUrl);
