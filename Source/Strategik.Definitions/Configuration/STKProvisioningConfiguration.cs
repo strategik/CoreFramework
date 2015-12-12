@@ -61,6 +61,8 @@ namespace Strategik.Definitions.Configuration
         /// </summary>
         public bool DeleteExistingSites { get; set; }
 
+        public bool ForceSiteDelete { get; set; }
+
         public String PrimarySiteCollectionAdministrator { get; set; }
 
         public String SecondarySiteCollectionAdminsitrator { get; set;}

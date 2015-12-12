@@ -219,9 +219,18 @@ namespace Strategik.CoreFramework.Helpers
         {
             if (tenantCustomisations == null) throw new ArgumentNullException("tennantCustomisations");
             if (config == null) config = new STKProvisioningConfiguration();
+            Log.Debug(LogSource, "Ensure tenant customisations is not yet implemented");
             // TODO:
         }
-        
+
+        public void RemoveTenantCustomisations(STKTenantCustomisations tenantCustomisations, STKProvisioningConfiguration config = null)
+        {
+            if (tenantCustomisations == null) throw new ArgumentNullException("tennantCustomisations");
+            if (config == null) config = new STKProvisioningConfiguration();
+            Log.Debug(LogSource, "Remove tenant customisations is not yet implemented");
+            // TODO:
+        }
+
         public void EnsureTaxonomy(STKTaxonomy taxonomy, STKProvisioningConfiguration config) 
         {
             if (taxonomy == null) throw new ArgumentNullException("taxonomy");
@@ -230,7 +239,15 @@ namespace Strategik.CoreFramework.Helpers
              STKTaxonomyHelper taxonomyHelper = new STKTaxonomyHelper(_context);
              taxonomyHelper.EnsureTaxonomy(taxonomy);
         }
-      
+
+        public void RemoveTaxonomy(STKTaxonomy taxonomy, STKProvisioningConfiguration config)
+        {
+            if (taxonomy == null) throw new ArgumentNullException("taxonomy");
+            if (config == null) config = new STKProvisioningConfiguration();
+            Log.Debug(LogSource, "Remove taxonomy is not yet implemented");
+            // TODO:
+        }
+
         public bool SiteExists(STKSite site) 
         {
             bool exists = false;
@@ -270,12 +287,13 @@ namespace Strategik.CoreFramework.Helpers
 
         #region Provisioning
 
-        protected virtual void BeforeInstallSolution(STKSolution solution, STKProvisioningConfiguration config)
+        protected virtual bool BeforeInstallSolution(STKSolution solution, STKProvisioningConfiguration config)
         {
+            return false; // return true to cancel
         }
 
         /// <summary>
-        /// Provisions a Strategik solution to an Office 365 tennant
+        /// Provisions a Strategik solution to an Office 365 tenant
         /// </summary>
         /// <remarks>
         /// Progressively provisions solution level artefacts, taxonomy, site
@@ -289,7 +307,11 @@ namespace Strategik.CoreFramework.Helpers
         {
             if (config == null) config = new STKProvisioningConfiguration();
 
-            BeforeInstallSolution(solution, config);
+            if (BeforeInstallSolution(solution, config))
+            {
+                Log.Info(LogSource,"Solution install has been cancelled");
+                return;
+            }
 
             // Ensures we have been passed a valid solution definition
             solution.Validate();
@@ -322,6 +344,71 @@ namespace Strategik.CoreFramework.Helpers
 
         protected virtual void AfterInstallSolution(STKSolution solution, STKProvisioningConfiguration config)
         {
+        }
+
+
+
+
+        protected bool BeforeUninstallSolution(STKSolution solution, STKProvisioningConfiguration config)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// Uninstalls a STK solution to an Office 365 tenant
+        /// </summary>
+        /// <param name="solution">The solution to remove</param>
+        /// <param name="config">The configuration settings to apply in the uninstall</param>
+        public void Uninstall(STKSolution solution, STKProvisioningConfiguration config)
+        {
+            if (config == null) config = new STKProvisioningConfiguration();
+
+            if (BeforeUninstallSolution(solution, config))
+            {
+                Log.Info(LogSource, "Solution uninstall has been cancelled");
+                return;
+            }
+
+            // Ensures we have been passed a valid solution definition
+            solution.Validate();
+
+            // Apply any tennant wide customisations
+            if (solution.HasTennantCustomisations())
+            {
+                RemoveTenantCustomisations(solution.TennantCustomisations, config);
+            }
+
+            // Apply any global taxonomy
+            if (solution.HasTaxonomy())
+            {
+                foreach (STKTaxonomy taxonomy in solution.Taxonomy)
+                {
+                    RemoveTaxonomy(taxonomy, config);
+                }
+            }
+
+            config.Solution = solution; // As we go down the tree we might need this !
+
+            // Create each site collection specified in the solution
+            foreach (STKSite site in solution.Sites)
+            {
+                if (config.DeleteExistingSites)
+                {
+                    DeleteSite(site, config);
+                }
+                else
+                {
+                    // TODO: - remove customisations but leave the site
+                }
+            }
+
+            AfterUninstallSolution(solution, config);
+        }
+
+        protected void AfterUninstallSolution(STKSolution solution, STKProvisioningConfiguration config)
+        {
+            //
         }
 
         #endregion
@@ -366,6 +453,18 @@ namespace Strategik.CoreFramework.Helpers
             {
 
                 Log.Debug(LogSource, "Force Delete: Swallowing error on second recycle bin deletion. Error message is {0}", e.Message);
+            }
+        }
+
+        public void DeleteSite(STKSite site, STKProvisioningConfiguration config)
+        {
+            if (config.ForceSiteDelete)
+            {
+                ForceDelete(site); // nuclear option
+            }
+            else
+            {
+                DeleteSite(site, true); // leave the site in the recycle bin
             }
         }
 
