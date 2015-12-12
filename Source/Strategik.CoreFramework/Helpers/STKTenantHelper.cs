@@ -141,6 +141,10 @@ namespace Strategik.CoreFramework.Helpers
                     DeleteSite(site, false); // bye bye data !
                     provisionSite = true; // we will need to recreate it
                 }
+                else
+                {
+                    Log.Debug(LogSource, "Site {0} will NOT be deleted as delete sites is not configured", site.Name);
+                }
             }
             else
             {
@@ -175,6 +179,8 @@ namespace Strategik.CoreFramework.Helpers
                 {
                     Log.Debug(LogSource, "Provisioning new site. Title = {0} threw an exception {1}, deleting and retrying", siteEntity.Title, ex.Message);
                     ForceDelete(site);
+
+                    Log.Debug(LogSource, "Provisioning new site, second attempt");
                     siteId = _tenant.CreateSiteCollection(siteEntity, true, true);
                 }
 
@@ -238,7 +244,7 @@ namespace Strategik.CoreFramework.Helpers
             catch
             {
                 exists = false;
-                Log.Warning("The site exists check for site {0} thrw an exception, the returned result (false) may be unreliable", fullUrl);
+                Log.Warning("The site exists check for site {0} threw an exception, the returned result (false) may be unreliable", fullUrl);
             }
 
             return exists;
@@ -330,10 +336,37 @@ namespace Strategik.CoreFramework.Helpers
         {
             String fullUrl = _sharePointUrl + site.TenantRelativeURL;
 
-            try { _tenant.DeleteSiteCollectionFromRecycleBin(fullUrl, true); } catch { }
-            try { _tenant.DeleteSiteCollection(fullUrl, false); } catch { }
-            try { _tenant.DeleteSiteCollectionFromRecycleBin(fullUrl, true); } catch { }
+            try
+            {
+                Log.Debug(LogSource, "Force Delete: attempting recycle bin deletion");
+               _tenant.DeleteSiteCollectionFromRecycleBin(fullUrl, true);
 
+            }
+            catch(Exception e)
+            {
+                Log.Debug(LogSource, "Force Delete: Swallowing error on recycle bin deletion. Error message is {0}", e.Message);
+            }
+
+            try
+            {
+                Log.Debug(LogSource, "Force Delete: attempting site collection deletion");
+                _tenant.DeleteSiteCollection(fullUrl, false);
+            }
+            catch(Exception e)
+            {
+                Log.Debug(LogSource, "Force Delete: Swallowing error on site collection delete. Error message is {0}", e.Message);
+            }
+
+            try
+            {
+                Log.Debug(LogSource, "Force Delete: attempting second recycle bin deletion");
+                _tenant.DeleteSiteCollectionFromRecycleBin(fullUrl, true);
+            }
+            catch(Exception e)
+            {
+
+                Log.Debug(LogSource, "Force Delete: Swallowing error on second recycle bin deletion. Error message is {0}", e.Message);
+            }
         }
 
         public void DeleteSite(STKSite site, bool useRecycleBin)
@@ -347,13 +380,20 @@ namespace Strategik.CoreFramework.Helpers
                 _tenant.DeleteSiteCollection(fullUrl, useRecycleBin);
                 Log.Debug(LogSource, "Site {0} deleted", fullUrl);
 
-                try //pnp code may note address sites in recycle bin properly 
+                try //pnp code may not address sites in recycle bin properly 
                 {
                     _tenant.DeleteSiteCollectionFromRecycleBin(fullUrl, true);
+                    Log.Debug(LogSource, "Site {0} deleted from recycle bin", fullUrl);
                 }
-                catch { }
+                catch(Exception e)
+                {
+                    Log.Debug(LogSource, "Swallowing error on recycle bin deletion. Error message is {0}", e.Message);
+                }
 
                 int breakLoop = 0;
+
+                Log.Debug(LogSource, "Start site delete check processing loop");
+
                 while (SiteExists(site))
                 {
                     // this code smells
@@ -377,8 +417,11 @@ namespace Strategik.CoreFramework.Helpers
 
                         break;
                     }
+
+                    
                 }
 
+                Log.Debug(LogSource, "Site delete check processing is completed. Break loop count is " + breakLoop);
             }
             else
             {
