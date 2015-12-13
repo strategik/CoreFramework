@@ -476,8 +476,15 @@ namespace Strategik.CoreFramework.Helpers
 
             if (SiteExists(site))
             {
-                _tenant.DeleteSiteCollection(fullUrl, useRecycleBin);
-                Log.Debug(LogSource, "Site {0} deleted", fullUrl);
+                try //pnp code may not address sites in recycle bin properly 
+                {
+                    _tenant.DeleteSiteCollection(fullUrl, useRecycleBin);
+                    Log.Debug(LogSource, "Site {0} deleted", fullUrl);
+                }
+                catch (Exception e)
+                {
+                    Log.Debug(LogSource, "Swallowing error on site deletion. Error message is {0}", e.Message);
+                }
 
                 try //pnp code may not address sites in recycle bin properly 
                 {
