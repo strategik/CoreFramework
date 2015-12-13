@@ -182,6 +182,7 @@ namespace Strategik.CoreFramework.Helpers
 
                     Log.Debug(LogSource, "Provisioning new site, second attempt");
                     siteId = _tenant.CreateSiteCollection(siteEntity, true, true);
+                    // We can still get an exception here in some circumstances 
                 }
 
                 site.UniqueId = siteId;
@@ -303,14 +304,15 @@ namespace Strategik.CoreFramework.Helpers
         /// <param name="solution">The definition of the solution to provision</param>
         /// <param name="config">Configuration to apply during provisioning</param>
         /// <returns>True if the solution is provisioned successfully</returns>
-        public void Install(STKSolution solution, STKProvisioningConfiguration config = null) 
+        public bool Install(STKSolution solution, STKProvisioningConfiguration config = null) 
         {
+            bool noErrors = true;
             if (config == null) config = new STKProvisioningConfiguration();
 
             if (BeforeInstallSolution(solution, config))
             {
                 Log.Info(LogSource,"Solution install has been cancelled");
-                return;
+                return noErrors;
             }
 
             // Ensures we have been passed a valid solution definition
@@ -336,10 +338,27 @@ namespace Strategik.CoreFramework.Helpers
             // Create each site collection specified in the solution
             foreach (STKSite site in solution.Sites)
             {
-                CreateSite(site, config);
+                try
+                {
+                    CreateSite(site, config);
+                }
+                catch (Exception e)
+                {
+                    if (config.ContinueOnError)
+                    {
+                        Log.Error(LogSource, "Unexpected error provisioning site {0}. Error message is {1}. Continuing installation. Check the error log for more details", site.Name, e.Message);
+                        continue;
+                    }
+                    else
+                    {
+                        throw e;
+                    }
+                }
             }
 
             AfterInstallSolution(solution, config);
+
+            return noErrors;
         }
 
         protected virtual void AfterInstallSolution(STKSolution solution, STKProvisioningConfiguration config)

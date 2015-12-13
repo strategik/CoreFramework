@@ -78,6 +78,8 @@ namespace Strategik.Definitions.Configuration
         /// </summary>
         public bool EnsureSite { get; set; }
 
+        public bool ContinueOnError { get; set; }
+
         #endregion
 
         public List<String> Messages { get; set; }
