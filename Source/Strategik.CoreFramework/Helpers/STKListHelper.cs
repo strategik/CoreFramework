@@ -24,6 +24,7 @@
 
 using System;
 using Microsoft.SharePoint.Client;
+
 using Strategik.Definitions.Configuration;
 using Strategik.Definitions.Libraries;
 using Strategik.Definitions.Lists;
@@ -253,6 +254,17 @@ namespace Strategik.CoreFramework.Helpers
         }
 
         #endregion Methods
+
+        #region Exists
+
+        public bool Exists(STKList list)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+            list.Validate();
+            return _clientContext.Web.ListExists(list.Name);
+        } 
+
+        #endregion
 
         #region Utilities 
 

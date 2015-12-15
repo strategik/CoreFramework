@@ -441,6 +441,7 @@ namespace Strategik.CoreFramework.Helpers
         public void ForceDelete(STKSite site)
         {
             String fullUrl = _sharePointUrl + site.TenantRelativeURL;
+            Log.Debug(LogSource, "Preparing to force delete site {0}", fullUrl);
 
             try
             {
