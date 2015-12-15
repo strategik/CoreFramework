@@ -14,7 +14,7 @@
         <releaseNotes>Updated PnP dependency. Minor updates.</releaseNotes>
         <copyright>Strategik Pty Ltd 2015</copyright>
         <dependencies>
-            <dependency id="OfficeDevPnPCore16" version="1.7.1015.1" />
+            <dependency id="OfficeDevPnPCore16" version="1.9.1215.1" />
         </dependencies>
     </metadata>
     <files>

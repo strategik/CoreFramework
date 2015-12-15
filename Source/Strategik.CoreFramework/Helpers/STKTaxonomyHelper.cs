@@ -24,6 +24,7 @@
 
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
+using OfficeDevPnP.Core.Diagnostics;
 using OfficeDevPnP.Core.Utilities;
 using Strategik.Definitions.Taxonomy;
 using System;
