@@ -24,6 +24,9 @@
 
 namespace Strategik.Definitions.Fields
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public enum STKFieldType
     {
         Text,
