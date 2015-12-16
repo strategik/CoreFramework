@@ -261,7 +261,7 @@ namespace Strategik.CoreFramework.Helpers
         {
             if (list == null) throw new ArgumentNullException("list");
             list.Validate();
-            return _clientContext.Web.ListExists(list.Name);
+            return _clientContext.Web.ListExists(list.Title);
         } 
 
         #endregion
