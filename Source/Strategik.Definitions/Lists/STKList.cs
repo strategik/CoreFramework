@@ -90,7 +90,7 @@ namespace Strategik.Definitions.Lists
         public List<STKListItemEventReceiver> EventReceivers { get; set; }
         public List<STKField> Fields { get; set; }
         public List<STKFieldLink> FieldLinks { get; set; }
-        public List<STKFolder> Folders { get; set; }
+        public List<STKFolderContentType> Folders { get; set; }
         public bool Hidden { get; set; }
         public List<STKListItem> Items { get; set; }
         public STKListType ListType { get; set; }
@@ -137,7 +137,7 @@ namespace Strategik.Definitions.Lists
             EnableEmailNotifications = false;
             RoleAssignments = new List<STKRoleAssignment>();
             this.CustomFields = new List<STKField>();
-            Folders = new List<STKFolder>();
+            Folders = new List<STKFolderContentType>();
             Items = new List<STKListItem>();
 
             _builtInFieldsRead = new List<String>();

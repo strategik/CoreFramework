@@ -24,6 +24,7 @@
 
 using Microsoft.SharePoint.Client;
 using Strategik.Definitions.Configuration;
+using Strategik.Definitions.Files;
 using Strategik.Definitions.Pages;
 using System;
 using System.Collections.Generic;
@@ -69,6 +70,50 @@ namespace Strategik.CoreFramework.Helpers
             {
                 //TODO
             }
+        }
+
+        public void EnsureMasterPages(List<STKMasterPage> masterPages, STKProvisioningConfiguration config = null)
+        {
+            foreach (STKMasterPage masterPage in masterPages)
+            {
+                STKFile file = STKFileHelper.GetFile(masterPage);
+                if (file != null) {
+                    _clientContext.Web.DeployMasterPage(file, masterPage.Title, masterPage.Description, "15", "", masterPage.FolderPath);
+                }
+            }
+        }
+
+        public void EnsurePageLayouts(List<STKPageLayout> pagesLayouts, STKProvisioningConfiguration config = null)
+        {
+            foreach (STKPageLayout pageLayout in pagesLayouts)
+            {
+                STKFile file = STKFileHelper.GetFile(pageLayout);
+                if (file != null)
+                {
+                    if (pageLayout.IsHTMLLayout)
+                    {
+                        _clientContext.Web.DeployHtmlPageLayout(file, pageLayout.Title, pageLayout.Description, pageLayout.FolderPath);
+                    }
+                    else
+                    {
+                        _clientContext.Web.DeployPageLayout(file, pageLayout.Title, pageLayout.Description, pageLayout.FolderPath);
+                    }
+                }
+            }
+        }
+
+        public void EnsureStyleLibraryAssets(List<STKStyleLibraryAssets> assetLocations, STKProvisioningConfiguration config = null)
+        {
+            foreach (STKStyleLibraryAssets assetLocation in assetLocations)
+            {
+                STKFolder assetFolder = STKFileHelper.GetAssets(assetLocation);
+                DeployAssetsFolder(assetFolder);
+            }
+        }
+
+        private void DeployAssetsFolder(STKFolder assetFolder)
+        {
+            throw new NotImplementedException(); // TODO
         }
 
         #endregion Implementation Methods

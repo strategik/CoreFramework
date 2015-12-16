@@ -98,6 +98,9 @@ namespace Strategik.CoreFramework.Helpers
 
             // Ensure Pages
             STKPageHelper pageHelper = new STKPageHelper(_clientContext);
+            pageHelper.EnsureMasterPages(web.MasterPages, config);
+            pageHelper.EnsurePageLayouts(web.PageLayouts, config);
+            pageHelper.EnsureStyleLibraryAssets(web.StyleLibraryAssetLocations, config);
             pageHelper.EnsurePages(web.PublishingPages, config);
             pageHelper.EnsurePages(web.WebPartPages, config);
             pageHelper.EnsurePages(web.WikiPages, config);

@@ -47,6 +47,9 @@ namespace Strategik.Definitions.Sites
         public List<STKPublishingPage> PublishingPages { get; set; }
         public List<STKWebPartPage> WebPartPages { get; set; }
         public List<STKWikiPage> WikiPages { get; set; }
+        public List<STKMasterPage> MasterPages { get; set; }
+        public List<STKPageLayout> PageLayouts { get; set; }
+        public List<STKStyleLibraryAssets> StyleLibraryAssetLocations { get; set; }
         public bool UseManagedNavigation { get; set; }
         public bool EnsureNavigationTermset { get; set; }
         public bool HasSiteMailbox { get; set; }
@@ -70,10 +73,13 @@ namespace Strategik.Definitions.Sites
             PublishingPages = new List<STKPublishingPage>();
             WebPartPages = new List<STKWebPartPage>();
             WikiPages = new List<STKWikiPage>();
+            MasterPages = new List<STKMasterPage>();
+            PageLayouts = new List<STKPageLayout>();
             FeaturesToActivate = new List<Guid>();
             FeaturesToDeactivate = new List<Guid>();
             SubWebs = new List<STKWeb>();
             SecurityGroups = new List<STKGroup>();
+            StyleLibraryAssetLocations = new List<STKStyleLibraryAssets>();
         }
 
         #endregion Constructors

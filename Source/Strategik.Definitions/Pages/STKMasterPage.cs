@@ -22,22 +22,19 @@
 
 #endregion License
 
-namespace Strategik.Definitions.ContentTypes
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Strategik.Definitions.Pages
 {
     /// <summary>
-    /// Class which represents SharePoint's Built-in "Folder" Content Type.
+    /// A custom masterpage to deploy to Office 365
     /// </summary>
-    public class STKFolder : STKContentType
+    public class STKMasterPage: STKPage
     {
-        #region Constructor
 
-        public STKFolder()
-        {
-            base.SharePointContentTypeId = "0x0120";
-            base.IsBuiltInContentType = true;
-            base.IsFolderContentType = true;
-        }
-
-        #endregion Constructor
     }
 }

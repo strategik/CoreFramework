@@ -108,7 +108,7 @@
     <Compile Include="ContentTypes\STKDocument.cs" />
     <Compile Include="ContentTypes\STKEvent.cs" />
     <Compile Include="ContentTypes\STKFieldLink.cs" />
-    <Compile Include="ContentTypes\STKFolder.cs" />
+    <Compile Include="ContentTypes\STKFolderContentType.cs" />
     <Compile Include="ContentTypes\STKIssue.cs" />
     <Compile Include="ContentTypes\STKItem.cs" />
     <Compile Include="ContentTypes\STKLink.cs" />
@@ -150,6 +150,8 @@
     <Compile Include="Fields\STKTaxonomyField.cs" />
     <Compile Include="Fields\STKTextField.cs" />
     <Compile Include="Fields\STKUserField.cs" />
+    <Compile Include="Files\STKFile.cs" />
+    <Compile Include="Files\STKFolder.cs" />
     <Compile Include="Libraries\STKDocumentLibrary.cs" />
     <Compile Include="Libraries\STKPictureLibrary.cs" />
     <Compile Include="Lists\STKAnnouncementsList.cs" />
@@ -167,8 +169,12 @@
     <Compile Include="Lists\STKList.cs" />
     <Compile Include="Lists\STKTaskList.cs" />
     <Compile Include="Lists\SKUserInformationList.cs" />
+    <Compile Include="Pages\STKPageLocationType.cs" />
+    <Compile Include="Pages\STKMasterPage.cs" />
     <Compile Include="Pages\STKPage.cs" />
+    <Compile Include="Pages\STKPageLayout.cs" />
     <Compile Include="Pages\STKPublishingPage.cs" />
+    <Compile Include="Pages\STKStyleLibraryAssets.cs" />
     <Compile Include="Pages\STKWebPartPage.cs" />
     <Compile Include="Pages\STKWikiPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

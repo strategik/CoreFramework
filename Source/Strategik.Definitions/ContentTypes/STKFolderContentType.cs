@@ -22,19 +22,22 @@
 
 #endregion License
 
-using Strategik.Definitions.Base;
-using System;
-
-namespace Strategik.Definitions.Pages
+namespace Strategik.Definitions.ContentTypes
 {
-    public class STKPage : STKDefinitionBase
+    /// <summary>
+    /// Class which represents SharePoint's Built-in "Folder" Content Type.
+    /// </summary>
+    public class STKFolderContentType : STKContentType
     {
-        public bool IsWelcomePage { get; set; }
-        public bool OverwriteIfPresent { get; set; }
-        public String Url { get; set; }
-        public String FileName { get; set; }
-        public String Location { get; set; }
-        public STKPageLocationType LocationType { get; set; }
-        public String FolderPath { get; set; }
+        #region Constructor
+
+        public STKFolderContentType()
+        {
+            base.SharePointContentTypeId = "0x0120";
+            base.IsBuiltInContentType = true;
+            base.IsFolderContentType = true;
+        }
+
+        #endregion Constructor
     }
 }
