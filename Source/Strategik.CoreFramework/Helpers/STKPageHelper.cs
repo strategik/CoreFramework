@@ -116,6 +116,33 @@ namespace Strategik.CoreFramework.Helpers
             throw new NotImplementedException(); // TODO
         }
 
+
+        /// <summary>
+        /// Downloads a list of the masterpages in the current context 
+        /// </summary>
+        /// <param name="downloadFiles">downloads the files</param>
+        /// <returns></returns>
+        public List<STKFile> GetMasterPages(bool downloadFiles)
+        {
+            List<STKFile> pages = new List<STKFile>();
+
+
+            return pages;
+        }
+
+        /// <summary>
+        /// Downloads a list of the page layotus in the current context
+        /// </summary>
+        /// <param name="downloadFiles">downlaods the files</param>
+        /// <returns></returns>
+        public List<STKFile> GetPageLayouts(bool downloadFiles)
+        {
+            List<STKFile> pages = new List<STKFile>();
+
+
+            return pages;
+        }
+
         #endregion Implementation Methods
     }
 }
