@@ -8,6 +8,8 @@ namespace Strategik.Definitions.Files
 {
     public class STKFolder
     {
+        public Guid SharePointId { get; set; }
+        public String Name { get; set; }
         public List<STKFolder> Folders { get; set; }
         public List<STKFile> Files { get; set; }
 

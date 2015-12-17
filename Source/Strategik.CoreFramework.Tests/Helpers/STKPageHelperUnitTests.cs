@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.SharePoint.Client;
 using Strategik.CoreFramework.Tests.Infrastructure;
@@ -19,10 +20,14 @@ namespace Strategik.CoreFramework.Tests.Helpers
             using (ClientContext context = STKTestsConfig.CreateClientContext())
             {
                 STKPageHelper helper = new STKPageHelper(context);
-                List<STKFile> pages = helper.GetMasterPages(false);
-                Assert.IsTrue(pages.Count > 0);
-                List<STKFile> pagesWithData = helper.GetMasterPages(false);
-                Assert.IsTrue(pages.Count == pagesWithData.Count);
+                STKFolder rootFolder = helper.GetMasterPages(false, new List<String> {"Strategik"});
+                Assert.IsTrue(rootFolder.Files.Count > 0);
+                STKFolder strategikFolder = rootFolder.Folders.Where(f => f.Name == "Strategik").SingleOrDefault();
+                Assert.IsNotNull(strategikFolder);
+                Assert.IsTrue(strategikFolder.Files.Count == 9);
+          
+                STKFolder rootFolderWithData = helper.GetMasterPages(true, new List<String> { "Strategik" });
+                Assert.IsTrue(rootFolder.Files.Count == rootFolderWithData.Files.Count);
             }
         }
 

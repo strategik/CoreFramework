@@ -1,4 +1,5 @@
-﻿using Strategik.Definitions.Files;
+﻿using Microsoft.SharePoint.Client;
+using Strategik.Definitions.Files;
 using Strategik.Definitions.Pages;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,18 @@ namespace Strategik.CoreFramework.Helpers
     /// <summary>
     /// Helper for manipulating files
     /// </summary>
-    public static class STKFileHelper
+    public class STKFileHelper: STKHelperBase
     {
+
+        #region Constructor
+
+        public STKFileHelper(ClientContext context)
+            : base(context)
+        {}
+
+        #endregion
+
+        #region Static Methods
         public static STKFile GetFile(STKPage page)
         {
             STKFile file = new STKFile {FileName = page.FileName };
@@ -69,6 +80,88 @@ namespace Strategik.CoreFramework.Helpers
 
 
             return bytes;
+        }
+
+        #endregion
+
+        #region Get all the files and folders from a SharePoint folder
+
+        public STKFolder GetFolder(Folder spFolder, bool downloadFile, bool includeSubFolders, List<String> folderMatch = null)
+        {
+            // Store this folders details
+            STKFolder folder = new STKFolder()
+            {
+               Name = spFolder.Name,
+               SharePointId = spFolder.UniqueId
+            };
+
+            // dont assume anything beneath us is already loaded
+            _clientContext.Load(spFolder.Files);
+            _clientContext.Load(spFolder.Folders);
+            _clientContext.ExecuteQueryRetry();
+
+            // recursively load our subfolders if required
+            if (includeSubFolders)
+            {
+                foreach (Folder spSubFolder in spFolder.Folders)
+                {
+                    String name = spSubFolder.Name;
+                    bool matchThisFolder = true;
+                    if (folderMatch != null) // Selectively match the subfolders (first level only)
+                    {
+                        matchThisFolder = folderMatch.Contains(name);
+                    }
+
+                    if (matchThisFolder)
+                    {
+                        // Dont pass the matching pattern here - if a first level folder is matched we get everything under it
+                        folder.Folders.Add(GetFolder(spSubFolder, downloadFile, includeSubFolders));
+                    }
+                }
+            }
+
+            // load all the files
+            foreach (File spFile in spFolder.Files)
+            {
+                STKFile file = new STKFile()
+                {
+                    FileName = spFile.Name,
+                    LinkingUrl = spFile.LinkingUrl,
+                    Title = spFile.Title,
+                    MajorVersion = spFile.MajorVersion,
+                    MinorVersion = spFile.MinorVersion,
+                    Created = spFile.TimeCreated,
+                    LastModified = spFile.TimeLastModified,
+                };
+
+                if (downloadFile)
+                {
+                    file.FileBytes = DownloadFile(spFile);
+                }
+
+                folder.Files.Add(file);
+            }
+
+            return folder;
+        }
+
+        private byte[] DownloadFile(File file)
+        {
+            byte[] data = new byte[0];
+            FileInformation fileInformation = File.OpenBinaryDirect(_clientContext, file.ServerRelativeUrl);
+            data = STKFileHelper.ReadFully(fileInformation.Stream); 
+            return data ;
+        }
+
+        #endregion
+
+        public static byte[] ReadFully(System.IO.Stream input)
+        {
+            using (System.IO.MemoryStream ms = new System.IO.MemoryStream())               
+            {
+                input.CopyTo(ms);
+                return ms.ToArray();
+            }
         }
 
         internal static STKFolder GetAssets(STKStyleLibraryAssets assetLocation)

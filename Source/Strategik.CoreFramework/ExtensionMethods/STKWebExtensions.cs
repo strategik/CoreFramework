@@ -76,7 +76,7 @@ namespace Microsoft.SharePoint.Client
            
             // Use CSOM to upload the file in
             FileCreationInformation newFile = new FileCreationInformation();
-            newFile.Content = file.FileBytes;
+            //newFile.Content = 
             newFile.Url = UrlUtility.Combine(rootFolder.ServerRelativeUrl, folderHierarchy, file.FileName);
             newFile.Overwrite = true;
 
@@ -173,6 +173,20 @@ namespace Microsoft.SharePoint.Client
             web.Context.ExecuteQueryRetry();
 
         }
+
+        public static List GetMasterpageGallery(this Web web)
+        {
+            // Get the path to the file which we are about to deploy
+            List masterPageGallery = web.GetCatalog((int)ListTemplateType.MasterPageCatalog);
+            Folder rootFolder = masterPageGallery.RootFolder;
+            web.Context.Load(masterPageGallery);
+            web.Context.Load(rootFolder);
+            web.Context.Load(rootFolder.Files);
+            web.Context.Load(rootFolder.Folders);
+            web.Context.ExecuteQueryRetry();
+            return masterPageGallery;
+        }
+
 
     }
 }

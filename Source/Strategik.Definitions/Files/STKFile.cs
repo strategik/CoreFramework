@@ -11,10 +11,16 @@ namespace Strategik.Definitions.Files
     /// </summary>
     public class STKFile
     {
-        public Byte[] FileBytes { get; set; }
+        public String Contents { get; set; }
+        public byte[] FileBytes { get; set; }
         public String FileName { get; set; }
         public String Title { get; set; }
         public String Description { get; set; }
         public String Version { get; set; }
+        public String LinkingUrl { get; set; }
+        public int MajorVersion { get; set; }
+        public int MinorVersion { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime LastModified { get; set; }
     }
 }

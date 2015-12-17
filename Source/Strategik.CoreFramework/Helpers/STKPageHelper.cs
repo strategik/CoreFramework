@@ -28,6 +28,7 @@ using Strategik.Definitions.Files;
 using Strategik.Definitions.Pages;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Strategik.CoreFramework.Helpers
 {
@@ -122,13 +123,15 @@ namespace Strategik.CoreFramework.Helpers
         /// </summary>
         /// <param name="downloadFiles">downloads the files</param>
         /// <returns></returns>
-        public List<STKFile> GetMasterPages(bool downloadFiles)
+        public STKFolder GetMasterPages(bool downloadFiles, List<String> folderMatch = null)
         {
-            List<STKFile> pages = new List<STKFile>();
-
-
-            return pages;
+            List masterPageGallery = _web.GetMasterpageGallery();
+            STKFileHelper fileHelper = new STKFileHelper(_clientContext);
+            STKFolder rootFolder = fileHelper.GetFolder(masterPageGallery.RootFolder, downloadFiles, true, folderMatch);
+            return rootFolder;
         }
+
+
 
         /// <summary>
         /// Downloads a list of the page layotus in the current context
@@ -143,6 +146,7 @@ namespace Strategik.CoreFramework.Helpers
             return pages;
         }
 
+       
         #endregion Implementation Methods
     }
 }
