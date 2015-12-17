@@ -41,6 +41,7 @@ using TermSet = Microsoft.SharePoint.Client.Taxonomy.TermSet;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using Strategik.Definitions.Security;
 using Strategik.Definitions.Sites;
+using Strategik.CoreFramework.PnP.Framework.Provisioning.Providers.Strategik.Model;
 
 namespace Microsoft.SharePoint.Client
 {
@@ -147,7 +148,7 @@ namespace Microsoft.SharePoint.Client
             List<STKField> stkSiteColumns = new List<STKField>();
 
             // Generate the PnP templates for site columns
-            ProvisioningTemplate template = new ProvisioningTemplate();
+            ProvisioningTemplate template = new STKPnPTemplate();
             ProvisioningTemplateCreationInformation createInfo = new ProvisioningTemplateCreationInformation(web);
             template = web.GetProvisioningTemplate(createInfo);
 
@@ -168,7 +169,7 @@ namespace Microsoft.SharePoint.Client
             List<STKContentType> stkContentTypes = new List<STKContentType>();
 
             // Generate the PnP templates for site columns
-            ProvisioningTemplate template = new ProvisioningTemplate();
+            ProvisioningTemplate template = new STKPnPTemplate();
             ProvisioningTemplateCreationInformation createInfo = new ProvisioningTemplateCreationInformation(web);
             template = web.GetProvisioningTemplate(createInfo);
 
@@ -189,7 +190,7 @@ namespace Microsoft.SharePoint.Client
             List<STKList> stkLists = new List<STKList>();
 
             // Generate the PnP templates for site columns
-            ProvisioningTemplate template = new ProvisioningTemplate();
+            ProvisioningTemplate template = new STKPnPTemplate();
             ProvisioningTemplateCreationInformation createInfo = new ProvisioningTemplateCreationInformation(web);
             template = web.GetProvisioningTemplate(createInfo);
 
@@ -210,7 +211,7 @@ namespace Microsoft.SharePoint.Client
             List<STKGroup> stkGroups = new List<STKGroup>();
 
             // Generate the PnP templates for site columns
-            ProvisioningTemplate template = new ProvisioningTemplate();
+            ProvisioningTemplate template = new STKPnPTemplate();
             ProvisioningTemplateCreationInformation createInfo = new ProvisioningTemplateCreationInformation(web);
             createInfo.IncludeSiteGroups = true;
             template = web.GetProvisioningTemplate(createInfo);
@@ -232,7 +233,7 @@ namespace Microsoft.SharePoint.Client
            
 
             // Generate the PnP templates for the web
-            ProvisioningTemplate template = new ProvisioningTemplate();
+            ProvisioningTemplate template = new STKPnPTemplate();
             ProvisioningTemplateCreationInformation createInfo = new ProvisioningTemplateCreationInformation(web);
             createInfo.IncludeSiteGroups = true;
 

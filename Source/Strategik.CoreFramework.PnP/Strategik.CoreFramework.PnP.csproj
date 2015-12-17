@@ -210,6 +210,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Framework\Provisioning\Providers\Strategik\Extensibility\STKPnPExtensibilityProvider.cs" />
     <Compile Include="Framework\Provisioning\Providers\Strategik\Extensions\STKSecurityExtension.cs" />
     <Compile Include="Framework\Provisioning\Providers\Strategik\Extensions\STKUserInterfaceExtensions.cs" />
     <Compile Include="Framework\Provisioning\Providers\Strategik\Extensions\STKFeatureExtension.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="Framework\Provisioning\Providers\Strategik\Extensions\STKListExtensions.cs" />
     <Compile Include="Framework\Provisioning\Providers\Strategik\Extensions\STKPageExtensions.cs" />
     <Compile Include="Framework\Provisioning\Providers\Strategik\Extensions\STKTaxonomyExtensions.cs" />
+    <Compile Include="Framework\Provisioning\Providers\Strategik\Model\STKPnPTemplate.cs" />
     <Compile Include="Framework\Provisioning\Providers\Strategik\STKConstants.cs" />
     <Compile Include="Framework\Provisioning\Providers\Strategik\STKPnPHelper.cs" />
     <Compile Include="Framework\Provisioning\Providers\Strategik\TemplateModelExtensions\ContentTypeExtensions.cs" />

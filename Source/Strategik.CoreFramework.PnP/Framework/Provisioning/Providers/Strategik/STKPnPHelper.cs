@@ -29,6 +29,7 @@ using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Diagnostics;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
+using Strategik.CoreFramework.PnP.Framework.Provisioning.Providers.Strategik.Model;
 using Strategik.Definitions.Configuration;
 using Strategik.Definitions.ContentTypes;
 using Strategik.Definitions.Features;
@@ -103,8 +104,9 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
         {
             Log.Debug(LogSource, "Starting provisioning for taxonomy {0}", taxonomy.UniqueId);
 
-            ProvisioningTemplate template = new ProvisioningTemplate();
+            ProvisioningTemplate template = new STKPnPTemplate();
             template.TermGroups.AddRange(taxonomy.GeneratePnPTemplates());
+           
             _web.ApplyProvisioningTemplate(template);
 
             Log.Debug(LogSource, "Provisioning for taxonomy {0} complete", taxonomy.UniqueId);
@@ -119,7 +121,8 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
             if (fields == null) throw new ArgumentNullException("fields");
             if (config == null) config = new STKProvisioningConfiguration();
 
-            ProvisioningTemplate allSiteColumnsTemplate = new ProvisioningTemplate();
+           // ProvisioningTemplate allSiteColumnsTemplate = new ProvisioningTemplate();
+        
 
             foreach (STKField field in fields)
             {
@@ -152,7 +155,7 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
                 _web.STKCleanupTaxonomyHiddenField((STKTaxonomyField)field);
             }
 
-            ProvisioningTemplate template = new ProvisioningTemplate();
+            ProvisioningTemplate template = new STKPnPTemplate();
             
 
             template.SiteFields.Add(field.GeneratePnPTemplate());
@@ -226,7 +229,7 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
             Provision(contentType.SiteColumns);
 
             // Generate the PnP template
-            ProvisioningTemplate template = new ProvisioningTemplate();
+            ProvisioningTemplate template = new STKPnPTemplate();
             template.ContentTypes.Add(contentType.GeneratePnPTemplate());
 
             // Provision the content type
@@ -269,7 +272,7 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
             Provision(list.ContentTypes);
 
             // Generate the PnP template
-            ProvisioningTemplate template = new ProvisioningTemplate();
+            ProvisioningTemplate template = new STKPnPTemplate();
             template.Lists.Add(list.GeneratePnPTemplate());
 
             // Template Creation settings
@@ -315,8 +318,9 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
         public void Provision(STKPage page, STKProvisioningConfiguration config = null)
         {
             // Provision the list
-            ProvisioningTemplate template = new ProvisioningTemplate();
+            ProvisioningTemplate template = new STKPnPTemplate();
             template.Pages.Add(page.GeneratePnPTemplate());
+        
             _web.ApplyProvisioningTemplate(template);
         }
 
@@ -331,8 +335,9 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
         public void Provision(STKCustomActions customAction, STKProvisioningConfiguration config = null)
         {
             // Generate the PnP template
-            ProvisioningTemplate template = new ProvisioningTemplate();
+            ProvisioningTemplate template = new STKPnPTemplate();
             template.CustomActions = customAction.GeneratePnPTemplate();
+
             _web.ApplyProvisioningTemplate(template);
         }
 
@@ -344,8 +349,9 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
         public void Provision(STKComposedLook composedLook)
         {
             // Generate the PnP template
-            ProvisioningTemplate template = new ProvisioningTemplate();
+            ProvisioningTemplate template = new STKPnPTemplate();
             template.ComposedLook = composedLook.GeneratePnPTemplate();
+
             _web.ApplyProvisioningTemplate(template);
         }
 
@@ -357,7 +363,7 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
         public void Provision(STKFeatures features, STKProvisioningConfiguration config = null)
         {
             // Generate the PnP template
-            ProvisioningTemplate template = new ProvisioningTemplate();
+            ProvisioningTemplate template = new STKPnPTemplate();
 
             foreach (STKFeature siteFeature in features.SiteFeatures)
             {
@@ -369,6 +375,7 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
                 template.Features.WebFeatures.Add(webFeature.GeneratePnPTemplate());
             }
 
+            
             _web.ApplyProvisioningTemplate(template);
         }
 
@@ -398,7 +405,7 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
             group.Validate();
 
             
-            ProvisioningTemplate template = new ProvisioningTemplate();
+            ProvisioningTemplate template = new STKPnPTemplate();
             template.Security.SiteGroups.Add(group.GeneratePnPTemplate());
 
             _web.ApplyProvisioningTemplate(template);
