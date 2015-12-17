@@ -187,6 +187,17 @@ namespace Microsoft.SharePoint.Client
             return masterPageGallery;
         }
 
-
+        public static List GetStyleLibrary(this Web web)
+        {
+            // Get the path to the file which we are about to deploy
+            List styleLibrary = web.Lists.GetByTitle("Style library");
+            Folder rootFolder = styleLibrary.RootFolder;
+            web.Context.Load(styleLibrary);
+            web.Context.Load(rootFolder);
+            web.Context.Load(rootFolder.Files);
+            web.Context.Load(rootFolder.Folders);
+            web.Context.ExecuteQueryRetry();
+            return styleLibrary;
+        }
     }
 }

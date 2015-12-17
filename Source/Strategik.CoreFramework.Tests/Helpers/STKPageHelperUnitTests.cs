@@ -33,6 +33,23 @@ namespace Strategik.CoreFramework.Tests.Helpers
 
         [TestMethod]
         [TestCategory(STKTestConstants.CoreFramework_Helpers)]
+        public void TestReadStyleLibraryAssets()
+        {
+            using (ClientContext context = STKTestsConfig.CreateClientContext())
+            {
+                STKPageHelper helper = new STKPageHelper(context);
+                STKFolder rootFolder = helper.GetStyleLibraryAssets(false, new List<String> { "Strategik" });
+ 
+                STKFolder strategikFolder = rootFolder.Folders.Where(f => f.Name == "Strategik").SingleOrDefault();
+                Assert.IsNotNull(strategikFolder);
+          
+                STKFolder rootFolderWithData = helper.GetStyleLibraryAssets(true, new List<String> { "Strategik" });
+                Assert.IsTrue(rootFolder.Files.Count == rootFolderWithData.Files.Count);
+            }
+        }
+
+        [TestMethod]
+        [TestCategory(STKTestConstants.CoreFramework_Helpers)]
         public void TestReadPageLayouts()
         {
             using (ClientContext context = STKTestsConfig.CreateClientContext())

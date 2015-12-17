@@ -22,5 +22,6 @@ namespace Strategik.Definitions.Files
         public int MinorVersion { get; set; }
         public DateTime Created { get; set; }
         public DateTime LastModified { get; set; }
+        public Dictionary<String, Object> ListItem { get; set; }
     }
 }

@@ -29,6 +29,7 @@ using Strategik.Definitions.Pages;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Strategik.CoreFramework.Helpers
 {
@@ -117,7 +118,6 @@ namespace Strategik.CoreFramework.Helpers
             throw new NotImplementedException(); // TODO
         }
 
-
         /// <summary>
         /// Downloads a list of the masterpages in the current context 
         /// </summary>
@@ -131,7 +131,13 @@ namespace Strategik.CoreFramework.Helpers
             return rootFolder;
         }
 
-
+        public STKFolder GetStyleLibraryAssets(bool downloadFiles, List<String> folderMatch = null)
+        {
+            List styleLibrary = _web.GetStyleLibrary();
+            STKFileHelper fileHelper = new STKFileHelper(_clientContext);
+            STKFolder rootFolder = fileHelper.GetFolder(styleLibrary.RootFolder, downloadFiles, true, folderMatch);
+            return rootFolder;
+        }
 
         /// <summary>
         /// Downloads a list of the page layotus in the current context
@@ -146,7 +152,33 @@ namespace Strategik.CoreFramework.Helpers
             return pages;
         }
 
-       
-        #endregion Implementation Methods
+        /// <summary>
+        /// Copy masterpage gallery contents from current context to target
+        /// </summary>
+        /// <param name="targetContext">Where we are copying to</param>
+        /// <param name="includeSubFolders">true is subfolders need to be copied</param>
+        /// <param name="overwriteTarget">overwite any identical files found on the target</param>
+        /// <param name="folderMatch">Limits the subfolders included if specified</param>
+
+        public void SyncMasterPageGallery(ClientContext targetContext, bool includeSubFolders, bool overwriteTarget, List<String> folderMatch = null)
+        {
+            STKFolder sourceRootFolder = GetMasterPages(true, folderMatch);
+
+            STKPageHelper targetPageHelper = new STKPageHelper(targetContext);
+            STKFolder targetRootFolder = GetMasterPages(false, folderMatch);
+
+            foreach (STKFile file in sourceRootFolder.Files)
+            {
+                STKFile existingFile = targetRootFolder.Files.Where(f => f.FileName.ToLower() == file.FileName.ToLower()).SingleOrDefault();
+                if (existingFile == null || overwriteTarget) // it aint there or we dont care
+                {
+                    
+                }
+            }
+
+
+        }
+
+        #endregion 
     }
 }

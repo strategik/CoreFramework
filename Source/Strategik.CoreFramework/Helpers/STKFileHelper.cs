@@ -3,6 +3,7 @@ using Strategik.Definitions.Files;
 using Strategik.Definitions.Pages;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -139,10 +140,41 @@ namespace Strategik.CoreFramework.Helpers
                     file.FileBytes = DownloadFile(spFile);
                 }
 
+                // Get the details from the list item associated with this file
+                // This will tell us what it is (e.g. a masterpage) etc
+                ListItem spListItem = spFile.ListItemAllFields;
+                _clientContext.Load(spListItem);
+                _clientContext.ExecuteQueryRetry();
+                file.ListItem = ProcessListItem(spListItem);
+
                 folder.Files.Add(file);
             }
 
             return folder;
+        }
+
+        private Dictionary<String, Object> ProcessListItem(ListItem spListItem)
+        {
+            Dictionary<String, Object> listItem = new Dictionary<String, Object>();
+
+            foreach(String key in spListItem.FieldValues.Keys)
+            {
+                Object value = null;
+                spListItem.FieldValues.TryGetValue(key, out value);
+
+                if (value != null)
+                {
+                    Debug.WriteLine(key + " has value " + value + " and type " + value.GetType().Name);
+
+                    String stringValue = value as String;
+                    if (String.IsNullOrEmpty(stringValue) == false)
+                    {
+                        listItem.Add(key, stringValue);
+                    }
+                }
+            }
+
+            return listItem;
         }
 
         private byte[] DownloadFile(File file)
