@@ -103,7 +103,7 @@ namespace Microsoft.SharePoint.Client
 
                 case STKSolutionLocationType.Assembly:
                     {
-                        Assembly assembly = Assembly.LoadWithPartialName(solution.Location);
+                        Assembly assembly = Assembly.Load(solution.Location); // TODO Check this - move to file helper
 
                         foreach (String resource in assembly.GetManifestResourceNames())
                         {
