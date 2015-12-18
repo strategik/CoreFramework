@@ -33,6 +33,7 @@ using Microsoft.SharePoint.Client;
 using Strategik.Definitions.Security;
 using Strategik.Definitions.Configuration;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik;
+using Strategik.Definitions.Security.Principals;
 
 namespace Strategik.CoreFramework.Helpers
 {

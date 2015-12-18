@@ -42,6 +42,7 @@ using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using Strategik.Definitions.Security;
 using Strategik.Definitions.Sites;
 using Strategik.CoreFramework.PnP.Framework.Provisioning.Providers.Strategik.Model;
+using Strategik.Definitions.Security.Principals;
 
 namespace Microsoft.SharePoint.Client
 {

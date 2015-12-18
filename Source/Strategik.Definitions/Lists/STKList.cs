@@ -27,6 +27,7 @@ using Strategik.Definitions.ContentTypes;
 using Strategik.Definitions.Events;
 using Strategik.Definitions.Fields;
 using Strategik.Definitions.Security;
+using Strategik.Definitions.Security.Roles;
 using Strategik.Definitions.Workflows;
 using System;
 using System.Collections.Generic;

@@ -27,6 +27,7 @@
 #endregion License
 
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
+using Strategik.Definitions.Security.Principals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,14 +42,14 @@ namespace Strategik.Definitions.Security
         {
             SiteGroup siteGroup = new SiteGroup()
             {
-                AllowMembersEditMembership = group.AllowUsersToEditMembership,
-                AutoAcceptRequestToJoinLeave = group.AutoAcceptRequestsToJoinOrLeave,
+                AllowMembersEditMembership = group.AllowMembersEditMembership,
+                AutoAcceptRequestToJoinLeave = group.AutoAcceptRequestToJoinLeave,
                 Description = group.Description,
-                OnlyAllowMembersViewMembership = group.OnlyAllowMembersToViewMembership,
-                AllowRequestToJoinLeave = group.AllowMembershipRequests,
-                RequestToJoinLeaveEmailSetting = group.MembershipRequestsEmail,
+                OnlyAllowMembersViewMembership = group.OnlyAllowMembersViewMembership,
+                AllowRequestToJoinLeave = group.AllowRequestToJoinLeave,
+                RequestToJoinLeaveEmailSetting = group.RequestToJoinLeaveEmailSetting,
                 Owner = group.Owner,
-                Title = group.Name
+                Title = group.Title
             };
 
             return siteGroup;

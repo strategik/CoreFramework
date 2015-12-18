@@ -37,6 +37,7 @@ using Strategik.Definitions.Fields;
 using Strategik.Definitions.Lists;
 using Strategik.Definitions.Pages;
 using Strategik.Definitions.Security;
+using Strategik.Definitions.Security.Principals;
 using Strategik.Definitions.Sites;
 using Strategik.Definitions.Taxonomy;
 using Strategik.Definitions.UserInterface;

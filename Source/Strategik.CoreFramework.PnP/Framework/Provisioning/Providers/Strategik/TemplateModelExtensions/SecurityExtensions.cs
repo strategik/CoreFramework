@@ -26,6 +26,7 @@
 
 
 using Strategik.Definitions.Security;
+using Strategik.Definitions.Security.Principals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,13 +41,13 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Model
         {
             STKGroup stkGroup = new STKGroup()
             {
-                AllowMembershipRequests = group.AllowRequestToJoinLeave,
-                AutoAcceptRequestsToJoinOrLeave = group.AutoAcceptRequestToJoinLeave,
-                AllowUsersToEditMembership = group.AllowMembersEditMembership,
+                AllowRequestToJoinLeave = group.AllowRequestToJoinLeave,
+                AutoAcceptRequestToJoinLeave = group.AutoAcceptRequestToJoinLeave,
+                AllowMembersEditMembership = group.AllowMembersEditMembership,
                 Description = group.Description,
-                MembershipRequestsEmail = group.RequestToJoinLeaveEmailSetting,
-                Name = group.Title,
-                OnlyAllowMembersToViewMembership = group.OnlyAllowMembersViewMembership,
+                RequestToJoinLeaveEmailSetting = group.RequestToJoinLeaveEmailSetting,
+                Title = group.Title,
+                OnlyAllowMembersViewMembership = group.OnlyAllowMembersViewMembership,
                 Owner = group.Owner
             };
 
@@ -54,7 +55,6 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Model
             {
                 STKUser stkUser = new STKUser()
                 {
-                    Group = stkGroup,
                     Name = user.Name
                 };
 

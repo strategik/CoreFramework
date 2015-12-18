@@ -1,4 +1,5 @@
 ﻿using Strategik.Definitions.Security;
+using Strategik.Definitions.Security.Principals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,13 @@ namespace Strategik.Definitions.TestModel.Security
 
         public static STKGroup CustomGroup1 = new STKGroup()
         {
-            AllowMembershipRequests = false,
-            AllowUsersToEditMembership = false,
-            AutoAcceptRequestsToJoinOrLeave = false,
+            AllowRequestToJoinLeave = false,
+            AllowMembersEditMembership = false,
+            AutoAcceptRequestToJoinLeave = false,
             Description = "Custom Group1 Description",
-            MembershipRequestsEmail = "group1@strategik.com.au",
-            Name = "Custom Group 1",
-            OnlyAllowMembersToViewMembership = false,
+            RequestToJoinLeaveEmailSetting = "group1@strategik.com.au",
+            Title = "Custom Group 1",
+            OnlyAllowMembersViewMembership = false,
             Owner = @"dev\strategikspdev" // This user must exist on the target system
         };
 

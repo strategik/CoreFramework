@@ -36,6 +36,7 @@ using Strategik.CoreFramework.Helpers;
 using Strategik.Definitions.Security;
 using Strategik.Definitions.TestModel.Security;
 using Strategik.CoreFramework.Tests.Infrastructure;
+using Strategik.Definitions.Security.Principals;
 
 namespace Strategik.CoreFramework.Tests.Helpers
 {
@@ -62,6 +63,32 @@ namespace Strategik.CoreFramework.Tests.Helpers
             {
                 STKSecurityHelper helper = new STKSecurityHelper(context);
                 List<STKGroup> allSiteGroups = helper.ReadGroups();
+            }
+        }
+
+
+        [TestMethod]
+        [TestCategory(STKTestConstants.CoreFramework_Helpers)]
+        public void TestCreateCustomAdministratorRole()
+        {
+            using (ClientContext context = STKTestsConfig.CreateClientContext())
+            {
+                //STKSecurityHelper helper = new STKSecurityHelper(context);
+                //STKGroup adminRole = new STKGroup()
+                //{
+                //    Name = "Custom Admin Role",
+                    
+                //};
+
+                //STKRoleAssignment adminRoleAssignment = new STKRoleAssignment()
+                //{
+                //    Group = adminRole
+                //};
+
+                //adminRoleAssignment.RoleDefinitions.Add()
+
+                //adminRole.RoleAssigments.Add();
+
             }
         }
 

@@ -28,6 +28,7 @@ using Strategik.Definitions.Fields;
 using Strategik.Definitions.Lists;
 using Strategik.Definitions.Pages;
 using Strategik.Definitions.Security;
+using Strategik.Definitions.Security.Principals;
 using System;
 using System.Collections.Generic;
 
