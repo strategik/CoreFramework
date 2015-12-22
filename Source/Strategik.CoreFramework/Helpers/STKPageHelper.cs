@@ -46,7 +46,15 @@ namespace Strategik.CoreFramework.Helpers
             if (clientContext == null) throw new ArgumentNullException("Client Context");
         }
 
-        #endregion Constructor
+        public STKPageHelper(STKAuthenticationHelper authHelper)
+            : base(authHelper)
+        {}
+
+        public STKPageHelper()
+            : base (new STKAuthenticationHelper())
+        { }
+
+        #endregion 
 
         #region Implementation Methods
 

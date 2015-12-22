@@ -22,6 +22,14 @@ namespace Strategik.CoreFramework.Helpers
             : base(context)
         {}
 
+        public STKFileHelper(STKAuthenticationHelper authHelper)
+            :base(authHelper)
+        {}
+
+        public STKFileHelper()
+            :base(new STKAuthenticationHelper())
+        {}
+
         #endregion
 
         #region Static Methods

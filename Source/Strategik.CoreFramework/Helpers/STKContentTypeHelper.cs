@@ -44,13 +44,24 @@ namespace Strategik.CoreFramework.Helpers
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         public STKContentTypeHelper(ClientContext clientContext)
             : base(clientContext)
         {
             _siteColumnHelper = new STKSiteColumnHelper(clientContext);
         }
+
+        public STKContentTypeHelper(STKAuthenticationHelper authHelper)
+            :base(authHelper)
+        {}
+
+        public STKContentTypeHelper()
+            :base(new STKAuthenticationHelper()) 
+        {
+            // Authentication details specificed in app / web.config
+        }
+
 
         #endregion Constructor
 

@@ -1,5 +1,4 @@
 ﻿#region License
-
 //
 // Copyright (c) 2015 Strategik Pty Ltd,
 //
@@ -20,7 +19,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-
+//
+// Author:  Dr Adrian Colquhoun
+//
 #endregion License
 
 using System;
@@ -35,11 +36,11 @@ namespace Strategik.Definitions.Base
     {
         #region Shared Properties
         /// <summary>
-        /// A descritpion of the item.
+        /// A description of the item.
         /// </summary>
         public string Description { get; set; }
         /// <summary>
-        /// The display name (if supported)
+        /// The display name (if supported) - will appear in the UI
         /// </summary>
         public string DisplayName { get; set; }
         /// <summary>
@@ -55,11 +56,20 @@ namespace Strategik.Definitions.Base
         /// </summary>
         public string Title { get; set; }
         /// <summary>
-        /// A unique identifer for the item
+        /// A unique identifer for the item - does not change between installations or versions
         /// </summary>
         public Guid UniqueId { get; set; }
+        /// <summary>
+        /// Allows us to explicitly track the major version of this definition
+        /// </summary>
         public int MajorVersion { get; set; }
+        /// <summary>
+        /// Allows us to explicitly track the minor version of this definition
+        /// </summary>
         public int MinorVersion { get; set; }
+        /// <summary>
+        /// Allows us to store a set or abritary properties within any definition
+        /// </summary>
         public Dictionary<String, String> STKProperties { get; set; }
 
         #endregion Shared Properties

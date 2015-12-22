@@ -26,9 +26,7 @@ namespace Strategik.Definitions.Shared
 {
     public enum STKScope
     {
-        Farm,
-        WebApplication,
-        CentralAdmin_WebApplication,
+        Tenant,
         Site,
         RootWeb,
         CurrentWeb

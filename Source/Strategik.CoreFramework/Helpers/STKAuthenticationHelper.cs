@@ -22,7 +22,6 @@
 
 #endregion License
 
-
 using Microsoft.SharePoint.Client;
 using Strategik.CoreFramework.Enumerations;
 using System;
@@ -37,16 +36,23 @@ using System.Threading.Tasks;
 namespace Strategik.CoreFramework.Helpers
 {
     /// <summary>
-    /// Helper class for dealing with tokens to allow us to use the framework in any arbitary approved application
+    /// Helper class for authenticating to Office 365 and providing a context to work against
     /// </summary>
     /// <remarks>
-    /// Provides a Client context for Office 365, OnPremise, App only and so on depending on how we 
-    /// configure it. Based on the code found in the Unit test classes in the Office PnP
+    /// Provides a Client Context for Office 365 to our helper clasess. The client Context is 
+    /// username / password, SharePoint provider hosted app (app only or app + user context 
+    /// or Windows Azure AD application (app only or app + user context) depending on how we 
+    /// configure this class. 
+    /// 
+    /// Reads authentication details from app / web.config for convenience so that we 
+    /// dont have to hard code credentials into our application.
+    /// 
+    /// Based on code from the PnP unit test projects.
     /// </remarks>
     public class STKAuthenticationHelper
     {
 
-        #region Keys
+        #region Keys - Used to read from app / web.config
 
         public const String STK_AppId = "STK_AppId";
         public const String STK_AppSecret = "STK_AppSecret";
@@ -55,11 +61,7 @@ namespace Strategik.CoreFramework.Helpers
         public const String STK_SharePointOnlineUrl = "STK_SPOSharePointUrl";
         public const String STK_UserName = "STK_SPOUserName";
         public const String STK_Password = "STK_SPOPassword";
-        public const String STK_OnPremUserId = "STK_OnPremUserName";
-        public const String STK_OnPremPassword = "STK_OnPremPassword";
-        public const String STK_OnPremDomain = "STK_OnPremDomain";
-        public const String STK_OnPremDevSiteUrl = "STK_OnPremDevSiteUrl";
-
+       
         #endregion
 
         #region Data
@@ -69,18 +71,15 @@ namespace Strategik.CoreFramework.Helpers
         private static String _realm;
         private static String _tenantUrl;
         private static String _sharePointOnlineUrl;
-        private static String _onPremDeveloperSiteUrl;
         private static String _userName;
         private static String _password;
-        private static String _onPremUserId;
-        private static String _onPremPassword;
-        private static String _onPremDomain;
-
+        
         private ClientContext _context;
         private ClientContext _adminContext;
 
         private STKTarget _target;
         private STKAuthenticationMode _authenticationMode;
+        private STKAppType _appType;
         private ICredentials _credentials;
         private bool _hasAdminUrl;
 
@@ -90,7 +89,7 @@ namespace Strategik.CoreFramework.Helpers
 
         static STKAuthenticationHelper ()
 	    {
-            // Preload any specified configuration values from the app.config
+            // Preload any specified configuration values from the app.config / web.config
 
             _realm = ConfigurationManager.AppSettings[STK_Realm];
             _appId = ConfigurationManager.AppSettings[STK_AppId];
@@ -99,10 +98,6 @@ namespace Strategik.CoreFramework.Helpers
             _sharePointOnlineUrl = ConfigurationManager.AppSettings[STK_SharePointOnlineUrl];
             _userName = ConfigurationManager.AppSettings[STK_UserName];
             _password = ConfigurationManager.AppSettings[STK_Password];
-            _onPremUserId = ConfigurationManager.AppSettings[STK_OnPremUserId];
-            _onPremDomain = ConfigurationManager.AppSettings[STK_OnPremDomain];
-            _onPremPassword = ConfigurationManager.AppSettings[STK_OnPremPassword];
-            _onPremDeveloperSiteUrl = ConfigurationManager.AppSettings[STK_OnPremDevSiteUrl];
 	    }
 
         /// <summary>
@@ -110,7 +105,11 @@ namespace Strategik.CoreFramework.Helpers
         /// </summary>
         public STKAuthenticationHelper()
             :this(String.Empty, String.Empty, String.Empty, null, STKTarget.Office_365)
-        {} // Looks for the appid and secret in app config
+        {
+            // Default is provider hosted app - client Auth flow
+            _appType = STKAppType.ProviderHosted;
+            _authenticationMode = STKAuthenticationMode.ClientAuthFlow;
+        } // Looks for the appid and secret in app config
 
         /// <summary>
         /// Create an app only or client authenticated client context.

@@ -33,15 +33,25 @@ namespace Strategik.CoreFramework.Helpers
 {
     public class STKFieldHelper: STKHelperBase
     {
-        #region Constructor
+        #region Constructors
 
         public STKFieldHelper(ClientContext clientContext)
             : base(clientContext)
         { }
 
-        #endregion Constructor
+        public STKFieldHelper(STKAuthenticationHelper authHelper)
+            :base(authHelper)
+        { }
 
-        #region Utilites
+        public STKFieldHelper()
+            :base(new STKAuthenticationHelper()) 
+        {
+            // Authentication details specificed in app / web.config
+        }
+
+        #endregion
+
+        #region Utilities
 
         public static void Validate(List<STKField> fields)
         {

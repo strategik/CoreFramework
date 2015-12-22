@@ -42,7 +42,15 @@ namespace Strategik.CoreFramework.Helpers
             : base(clientContext)
         { }
 
-        #endregion Constructor
+        public STKSearchHelper(STKAuthenticationHelper authHelper)
+            : base(authHelper)
+        { }
+
+        public STKSearchHelper()
+            : base (new STKAuthenticationHelper())
+        { }
+
+        #endregion
 
         #region Import and Export Methods
 

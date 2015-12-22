@@ -196,6 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\STKConfiguration.cs" />
+    <Compile Include="Enumerations\STKAppType.cs" />
     <Compile Include="Enumerations\STKAuthenticationMode.cs" />
     <Compile Include="Enumerations\STKTarget.cs" />
     <Compile Include="ExtensionMethods\STKSearchExtensions.cs" />
@@ -208,7 +209,6 @@
     <Compile Include="Helpers\STKSecurityHelper.cs" />
     <Compile Include="Helpers\STKSiteColumnHelper.cs" />
     <Compile Include="Helpers\STKSiteHelper.cs" />
-    <Compile Include="Helpers\STKSolutionHelper.cs" />
     <Compile Include="Helpers\STKTokenHelper.cs" />
     <Compile Include="Helpers\STKWebHelper.cs" />
     <Compile Include="Helpers\STKWorkflowHelper.cs" />

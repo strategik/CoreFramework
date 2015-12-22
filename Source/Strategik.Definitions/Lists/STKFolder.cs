@@ -25,6 +25,7 @@
 using System;
 using System.Collections.Generic;
 
+//TODO: We have STKFolder definition elsewhere that can replace this class
 namespace Strategik.Definitions.Lists
 {
     /// <summary>

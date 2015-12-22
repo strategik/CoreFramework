@@ -43,7 +43,15 @@ namespace Strategik.CoreFramework.Helpers
             : base(clientContext)
         { }
 
-        #endregion Constructors
+        public STKTaxonomyHelper(STKAuthenticationHelper authHelper)
+            : base(authHelper)
+        { }
+
+        public STKTaxonomyHelper()
+            : base (new STKAuthenticationHelper())
+        { }
+
+        #endregion 
 
         #region Read Taxonomy Definitions Methods
 

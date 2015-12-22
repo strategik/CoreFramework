@@ -51,7 +51,15 @@ namespace Strategik.CoreFramework.Helpers
             : base(context)
         { }
 
-        #endregion Constructors
+        public STKSiteHelper(STKAuthenticationHelper authHelper)
+            : base(authHelper)
+        { }
+
+        public STKSiteHelper()
+            : base(new STKAuthenticationHelper())
+        { }
+
+        #endregion
 
         #region Methods
 

@@ -37,8 +37,15 @@ namespace Strategik.CoreFramework.Helpers
     {
         #region Constructors
         public STKWorkflowHelper(ClientContext clientContext) : base(clientContext)
-        {
-        }
+        { }
+
+        public STKWorkflowHelper(STKAuthenticationHelper authHelper)
+            : base(authHelper)
+        { }
+
+        public STKWorkflowHelper()
+            : base(new STKAuthenticationHelper())
+        { }
 
         #endregion
 

@@ -23,7 +23,6 @@
 //
 // Author:  Dr Adrian Colquhoun
 //
-
 #endregion License
 
 using Strategik.Definitions.Solutions;
@@ -38,39 +37,49 @@ namespace Strategik.Definitions.Configuration
     /// <summary>
     /// Allows configuration to be passed to provisioning operations
     /// </summary>
+    /// <remarks>
+    /// We often wish to apply different provisioning configuration rules to the same logical
+    /// definition. We specify provisioning overrides using this class.
+    /// </remarks>
     public class STKProvisioningConfiguration
     {
         #region Properties
 
-        #region PnP Switches - redundant
-        public bool UsePnP { get; set; }
-        public bool UsePnPForTaxonomy { get; set; }
-        public bool UsePnPForSecurity { get; set; }
-        public bool UsePnpForSiteColumns { get; set; }
-        public bool UsePnPForLists { get; set; }
-        public bool UsePnPForContentTypes { get; set; }
-        public bool UsePnPForSitePages { get; set; }
-        public bool UsePnPForwebPartPages { get; set; }
-        public bool UsePnPForPublishingPages { get; set; }
-
-        #endregion
-
         #region Site Collection Overrides
+
         /// <summary>
         /// Set to true to delete existing site collections during provisioning
         /// </summary>
         public bool DeleteExistingSites { get; set; }
 
+        /// <summary>
+        /// Set to trur to skip the recycle bin on a site collection delete
+        /// </summary>
         public bool ForceSiteDelete { get; set; }
 
+        /// <summary>
+        /// The primamry site colelction adminstrator to use during provisioning
+        /// </summary>
         public String PrimarySiteCollectionAdministrator { get; set; }
 
-        public String SecondarySiteCollectionAdminsitrator { get; set;}
+        /// <summary>
+        /// The secondary site collection administrator
+        /// </summary>
+        public String SecondarySiteCollectionAdminisitrator { get; set;}
 
+        /// <summary>
+        /// Override the tenant relative URL when provisioning
+        /// </summary>
         public String TenantRelativeUrl { get; set; }
 
+        /// <summary>
+        /// Timezone
+        /// </summary>
         public int? TimeZone { get; set; }
 
+        /// <summary>
+        /// Locale
+        /// </summary>
         public uint? Locale { get; set; }
 
         /// <summary>
@@ -95,33 +104,37 @@ namespace Strategik.Definitions.Configuration
             : this(null)
         {}
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="solution">the solution that this configuration applies to</param>
         public STKProvisioningConfiguration(STKSolution solution)
         {
             Solution = solution;
             WhatIf = false;
             Messages = new List<String>();
 
-            // Use the PnP code by default for content types, site columns, lists and libraries
-            UsePnP = true;
-            UsePnpForSiteColumns = true;
-            UsePnPForContentTypes = true;
-            UsePnPForLists = true;
-        }
-
-        public bool HasPrimarySiteCollectionAdministrator()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool HasTenantRelativeUrl()
-        {
-            throw new NotImplementedException();
+          
         }
 
         #endregion
 
         #region Has Property Checks
 
+        public bool HasPrimarySiteCollectionAdministrator()
+        {
+            return String.IsNullOrEmpty(PrimarySiteCollectionAdministrator) ? false : true;
+        }
+
+        public bool HasSecondarySiteCollectionAdministrator()
+        {
+            return String.IsNullOrEmpty(SecondarySiteCollectionAdminisitrator) ? false : true;
+        }
+
+        public bool HasTenantRelativeUrl()
+        {
+            return String.IsNullOrEmpty(TenantRelativeUrl) ? false : true;
+        }
 
         #endregion
     }

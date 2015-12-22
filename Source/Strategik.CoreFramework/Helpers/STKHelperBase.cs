@@ -48,6 +48,7 @@ namespace Strategik.CoreFramework.Helpers
         protected ClientContext _clientContext;
         protected Web _web;
         protected Site _site;
+        protected STKAuthenticationHelper _authHelper;
 
         #endregion Data
 
@@ -58,6 +59,25 @@ namespace Strategik.CoreFramework.Helpers
             if (clientContext == null) throw new ArgumentNullException("Client Context");
 
             _clientContext = clientContext;
+            _clientContext.Load(_clientContext.Web);
+            _clientContext.Load(_clientContext.Site);
+
+            _clientContext.ExecuteQueryRetry();
+
+            _web = _clientContext.Web;
+            _site = _clientContext.Site;
+
+            Log.Info(STKConstants.LoggingSource, "Initialised helper {0}. Target web is {1} located at {2}", this.GetType().Name, _web.Title, _web.Url);
+        }
+
+
+        public STKHelperBase(STKAuthenticationHelper authHelper)
+        {
+            if (authHelper == null) throw new ArgumentNullException("Authentication helper");
+
+            _authHelper = authHelper;
+            _clientContext = _authHelper.GetClientContext();
+
             _clientContext.Load(_clientContext.Web);
             _clientContext.Load(_clientContext.Site);
 

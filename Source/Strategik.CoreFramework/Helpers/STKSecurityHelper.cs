@@ -42,8 +42,15 @@ namespace Strategik.CoreFramework.Helpers
         #region Constructors
         public STKSecurityHelper(ClientContext clientContext) 
             : base(clientContext)
-        {
-        }
+        { }
+
+        public STKSecurityHelper(STKAuthenticationHelper authHelper)
+            : base(authHelper)
+        { }
+
+        public STKSecurityHelper()
+            : base(new STKAuthenticationHelper())
+        { }
 
         #endregion
 
@@ -72,7 +79,6 @@ namespace Strategik.CoreFramework.Helpers
         }
 
         #endregion
-
 
         #region Read Groups Methods
 

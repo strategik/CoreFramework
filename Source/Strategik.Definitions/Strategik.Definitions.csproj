@@ -169,6 +169,9 @@
     <Compile Include="Lists\STKList.cs" />
     <Compile Include="Lists\STKTaskList.cs" />
     <Compile Include="Lists\SKUserInformationList.cs" />
+    <Compile Include="Mail\STKEmailTemplate.cs" />
+    <Compile Include="Mail\STKMailFolder.cs" />
+    <Compile Include="Mail\STKO365Mailbox.cs" />
     <Compile Include="Pages\STKPageLocationType.cs" />
     <Compile Include="Pages\STKMasterPage.cs" />
     <Compile Include="Pages\STKPage.cs" />
@@ -221,7 +224,6 @@
     <Compile Include="Yammer\STKYammerCustomisations.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Mail\" />
     <Folder Include="OneDrive\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

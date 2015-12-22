@@ -29,7 +29,7 @@
 namespace Strategik.Definitions.Events
 {
     ///<summary>
-    ///OurcopyofSPEventReceiverTypeenumeration
+    ///Our copy of SPEventReceiverType enumeration
     ///</summary>
     public enum STKEventReceiverType
     {

@@ -48,7 +48,16 @@ namespace Strategik.CoreFramework.Helpers
             : base(context)
         { }
 
-        #endregion Constructor
+
+        public STKWebHelper(STKAuthenticationHelper authHelper)
+            : base(authHelper)
+        { }
+
+        public STKWebHelper()
+            : base(new STKAuthenticationHelper())
+        { }
+
+        #endregion 
 
         #region Methods
 
@@ -179,8 +188,8 @@ namespace Strategik.CoreFramework.Helpers
         public STKWeb ReadWeb()
         {
             // Delegated to the PnPHelper
-            STKPnPHelper ppHelper = new STKPnPHelper(_clientContext);
-            return ppHelper.ReadWeb();
+            STKPnPHelper pnpHelper = new STKPnPHelper(_clientContext);
+            return pnpHelper.ReadWeb();
         }
 
         #endregion

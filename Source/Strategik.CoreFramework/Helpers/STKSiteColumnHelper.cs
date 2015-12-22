@@ -50,6 +50,14 @@ namespace Strategik.CoreFramework.Helpers
             : base(clientContext)
         { }
 
+        public STKSiteColumnHelper(STKAuthenticationHelper authHelper)
+            : base(authHelper)
+        { }
+
+        public STKSiteColumnHelper()
+            : base(new STKAuthenticationHelper())
+        { }
+
         #endregion
 
         #region Ensure Site Columns

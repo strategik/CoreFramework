@@ -89,6 +89,13 @@ namespace Strategik.CoreFramework.Helpers
         public STKTenantHelper(STKAuthenticationHelper authHelper)
         {
             if (authHelper == null) throw new ArgumentNullException("authHelper");
+            _authHelper = authHelper;
+            Initialise(false);
+        }
+
+        public STKTenantHelper()
+        {
+            _authHelper = new STKAuthenticationHelper();
             Initialise(false);
         }
 

@@ -27,6 +27,6 @@ namespace Strategik.Definitions.Shared
     public enum STKViewType
     {
         Html,
-        Gantt
+        Gannt
     }
 }

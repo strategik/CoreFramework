@@ -96,5 +96,35 @@ namespace Strategik.CoreFramework.Tests.Helpers
             Assert.Fail(STKTestConstants.TestNotImplemented);
         }
 
+
+        [TestMethod]
+        [TestCategory(STKTestConstants.CoreFramework_Helpers)]
+        public void TestProvisionTaskList()
+        {
+            using (ClientContext context = STKTestsConfig.CreateClientContext())
+            {
+                STKListHelper helper = new STKListHelper(context);
+                helper.EnsureList(new STKTaskList());
+            }
+        }
+
+        [TestMethod]
+        [TestCategory(STKTestConstants.CoreFramework_Helpers)]
+        public void TestProvisionCustomisedTaskList()
+        {
+            using (ClientContext context = STKTestsConfig.CreateClientContext())
+            {
+                STKListHelper helper = new STKListHelper(context);
+                STKTaskList taskList = new STKTaskList()
+                {
+                    Title = "My Demo Task List",
+                    Url = "demoTasks",
+                    EnableVersioning = true,
+                };
+
+                helper.EnsureList(taskList);
+            }
+        }
+
     }
 }
