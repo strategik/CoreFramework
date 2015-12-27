@@ -27,7 +27,7 @@ namespace Strategik.CoreFramework.PnP.Framework.Provisioning.Providers.Strategik
             Log.Debug(LogSource, "Extraction extension called " + configurationData);
 
             // Extract default group information if reading groups
-            if (configurationData.Equals("ReadGroups") || configurationData.Equals("ReadPermissionLevels"))
+            if (configurationData.Equals("ReadGroups") || configurationData.Equals("ReadRoleAssignments") || configurationData.Equals("ReadRoleDefinitions"))
             {
                 pnpTemplate = ReadSecurityInfo(web, pnpTemplate);
             }
@@ -75,7 +75,8 @@ namespace Strategik.CoreFramework.PnP.Framework.Provisioning.Providers.Strategik
                 r => r.RoleDefinitionBindings.Include(
                     rd => rd.Name,
                     rd => rd.RoleTypeKind),
-                r => r.Member.LoginName));
+                r => r.Member.LoginName,
+                r => r.Member.PrincipalType));
 
             web.Context.ExecuteQueryRetry();
 

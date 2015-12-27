@@ -96,7 +96,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
             using (ClientContext context = STKTestsConfig.CreateClientContext())
             {
                 STKSecurityHelper helper = new STKSecurityHelper(context);
-                List<STKRoleDefinition> allCustomRoleDefinitions = helper.ReadRoleDefinitions();
+                List<STKRoleDefinition> allRoleDefinitions = helper.ReadRoleDefinitions();
             }
         }
 
@@ -107,7 +107,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
             using (ClientContext context = STKTestsConfig.CreateClientContext())
             {
                 STKSecurityHelper helper = new STKSecurityHelper(context);
-                List<STKRoleAssignment> allPermissionLevels = helper.ReadRoleAssignments();
+                List<STKRoleAssignment> allRoleAssignments = helper.ReadRoleAssignments();
             }
         }
 
