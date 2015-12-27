@@ -73,5 +73,10 @@ namespace Strategik.Definitions.Security.Principals
         /// </summary>
         public String RequestToJoinLeaveEmailSetting { get; set; }
 
-    }
+
+        public STKGroup()
+        {
+            Users = new List<STKUser>();
+        }
+    }       
 }

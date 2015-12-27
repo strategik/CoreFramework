@@ -43,6 +43,7 @@ using Strategik.Definitions.Security;
 using Strategik.Definitions.Sites;
 using Strategik.CoreFramework.PnP.Framework.Provisioning.Providers.Strategik.Model;
 using Strategik.Definitions.Security.Principals;
+using Strategik.CoreFramework.PnP.Framework.Provisioning.Providers.Strategik.Extensibility;
 
 namespace Microsoft.SharePoint.Client
 {
@@ -149,9 +150,13 @@ namespace Microsoft.SharePoint.Client
             List<STKField> stkSiteColumns = new List<STKField>();
 
             // Generate the PnP templates for site columns
-            ProvisioningTemplate template = new STKPnPTemplate();
+     
             ProvisioningTemplateCreationInformation createInfo = new ProvisioningTemplateCreationInformation(web);
-            template = web.GetProvisioningTemplate(createInfo);
+            ProvisioningTemplate template = web.GetProvisioningTemplate(createInfo);
+
+            // Extensibility
+            STKPnPExtensbilityProvider extensibilityProvider = new STKPnPExtensbilityProvider();
+            template = extensibilityProvider.ExtractTemplate(web, template, "ReadSiteColumns");
 
             // Convert the templates returned to STKFields
             foreach (OfficeDevPnP.Core.Framework.Provisioning.Model.Field field in template.SiteFields)
@@ -174,6 +179,10 @@ namespace Microsoft.SharePoint.Client
             ProvisioningTemplateCreationInformation createInfo = new ProvisioningTemplateCreationInformation(web);
             template = web.GetProvisioningTemplate(createInfo);
 
+            // Extensibility
+            STKPnPExtensbilityProvider extensibilityProvider = new STKPnPExtensbilityProvider();
+            template = extensibilityProvider.ExtractTemplate(web, template, "ReadContentTypes");
+
             // Convert the templates returns to STKFields
             foreach (OfficeDevPnP.Core.Framework.Provisioning.Model.ContentType contentType in template.ContentTypes)
             {
@@ -195,6 +204,10 @@ namespace Microsoft.SharePoint.Client
             ProvisioningTemplateCreationInformation createInfo = new ProvisioningTemplateCreationInformation(web);
             template = web.GetProvisioningTemplate(createInfo);
 
+            // Extensibility
+            STKPnPExtensbilityProvider extensibilityProvider = new STKPnPExtensbilityProvider();
+            template = extensibilityProvider.ExtractTemplate(web, template, "ReadLists");
+
             foreach (ListInstance list in template.Lists)
             {
                 stkLists.Add(list.GenerateStrategikDefinition());
@@ -215,7 +228,14 @@ namespace Microsoft.SharePoint.Client
             ProvisioningTemplate template = new STKPnPTemplate();
             ProvisioningTemplateCreationInformation createInfo = new ProvisioningTemplateCreationInformation(web);
             createInfo.IncludeSiteGroups = true;
-            template = web.GetProvisioningTemplate(createInfo);
+
+            // template = web.GetProvisioningTemplate(createInfo);
+            template = new ProvisioningTemplate(); // no point calling the PnP code here as we repeat 
+            // call in the extension method to get all the groups
+
+            // Extensibility
+            STKPnPExtensbilityProvider extensibilityProvider = new STKPnPExtensbilityProvider();
+            template = extensibilityProvider.ExtractTemplate(web, template, "ReadGroups");
 
             foreach (SiteGroup group in template.Security.SiteGroups)
             {

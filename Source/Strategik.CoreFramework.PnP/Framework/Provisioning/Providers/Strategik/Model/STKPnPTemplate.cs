@@ -10,13 +10,14 @@ using System.Threading.Tasks;
 namespace Strategik.CoreFramework.PnP.Framework.Provisioning.Providers.Strategik.Model
 {
     /// <summary>
-    /// Extend the PnP Provisioning Template
+    /// Extend the PnP Provisioning Template an plug in an extsnibility provide for provisioning operations
     /// </summary>
     public class STKPnPTemplate: ProvisioningTemplate
     {
         #region Data
 
         private string _configuration;
+
 
         #endregion
 

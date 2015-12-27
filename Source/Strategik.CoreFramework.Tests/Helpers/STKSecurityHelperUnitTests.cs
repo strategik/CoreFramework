@@ -44,19 +44,25 @@ namespace Strategik.CoreFramework.Tests.Helpers
     public class STKSecurityHelperUnitTests
     {
         [TestMethod]
-        [TestCategory(STKTestConstants.CoreFramework_Helpers)]
+        [TestCategory(STKTestConstants.CoreFramework_Helpers_SecurityHelper)]
         public void TestEnsureSecurityGroups()
         {
             using (ClientContext context = STKTestsConfig.CreateClientContext())
             {
                 STKSecurityHelper helper = new STKSecurityHelper(context);
-                List<STKGroup> allSiteGroups = STKTestSecurity.AllCustomGroups();
-                helper.EnsureGroups(allSiteGroups);
+                List<STKGroup> allCustomGroups = STKTestSecurity.AllCustomGroups();
+
+                foreach (STKGroup group in allCustomGroups)
+                {
+                    group.Owner = STKTestsConfig.UserName;
+                }
+
+                helper.EnsureGroups(allCustomGroups);
             }
         }
 
         [TestMethod]
-        [TestCategory(STKTestConstants.CoreFramework_Helpers)]
+        [TestCategory(STKTestConstants.CoreFramework_Helpers_SecurityHelper)]
         public void TestReadSecurityGroups()
         {
             using (ClientContext context = STKTestsConfig.CreateClientContext())
