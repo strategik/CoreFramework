@@ -15,7 +15,7 @@
         <copyright>Strategik Pty Ltd 2015</copyright>
         <dependencies>
             <dependency id="OfficeDevPnPCore16" version="1.9.1215.1" />
-			<dependency id="Json.NET" version="7.0.1" />
+			<dependency id="Newtonsoft.JSON" version="7.0.1" />
         </dependencies>
     </metadata>
     <files>
