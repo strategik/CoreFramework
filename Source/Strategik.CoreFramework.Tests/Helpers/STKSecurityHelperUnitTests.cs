@@ -37,6 +37,8 @@ using Strategik.Definitions.Security;
 using Strategik.Definitions.TestModel.Security;
 using Strategik.CoreFramework.Tests.Infrastructure;
 using Strategik.Definitions.Security.Principals;
+using Strategik.Definitions.Security.Permissions;
+using Strategik.Definitions.Security.Roles;
 
 namespace Strategik.CoreFramework.Tests.Helpers
 {
@@ -52,10 +54,12 @@ namespace Strategik.CoreFramework.Tests.Helpers
                 STKSecurityHelper helper = new STKSecurityHelper(context);
                 List<STKGroup> allCustomGroups = STKTestSecurity.AllCustomGroups();
 
-                foreach (STKGroup group in allCustomGroups)
-                {
-                    group.Owner = STKTestsConfig.UserName;
-                }
+                allCustomGroups[0].Owner = STKTestsConfig.UserName;
+
+                //foreach (STKGroup group in allCustomGroups)
+                //{
+                //    group.Owner = STKTestsConfig.UserName;
+                //}
 
                 helper.EnsureGroups(allCustomGroups);
             }
@@ -69,6 +73,41 @@ namespace Strategik.CoreFramework.Tests.Helpers
             {
                 STKSecurityHelper helper = new STKSecurityHelper(context);
                 List<STKGroup> allSiteGroups = helper.ReadGroups();
+            }
+        }
+
+
+        [TestMethod]
+        [TestCategory(STKTestConstants.CoreFramework_Helpers_SecurityHelper)]
+        public void TestEnsureRoleDefinitions()
+        {
+            using (ClientContext context = STKTestsConfig.CreateClientContext())
+            {
+                STKSecurityHelper helper = new STKSecurityHelper(context);
+                List<STKRoleDefinition> allCustomRoleDefinitions = STKTestSecurity.AllCustomRoleDefinitions();
+                helper.EnsureRoleDefinitions(allCustomRoleDefinitions);
+            }
+        }
+
+        [TestMethod]
+        [TestCategory(STKTestConstants.CoreFramework_Helpers_SecurityHelper)]
+        public void TestReadRoleDefinitions()
+        {
+            using (ClientContext context = STKTestsConfig.CreateClientContext())
+            {
+                STKSecurityHelper helper = new STKSecurityHelper(context);
+                List<STKRoleDefinition> allCustomRoleDefinitions = helper.ReadRoleDefinitions();
+            }
+        }
+
+        [TestMethod]
+        [TestCategory(STKTestConstants.CoreFramework_Helpers_SecurityHelper)]
+        public void TestReadRoleAssignments()
+        {
+            using (ClientContext context = STKTestsConfig.CreateClientContext())
+            {
+                STKSecurityHelper helper = new STKSecurityHelper(context);
+                List<STKRoleAssignment> allPermissionLevels = helper.ReadRoleAssignments();
             }
         }
 

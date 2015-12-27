@@ -9,7 +9,7 @@ using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Diagnostics;
 using Strategik.CoreFramework.PnP.Framework.Provisioning.Providers.Strategik.Model;
 using User = OfficeDevPnP.Core.Framework.Provisioning.Model.User;
-
+using Microsoft.SharePoint.Client.Utilities;
 
 namespace Strategik.CoreFramework.PnP.Framework.Provisioning.Providers.Strategik.Extensibility
 {
@@ -27,9 +27,9 @@ namespace Strategik.CoreFramework.PnP.Framework.Provisioning.Providers.Strategik
             Log.Debug(LogSource, "Extraction extension called " + configurationData);
 
             // Extract default group information if reading groups
-            if (configurationData.Equals("ReadGroups"))
+            if (configurationData.Equals("ReadGroups") || configurationData.Equals("ReadPermissionLevels"))
             {
-                pnpTemplate = ReadGroups(web, pnpTemplate);
+                pnpTemplate = ReadSecurityInfo(web, pnpTemplate);
             }
 
             return pnpTemplate;
@@ -45,215 +45,194 @@ namespace Strategik.CoreFramework.PnP.Framework.Provisioning.Providers.Strategik
 
         #region Implementation
 
-        protected ProvisioningTemplate ReadGroups(Web web, ProvisioningTemplate template)
+        protected ProvisioningTemplate ReadSecurityInfo(Web web, ProvisioningTemplate template)
         {
-            // We have cloned the PnP read groups functionality here to add in the out of the box groups
-            // and to ensure we read groups when processing a sub web
-            // if this is a sub site then we're not creating security entities as by default security is inherited from the root site
-            // Eseentially we are reading the site security again here for now
+            // Replace the PnP read security info implementation for now as we want all the available info
+            // to get a full picture of the security model currently applied to the site
+            Log.Debug(LogSource, "Read Security info extension called");
 
-            Log.Debug(LogSource, "Read groups extension called");
-            web.Context.Load(web, w => w.HasUniqueRoleAssignments, w => w.Title);
+            // Holds all the security related information
+            SiteSecurity siteSecurity = new SiteSecurity();
+            // Get the default groups
+            AddDefaultGroupsToSiteSecurity(web, siteSecurity);
+            // Get any addtional site collection administrators
+            AddAdditionalAdministratorsToSiteSecurity(web, siteSecurity);
+            // Get any custom groups
+            AddAdditionalGroupsToSiteSecurity(web, siteSecurity);
+            // Get all the role Definitions
+            AddRoleDefinitionsToSiteSecurity(web, siteSecurity);
+            // Get all the role Assingments
+            AddRoleAssignmentsToSiteSecurity(web, siteSecurity);
 
-            var ownerGroup = web.AssociatedOwnerGroup;
-            var memberGroup = web.AssociatedMemberGroup;
-            var visitorGroup = web.AssociatedVisitorGroup;
-            web.Context.ExecuteQueryRetry();
+            template.Security = siteSecurity;
 
-            if (!ownerGroup.ServerObjectIsNull.Value)
-            {
-                web.Context.Load(ownerGroup, o => o.Id, o => o.Users, o => o.Title);
-            }
-            if (!memberGroup.ServerObjectIsNull.Value)
-            {
-                web.Context.Load(memberGroup, o => o.Id, o => o.Users, o => o.Title);
-            }
-            if (!visitorGroup.ServerObjectIsNull.Value)
-            {
-                web.Context.Load(visitorGroup, o => o.Id, o => o.Users, o => o.Title);
-            }
+            return template;
+        }
 
-            web.Context.ExecuteQueryRetry();
-
-            List<int> associatedGroupIds = new List<int>();
-            var owners = new List<User>();
-            var members = new List<User>();
-            var visitors = new List<User>();
-            if (!ownerGroup.ServerObjectIsNull.Value)
-            {
-                //associatedGroupIds.Add(ownerGroup.Id);  - we will include this group
-                foreach (var member in ownerGroup.Users)
-                {
-                    owners.Add(new User() { Name = member.LoginName });
-                }
-            }
-            if (!memberGroup.ServerObjectIsNull.Value)
-            {
-                // associatedGroupIds.Add(memberGroup.Id); - we will include this group
-                foreach (var member in memberGroup.Users)
-                {
-                    members.Add(new User() { Name = member.LoginName });
-                }
-            }
-            if (!visitorGroup.ServerObjectIsNull.Value)
-            {
-                // associatedGroupIds.Add(visitorGroup.Id); - we will include this group
-                foreach (var member in visitorGroup.Users)
-                {
-                    visitors.Add(new User() { Name = member.LoginName });
-                }
-            }
-            var siteSecurity = new SiteSecurity();
-            siteSecurity.AdditionalOwners.AddRange(owners);
-            siteSecurity.AdditionalMembers.AddRange(members);
-            siteSecurity.AdditionalVisitors.AddRange(visitors);
-
-            var query = from user in web.SiteUsers
-                        where user.IsSiteAdmin
-                        select user;
-            var allUsers = web.Context.LoadQuery(query);
+        protected void AddRoleAssignmentsToSiteSecurity(Web web, SiteSecurity siteSecurity)
+        {
+            IEnumerable<Microsoft.SharePoint.Client.RoleAssignment> spRoleAssignments = web.Context.LoadQuery(web.RoleAssignments.Include(
+                r => r.RoleDefinitionBindings.Include(
+                    rd => rd.Name,
+                    rd => rd.RoleTypeKind),
+                r => r.Member.LoginName));
 
             web.Context.ExecuteQueryRetry();
 
-            var admins = new List<User>();
-            foreach (var member in allUsers)
+            foreach (Microsoft.SharePoint.Client.RoleAssignment spRoleAssignment in spRoleAssignments)
+            {
+                foreach (var roleDefinition in spRoleAssignment.RoleDefinitionBindings)
+                {
+                    if (roleDefinition.RoleTypeKind != RoleType.Guest)
+                    {
+                        STKPnPRoleAssignment roleAssignment = new STKPnPRoleAssignment();
+                        roleAssignment.RoleDefinition = roleDefinition.Name;
+                        roleAssignment.Principal = spRoleAssignment.Member.LoginName;
+
+                        if (spRoleAssignment.Member.PrincipalType == PrincipalType.SharePointGroup)
+                        {
+                            roleAssignment.IsSharePointGroup = true;
+                        }
+                        else if (spRoleAssignment.Member.PrincipalType == PrincipalType.SecurityGroup)
+                        {
+                            roleAssignment.IsADGroup = true;
+                        }
+                        else if (spRoleAssignment.Member.PrincipalType == PrincipalType.User)
+                        {
+                            roleAssignment.IsUser = true;
+                        }
+
+                        siteSecurity.SiteSecurityPermissions.RoleAssignments.Add(roleAssignment);
+                    }
+                }
+            }
+        }
+
+        protected void AddRoleDefinitionsToSiteSecurity(Web web, SiteSecurity siteSecurity)
+        {
+            IEnumerable<Microsoft.SharePoint.Client.RoleDefinition> spRoleDefinitions = web.Context.LoadQuery(web.RoleDefinitions.Include(r => r.Name, r => r.Description, r => r.BasePermissions, r => r.RoleTypeKind));
+            web.Context.ExecuteQueryRetry();
+
+            
+            var permissionKeys = Enum.GetNames(typeof(PermissionKind));
+
+            foreach (Microsoft.SharePoint.Client.RoleDefinition spRoleDefinition in spRoleDefinitions)
+            {
+                
+               OfficeDevPnP.Core.Framework.Provisioning.Model.RoleDefinition roleDefinition
+                                                = new OfficeDevPnP.Core.Framework.Provisioning.Model.RoleDefinition();
+                roleDefinition.Description = spRoleDefinition.Description;
+                roleDefinition.Name = spRoleDefinition.Name;
+                List<PermissionKind> permissions = new List<PermissionKind>();
+
+                foreach (var permissionKey in permissionKeys)
+                {
+                    var permissionKind = (PermissionKind)Enum.Parse(typeof(PermissionKind), permissionKey);
+                    if (spRoleDefinition.BasePermissions.Has(permissionKind))
+                    {
+                        roleDefinition.Permissions.Add(permissionKind);
+                    }
+                }
+                    
+                siteSecurity.SiteSecurityPermissions.RoleDefinitions.Add(roleDefinition);
+            }
+        }
+
+        protected void AddAdditionalGroupsToSiteSecurity(Web web, SiteSecurity siteSecurity)
+        {
+            //TODO: Check we are not duplicating groups
+            web.Context.Load(web.SiteGroups,
+                o => o.IncludeWithDefaultProperties(
+                    gr => gr.Title,
+                    gr => gr.AllowMembersEditMembership,
+                    gr => gr.AutoAcceptRequestToJoinLeave,
+                    gr => gr.AllowRequestToJoinLeave,
+                    gr => gr.Description,
+                    gr => gr.Users.Include(u => u.LoginName),
+                    gr => gr.OnlyAllowMembersViewMembership,
+                    gr => gr.Owner.LoginName,
+                    gr => gr.RequestToJoinLeaveEmailSetting
+                    ));
+
+            web.Context.ExecuteQueryRetry();
+
+            foreach (Group group in web.SiteGroups)
+            {
+                SiteGroup siteGroup = new SiteGroup()
+                {
+                    Title = group.Title,
+                    AllowMembersEditMembership = group.AllowMembersEditMembership,
+                    AutoAcceptRequestToJoinLeave = group.AutoAcceptRequestToJoinLeave,
+                    AllowRequestToJoinLeave = group.AllowRequestToJoinLeave,
+                    Description = group.Description,
+                    OnlyAllowMembersViewMembership = group.OnlyAllowMembersViewMembership,
+                    Owner = group.Owner.LoginName,
+                    RequestToJoinLeaveEmailSetting = group.RequestToJoinLeaveEmailSetting
+                };
+
+                foreach (var member in group.Users)
+                {
+                    siteGroup.Members.Add(new User() { Name = member.LoginName });
+                }
+                siteSecurity.SiteGroups.Add(siteGroup);
+            }
+        }
+
+        protected void AddAdditionalAdministratorsToSiteSecurity(Web web, SiteSecurity siteSecurity)
+        {
+            IQueryable<Microsoft.SharePoint.Client.User> query = from user in web.SiteUsers
+                                                                 where user.IsSiteAdmin
+                                                                 select user;
+
+            IEnumerable<Microsoft.SharePoint.Client.User> allSiteAdminsitrators = web.Context.LoadQuery(query);
+            web.Context.ExecuteQueryRetry();
+
+            List<User> admins = new List<User>();
+            foreach (var member in allSiteAdminsitrators)
             {
                 admins.Add(new User() { Name = member.LoginName });
             }
             siteSecurity.AdditionalAdministrators.AddRange(admins);
 
-            // include all the site groups
+        }
 
-                web.Context.Load(web.SiteGroups,
-                    o => o.IncludeWithDefaultProperties(
-                        gr => gr.Title,
-                        gr => gr.AllowMembersEditMembership,
-                        gr => gr.AutoAcceptRequestToJoinLeave,
-                        gr => gr.AllowRequestToJoinLeave,
-                        gr => gr.Description,
-                        gr => gr.Users.Include(u => u.LoginName),
-                        gr => gr.OnlyAllowMembersViewMembership,
-                        gr => gr.Owner.LoginName,
-                        gr => gr.RequestToJoinLeaveEmailSetting
-                        ));
-
-                web.Context.ExecuteQueryRetry();
-
-                foreach (var group in web.SiteGroups.AsEnumerable().Where(o => !associatedGroupIds.Contains(o.Id)))
-                {
-                    
-                    var siteGroup = new SiteGroup()
-                    {
-                        //Title = group.Title.Replace(web.Title, "{sitename}"),
-                        Title = group.Title,
-                        AllowMembersEditMembership = group.AllowMembersEditMembership,
-                        AutoAcceptRequestToJoinLeave = group.AutoAcceptRequestToJoinLeave,
-                        AllowRequestToJoinLeave = group.AllowRequestToJoinLeave,
-                        Description = group.Description,
-                        OnlyAllowMembersViewMembership = group.OnlyAllowMembersViewMembership,
-                        //    Owner = ReplaceGroupTokens(web, group.Owner.LoginName),
-                        Owner = group.Owner.LoginName,
-                        RequestToJoinLeaveEmailSetting = group.RequestToJoinLeaveEmailSetting
-                    };
-
-                    foreach (var member in group.Users)
-                    {
-                        siteGroup.Members.Add(new User() { Name = member.LoginName });
-                    }
-                    siteSecurity.SiteGroups.Add(siteGroup);
-                }
-            
-
-            var webRoleDefinitions = web.Context.LoadQuery(web.RoleDefinitions.Include(r => r.Name, r => r.Description, r => r.BasePermissions, r => r.RoleTypeKind));
+        protected void AddDefaultGroupsToSiteSecurity(Web web, SiteSecurity siteSecurity)
+        {
+            Group ownerGroup = web.AssociatedOwnerGroup;
+            Group memberGroup = web.AssociatedMemberGroup;
+            Group visitorGroup = web.AssociatedVisitorGroup;
             web.Context.ExecuteQueryRetry();
 
-            if (web.HasUniqueRoleAssignments)
+            if (!ownerGroup.ServerObjectIsNull.Value) { web.Context.Load(ownerGroup, o => o.Id, o => o.Users, o => o.Title); }
+            if (!memberGroup.ServerObjectIsNull.Value) { web.Context.Load(memberGroup, o => o.Id, o => o.Users, o => o.Title); }
+            if (!visitorGroup.ServerObjectIsNull.Value) { web.Context.Load(visitorGroup, o => o.Id, o => o.Users, o => o.Title); }
+            web.Context.ExecuteQueryRetry();
+
+            List<User> owners = new List<User>();
+            List<User> members = new List<User>();
+            List<User> visitors = new List<User>();
+
+            if (!ownerGroup.ServerObjectIsNull.Value)
             {
-                var permissionKeys = Enum.GetNames(typeof(PermissionKind));
-
-                foreach (var webRoleDefinition in webRoleDefinitions)
-                {
-                    if (webRoleDefinition.RoleTypeKind == RoleType.None)
-                    {
-                       
-                        var modelRoleDefinitions = new OfficeDevPnP.Core.Framework.Provisioning.Model.RoleDefinition();
-
-                        modelRoleDefinitions.Description = webRoleDefinition.Description;
-                        modelRoleDefinitions.Name = webRoleDefinition.Name;
-                        var permissions = new List<PermissionKind>();
-
-                        foreach (var permissionKey in permissionKeys)
-                        {
-                            var permissionKind = (PermissionKind)Enum.Parse(typeof(PermissionKind), permissionKey);
-                            if (webRoleDefinition.BasePermissions.Has(permissionKind))
-                            {
-                                modelRoleDefinitions.Permissions.Add(permissionKind);
-                            }
-                        }
-                        siteSecurity.SiteSecurityPermissions.RoleDefinitions.Add(modelRoleDefinitions);
-                    }
-                    else
-                    {
-                       
-                    }
-                }
-
-                var webRoleAssignments = web.Context.LoadQuery(web.RoleAssignments.Include(
-                    r => r.RoleDefinitionBindings.Include(
-                        rd => rd.Name,
-                        rd => rd.RoleTypeKind),
-                    r => r.Member.LoginName));
-
-                web.Context.ExecuteQueryRetry();
-
-                foreach (var webRoleAssignment in webRoleAssignments)
-                {
-                    if (webRoleAssignment.Member.LoginName != "Excel Services Viewers")
-                    {
-                        foreach (var roleDefinition in webRoleAssignment.RoleDefinitionBindings)
-                        {
-                            if (roleDefinition.RoleTypeKind != RoleType.Guest)
-                            {
-                                var modelRoleAssignment = new OfficeDevPnP.Core.Framework.Provisioning.Model.RoleAssignment();
-                                modelRoleAssignment.RoleDefinition = roleDefinition.Name;
-                                modelRoleAssignment.Principal = webRoleAssignment.Member.LoginName;
-                                siteSecurity.SiteSecurityPermissions.RoleAssignments.Add(modelRoleAssignment);
-                            }
-                        }
-                    }
-                }
-
-                template.Security = siteSecurity;
+                foreach (var member in ownerGroup.Users) { owners.Add(new User() { Name = member.LoginName }); }
             }
 
-            //TODO: Check we dont need this
-            //// If a base template is specified then use that one to "cleanup" the generated template model
-            //if (creationInfo.BaseTemplate != null)
-            //{
-            //    template = CleanupEntities(template, creationInfo.BaseTemplate);
+            if (!memberGroup.ServerObjectIsNull.Value)
+            {
+                foreach (var member in memberGroup.Users) { members.Add(new User() { Name = member.LoginName }); }
+            }
 
-            //}
-        
-            return template;
+            if (!visitorGroup.ServerObjectIsNull.Value)
+            {
+                foreach (var member in visitorGroup.Users) { visitors.Add(new User() { Name = member.LoginName }); }
+            }
+
+            siteSecurity.AdditionalOwners.AddRange(owners);
+            siteSecurity.AdditionalMembers.AddRange(members);
+            siteSecurity.AdditionalVisitors.AddRange(visitors);
         }
 
-    private string ReplaceGroupTokens(Web web, string loginName)
-    {
-        if (!web.AssociatedOwnerGroup.ServerObjectIsNull.Value)
-        {
-            loginName = loginName.Replace(web.AssociatedOwnerGroup.Title, "{associatedownergroup}");
-        }
-        if (!web.AssociatedMemberGroup.ServerObjectIsNull.Value)
-        {
-            loginName = loginName.Replace(web.AssociatedMemberGroup.Title, "{associatedmembergroup}");
-        }
-        if (!web.AssociatedVisitorGroup.ServerObjectIsNull.Value)
-        {
-            loginName = loginName.Replace(web.AssociatedVisitorGroup.Title, "{associatedvisitorgroup}");
-        }
-        return loginName;
+        #endregion
+
     }
-    #endregion
-
-}
 }

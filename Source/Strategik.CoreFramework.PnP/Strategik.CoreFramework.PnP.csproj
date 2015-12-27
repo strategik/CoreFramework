@@ -221,6 +221,7 @@
     <Compile Include="Framework\Provisioning\Providers\Strategik\Extensions\STKListExtensions.cs" />
     <Compile Include="Framework\Provisioning\Providers\Strategik\Extensions\STKPageExtensions.cs" />
     <Compile Include="Framework\Provisioning\Providers\Strategik\Extensions\STKTaxonomyExtensions.cs" />
+    <Compile Include="Framework\Provisioning\Providers\Strategik\Model\STKPnPRoleAssignment.cs" />
     <Compile Include="Framework\Provisioning\Providers\Strategik\Model\STKPnPTemplate.cs" />
     <Compile Include="Framework\Provisioning\Providers\Strategik\STKConstants.cs" />
     <Compile Include="Framework\Provisioning\Providers\Strategik\STKPnPHelper.cs" />
@@ -247,7 +248,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>XCopy *.pdb c:\symbols /y</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!--<Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

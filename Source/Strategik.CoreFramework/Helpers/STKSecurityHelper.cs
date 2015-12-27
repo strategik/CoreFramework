@@ -34,6 +34,8 @@ using Strategik.Definitions.Security;
 using Strategik.Definitions.Configuration;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik;
 using Strategik.Definitions.Security.Principals;
+using Strategik.Definitions.Security.Permissions;
+using Strategik.Definitions.Security.Roles;
 
 namespace Strategik.CoreFramework.Helpers
 {
@@ -67,7 +69,6 @@ namespace Strategik.CoreFramework.Helpers
             }
         }
 
-
         public void EnsureGroup(STKGroup group, STKProvisioningConfiguration config = null)
         {
             if (group == null) throw new ArgumentNullException("group");
@@ -84,8 +85,78 @@ namespace Strategik.CoreFramework.Helpers
 
         public List<STKGroup> ReadGroups()
         {
-            STKPnPHelper pnpHelper = new STKPnPHelper(_clientContext);
+           STKPnPHelper pnpHelper = new STKPnPHelper(_clientContext);
            return pnpHelper.ReadGroups();
+        }
+
+        #endregion
+
+        #region Read Role Definitions
+
+        public List<STKRoleDefinition> ReadRoleDefinitions()
+        {
+            STKPnPHelper pnpHelper = new STKPnPHelper(_clientContext);
+            return pnpHelper.ReadRoleDefinitions();
+        }
+
+        #endregion
+
+        #region Ensure Role Definitions
+
+        public void EnsureRoleDefinitions(List<STKRoleDefinition> roleDefinitions, STKProvisioningConfiguration config = null)
+        {
+            if (roleDefinitions == null) throw new ArgumentNullException("roleDefinitions");
+            if (config == null) config = new STKProvisioningConfiguration();
+
+            foreach (STKRoleDefinition roleDefinition in roleDefinitions)
+            {
+                EnsureRoleDefinition(roleDefinition);
+            }
+        }
+
+        public void EnsureRoleDefinition(STKRoleDefinition roleDefinition, STKProvisioningConfiguration config = null)
+        {
+            if (roleDefinition == null) throw new ArgumentNullException("roleDefinition");
+            if (config == null) config = new STKProvisioningConfiguration();
+
+
+            STKPnPHelper pnpHelper = new STKPnPHelper(_clientContext);
+            pnpHelper.Provision(roleDefinition, config);
+        }
+
+        #endregion
+
+        #region Read Role Assignments
+
+        public List<STKRoleAssignment> ReadRoleAssignments()
+        {
+            STKPnPHelper pnpHelper = new STKPnPHelper(_clientContext);
+            return pnpHelper.ReadRoleAssignments();
+        }
+
+        #endregion
+
+        #region Ensure Role Assignments
+
+        public void EnsureRoleAssignments(List<STKRoleAssignment> roleAssignments, STKProvisioningConfiguration config = null)
+        {
+            if (roleAssignments == null) throw new ArgumentNullException("roleAssignments");
+            if (config == null) config = new STKProvisioningConfiguration();
+
+            foreach (STKRoleAssignment roleAssignment in roleAssignments)
+            {
+                EnsureRoleAssignment(roleAssignment);
+            }
+        }
+
+        public void EnsureRoleAssignment(STKRoleAssignment roleAssignment, STKProvisioningConfiguration config = null)
+        {
+            if (roleAssignment == null) throw new ArgumentNullException("roleAssignment");
+            if (config == null) config = new STKProvisioningConfiguration();
+
+
+            STKPnPHelper pnpHelper = new STKPnPHelper(_clientContext);
+            pnpHelper.Provision(roleAssignment, config);
         }
 
 

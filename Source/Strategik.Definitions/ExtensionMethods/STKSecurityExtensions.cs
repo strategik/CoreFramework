@@ -24,7 +24,9 @@
 //
 #endregion
 
+using Strategik.Definitions.Security.Permissions;
 using Strategik.Definitions.Security.Principals;
+using Strategik.Definitions.Security.Roles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +44,21 @@ namespace Strategik.Definitions.Security
         public static bool Validate(this STKGroup group)
         {
             return true; //TODO 
+        }
+
+        public static bool Validate(this STKPermissionLevel permissionLevel)
+        {
+            return true; //TODO 
+        }
+
+        public static bool Validate(this STKRoleAssignment roleAssignment)
+        {
+            return true; //TODO
+        }
+
+        public static bool Validate(this STKRoleDefinition roleDefinition)
+        {
+            return true; //TODO
         }
 
         #endregion

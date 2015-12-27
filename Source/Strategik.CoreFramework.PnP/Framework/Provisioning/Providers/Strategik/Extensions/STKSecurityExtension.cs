@@ -26,8 +26,11 @@
 
 #endregion License
 
+using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
+using Strategik.Definitions.Security.Permissions;
 using Strategik.Definitions.Security.Principals;
+using Strategik.Definitions.Security.Roles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,5 +58,32 @@ namespace Strategik.Definitions.Security
             return siteGroup;
         }
 
+        public static OfficeDevPnP.Core.Framework.Provisioning.Model.RoleDefinition GeneratePnPTemplate(this STKRoleDefinition stkRoleDefinition)
+        {
+            OfficeDevPnP.Core.Framework.Provisioning.Model.RoleDefinition roleDefinition = new OfficeDevPnP.Core.Framework.Provisioning.Model.RoleDefinition()
+            {
+                Name = stkRoleDefinition.Name,
+                Description = stkRoleDefinition.Description
+            };
+
+            foreach (STKPermission permission in stkRoleDefinition.PermissionLevel.Permissions)
+            {
+                PermissionKind pk = (PermissionKind)permission;
+                roleDefinition.Permissions.Add(pk);
+            }
+
+            return roleDefinition;
+        }
+
+        public static OfficeDevPnP.Core.Framework.Provisioning.Model.RoleAssignment GeneratePnPTemplate(this STKRoleAssignment stkRoleAssignment)
+        {
+            OfficeDevPnP.Core.Framework.Provisioning.Model.RoleAssignment roleAssignment = new OfficeDevPnP.Core.Framework.Provisioning.Model.RoleAssignment()
+            {
+                Principal = stkRoleAssignment.Principal.ToString(),
+                RoleDefinition = stkRoleAssignment.RoleDefinition.Name
+            };
+            
+            return roleAssignment;
+        }
     }
 }

@@ -44,6 +44,8 @@ using Strategik.Definitions.Sites;
 using Strategik.CoreFramework.PnP.Framework.Provisioning.Providers.Strategik.Model;
 using Strategik.Definitions.Security.Principals;
 using Strategik.CoreFramework.PnP.Framework.Provisioning.Providers.Strategik.Extensibility;
+using Strategik.Definitions.Security.Permissions;
+using Strategik.Definitions.Security.Roles;
 
 namespace Microsoft.SharePoint.Client
 {
@@ -246,6 +248,69 @@ namespace Microsoft.SharePoint.Client
         }
 
         #endregion
+
+
+        #region Role Definitions
+
+        public static List<STKRoleDefinition> ReadRoleDefinitions(this Web web)
+        {
+            List<STKRoleDefinition> stkRoleDefinitions = new List<STKRoleDefinition>();
+
+            // Generate the PnP templates for site columns
+            ProvisioningTemplate template = new STKPnPTemplate();
+            ProvisioningTemplateCreationInformation createInfo = new ProvisioningTemplateCreationInformation(web);
+            createInfo.IncludeSiteGroups = true;
+
+            // template = web.GetProvisioningTemplate(createInfo);
+            template = new ProvisioningTemplate(); // no point calling the PnP code here as we repeat 
+            // call in the extension method to get all the groups
+
+            // Extensibility
+            STKPnPExtensbilityProvider extensibilityProvider = new STKPnPExtensbilityProvider();
+            template = extensibilityProvider.ExtractTemplate(web, template, "ReadRoleDefinitions");
+
+            foreach (OfficeDevPnP.Core.Framework.Provisioning.Model.RoleDefinition roleDefinition in template.Security.SiteSecurityPermissions.RoleDefinitions)
+            {
+                stkRoleDefinitions.Add(roleDefinition.GenerateStrategikDefinition());
+            }
+
+            return stkRoleDefinitions;
+        }
+
+
+        #endregion
+
+
+        #region Role Assignments
+
+        public static List<STKRoleAssignment> ReadRoleAssignments(this Web web)
+        {
+            List<STKRoleAssignment> stkRoleAssignments = new List<STKRoleAssignment>();
+
+            // Generate the PnP templates for site columns
+            ProvisioningTemplate template = new STKPnPTemplate();
+            ProvisioningTemplateCreationInformation createInfo = new ProvisioningTemplateCreationInformation(web);
+            createInfo.IncludeSiteGroups = true;
+
+            // template = web.GetProvisioningTemplate(createInfo);
+            template = new ProvisioningTemplate(); // no point calling the PnP code here as we repeat 
+            // call in the extension method to get all the groups
+
+            // Extensibility
+            STKPnPExtensbilityProvider extensibilityProvider = new STKPnPExtensbilityProvider();
+            template = extensibilityProvider.ExtractTemplate(web, template, "ReadRoleAssignments");
+
+            foreach (OfficeDevPnP.Core.Framework.Provisioning.Model.RoleAssignment roleAssignment in template.Security.SiteSecurityPermissions.RoleAssignments)
+            {
+                stkRoleAssignments.Add(roleAssignment.GenerateStrategikDefinition());
+            }
+
+            return stkRoleAssignments;
+        }
+
+
+        #endregion
+
 
         #region Web
 

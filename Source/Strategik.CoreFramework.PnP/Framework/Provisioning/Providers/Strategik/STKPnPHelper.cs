@@ -37,7 +37,9 @@ using Strategik.Definitions.Fields;
 using Strategik.Definitions.Lists;
 using Strategik.Definitions.Pages;
 using Strategik.Definitions.Security;
+using Strategik.Definitions.Security.Permissions;
 using Strategik.Definitions.Security.Principals;
+using Strategik.Definitions.Security.Roles;
 using Strategik.Definitions.Sites;
 using Strategik.Definitions.Taxonomy;
 using Strategik.Definitions.UserInterface;
@@ -418,6 +420,82 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
             return _web.ReadGroups();
         }
 
+        #endregion
+
+        #region Role Definitions
+
+        public void Provision(List<STKRoleDefinition> roleDefinitions, STKProvisioningConfiguration config = null)
+        {
+
+            if (roleDefinitions == null) throw new ArgumentNullException("roleDefinitions");
+            if (config == null) config = new STKProvisioningConfiguration();
+
+            foreach (STKRoleDefinition roleDefinition in roleDefinitions)
+            {
+                Provision(roleDefinition, config);
+            }
+        }
+
+        public void Provision(STKRoleDefinition roleDefinition, STKProvisioningConfiguration config = null)
+        {
+
+            if (roleDefinition == null) throw new ArgumentNullException("roleDefinition");
+            if (config == null) config = new STKProvisioningConfiguration();
+
+            // Check we have a valid definition 
+            roleDefinition.Validate();
+
+
+            ProvisioningTemplate template = new STKPnPTemplate();
+            template.Security.SiteSecurityPermissions.RoleDefinitions.Add(roleDefinition.GeneratePnPTemplate());
+
+            _web.ApplyProvisioningTemplate(template);
+
+        }
+
+        public List<STKRoleDefinition> ReadRoleDefinitions()
+        {
+            return _web.ReadRoleDefinitions();
+        }
+
+        #endregion
+
+        #region Role Assignments
+
+
+        public void Provision(List<STKRoleAssignment> roleAssignments, STKProvisioningConfiguration config = null)
+        {
+
+            if (roleAssignments == null) throw new ArgumentNullException("roleAssignments");
+            if (config == null) config = new STKProvisioningConfiguration();
+
+            foreach (STKRoleAssignment roleAssignment in roleAssignments)
+            {
+                Provision(roleAssignment, config);
+            }
+        }
+
+        public void Provision(STKRoleAssignment roleAssignment, STKProvisioningConfiguration config = null)
+        {
+
+            if (roleAssignment == null) throw new ArgumentNullException("roleAssignment");
+            if (config == null) config = new STKProvisioningConfiguration();
+
+            // Check we have a valid definition 
+            roleAssignment.Validate();
+
+
+            ProvisioningTemplate template = new STKPnPTemplate();
+            template.Security.SiteSecurityPermissions.RoleAssignments.Add(roleAssignment.GeneratePnPTemplate());
+
+            _web.ApplyProvisioningTemplate(template);
+
+        }
+
+        public List<STKRoleAssignment> ReadRoleAssignments()
+        {
+            return _web.ReadRoleAssignments();
+        }
 
         #endregion
 

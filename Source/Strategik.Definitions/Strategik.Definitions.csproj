@@ -189,6 +189,7 @@
     <Compile Include="Security\Permissions\STKPermission.cs" />
     <Compile Include="Security\Permissions\STKPermissionLevel.cs" />
     <Compile Include="Security\Permissions\STKSiteOwnerNoSubsites.cs" />
+    <Compile Include="Security\Principals\STKADGroup.cs" />
     <Compile Include="Security\Principals\STKGroup.cs" />
     <Compile Include="Security\Principals\STKPrincipal.cs" />
     <Compile Include="Security\Principals\STKUser.cs" />
@@ -228,7 +229,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>XCopy *.pdb c:\symbols /y</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
