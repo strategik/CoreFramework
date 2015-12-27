@@ -15,12 +15,20 @@
         <copyright>Strategik Pty Ltd 2015</copyright>
         <dependencies>
             <dependency id="OfficeDevPnPCore16" version="1.9.1215.1" />
+			<dependency id="Json.NET" version="7.0.1" />
         </dependencies>
     </metadata>
     <files>
         <file src="..\Source\Strategik.CoreFramework\bin\debug\Strategik.CoreFramework.dll" target="lib\Strategik.CoreFramework.dll" />
         <file src="..\Source\Strategik.CoreFramework.PnP\bin\debug\Strategik.CoreFramework.PnP.dll" target="lib\Strategik.CoreFramework.PnP.dll" />
         <file src="..\Source\Strategik.Definitions\bin\debug\Strategik.Definitions.dll" target="lib\Strategik.Definitions.dll" />
-	<file src="..\Source\Strategik.CoreFramework.TestInfrastructure\bin\debug\Strategik.CoreFramework.Tests.Infrastructure.dll" target="lib\Strategik.CoreFramework.Tests.Infrastructure.dll" />
+		<file src="..\Source\Strategik.CoreFramework.TestInfrastructure\bin\debug\Strategik.CoreFramework.Tests.Infrastructure.dll" target="lib\Strategik.CoreFramework.Tests.Infrastructure.dll" /> 
+		<file src="..\Source\Strategik.CoreFramework\bin\debug\Strategik.CoreFramework.pdb" target="lib\Strategik.CoreFramework.pdb" />
+        <file src="..\Source\Strategik.CoreFramework.PnP\bin\debug\Strategik.CoreFramework.PnP.pdb" target="lib\Strategik.CoreFramework.PnP.pdb" />
+        <file src="..\Source\Strategik.Definitions\bin\debug\Strategik.Definitions.pdb" target="lib\Strategik.Definitions.pdb" />
+		<file src="..\Source\Strategik.CoreFramework.TestInfrastructure\bin\debug\Strategik.CoreFramework.Tests.Infrastructure.dll" target="lib\Strategik.CoreFramework.Tests.Infrastructure.dll" /> 
+		<file src="**\*.cs" target="src" />
+		
+
     </files>
 </package>
