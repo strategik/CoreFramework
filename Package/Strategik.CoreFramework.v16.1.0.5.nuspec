@@ -14,7 +14,7 @@
         <releaseNotes>Updated PnP dependency. Minor updates.</releaseNotes>
         <copyright>Strategik Pty Ltd 2015</copyright>
         <dependencies>
-            <dependency id="OfficeDevPnPCore16" version="1.9.1215.1" />
+            <!-- <dependency id="OfficeDevPnPCore16" version="1.9.1215.1" /> -->
 			<dependency id="Newtonsoft.JSON" version="7.0.1" />
         </dependencies>
     </metadata>
@@ -28,7 +28,9 @@
         <file src="..\Source\Strategik.Definitions\bin\debug\Strategik.Definitions.pdb" target="lib\Strategik.Definitions.pdb" />
 		<file src="..\Source\Strategik.CoreFramework.TestInfrastructure\bin\debug\Strategik.CoreFramework.Tests.Infrastructure.dll" target="lib\Strategik.CoreFramework.Tests.Infrastructure.dll" /> 
 		<file src="**\*.cs" target="src" />
-		
+		<!-- PnP dependency with debug symbols -->
+		<file src="..\Source\Strategik.CoreFramework.PnP.Dependencies\OfficeDevPnP.Core.dll" target="lib\OfficeDevPnP.Core.dll" />
+		<file src="..\Source\Strategik.CoreFramework.PnP.Dependencies\OfficeDevPnP.Core.pdb" target="lib\OfficeDevPnP.Core.pdb" />
 
     </files>
 </package>
