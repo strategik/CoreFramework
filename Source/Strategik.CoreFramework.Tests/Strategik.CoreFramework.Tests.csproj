@@ -115,6 +115,10 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="OfficeDevPnP.Core, Version=1.9.1215.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Strategik.CoreFramework.PnP.Dependencies\OfficeDevPnP.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -181,10 +185,6 @@
     <Compile Include="STKContstants.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Pnp-Sites-Core\Core\OfficeDevPnP.Core\OfficeDevPnP.Core.csproj">
-      <Project>{f2077977-8ebf-409d-bbf4-8efb328928a8}</Project>
-      <Name>OfficeDevPnP.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Strategik.CoreFramework.PnP\Strategik.CoreFramework.PnP.csproj">
       <Project>{b9bcf2cd-da0c-4b11-89a1-1ae362fc0b1b}</Project>
       <Name>Strategik.CoreFramework.PnP</Name>
