@@ -44,9 +44,13 @@
         <file src="..\Source\Strategik.CoreFramework.PnP\bin\debug\Strategik.CoreFramework.PnP.dll" target="lib\net45\Strategik.CoreFramework.PnP.dll" />
         <file src="..\Source\Strategik.Definitions\bin\debug\Strategik.Definitions.dll" target="lib\net45\Strategik.Definitions.dll" />
 		<file src="..\Source\Strategik.CoreFramework.TestInfrastructure\bin\debug\Strategik.CoreFramework.Tests.Infrastructure.dll" target="lib\net45\Strategik.CoreFramework.Tests.Infrastructure.dll" /> 
+		<file src="..\Source\Strategik.CoreFramework\bin\debug\Strategik.CoreFramework.pdb" target="lib\net45\Strategik.CoreFramework.pdb" />
+        <file src="..\Source\Strategik.CoreFramework.PnP\bin\debug\Strategik.CoreFramework.PnP.pdb" target="lib\net45\Strategik.CoreFramework.PnP.pdb" />
+        <file src="..\Source\Strategik.Definitions\bin\debug\Strategik.Definitions.pdb" target="lib\net45\Strategik.Definitions.pdb" />
 		<file src="..\Source\Strategik.CoreFramework.TestInfrastructure\bin\debug\Strategik.CoreFramework.Tests.Infrastructure.dll" target="lib\net45\Strategik.CoreFramework.Tests.Infrastructure.dll" /> 
+		<file src="**\*.cs" target="src" />
 		<!-- PnP dependency with debug symbols -->
 		<file src="..\Source\Strategik.CoreFramework.PnP.Dependencies\OfficeDevPnP.Core.dll" target="lib\net45\OfficeDevPnP.Core.dll" />
-
+		<file src="..\Source\Strategik.CoreFramework.PnP.Dependencies\OfficeDevPnP.Core.pdb" target="lib\net45\OfficeDevPnP.Core.pdb" />
     </files>
 </package>
