@@ -10,27 +10,47 @@
         <projectUrl>https://github.com/strategik/CoreFramework</projectUrl>
         <iconUrl>https://raw.githubusercontent.com/strategik/CoreFramework/master/Media/Images/strategik96.png</iconUrl>
         <requireLicenseAcceptance>true</requireLicenseAcceptance>
-        <description>Strategik's wrapper around the Office Dev PnP Core. Experimental (under active development)</description>
-        <releaseNotes>Updated PnP dependency. Minor updates.</releaseNotes>
+        <description>Strategik's wrapper around the Office Dev PnP Core. Experimental (under active development). Packaged every build.</description>
+        <releaseNotes>Refer to GitHub Commits</releaseNotes>
         <copyright>Strategik Pty Ltd 2015</copyright>
         <dependencies>
             <!-- <dependency id="OfficeDevPnPCore16" version="1.9.1215.1" /> -->
-			<dependency id="Newtonsoft.JSON" version="7.0.1" />
+			 <dependency id="Newtonsoft.JSON" version="7.0.1" />
+			 <dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" /> 
+             <dependency id="Microsoft.AspNet.WebApi.Core" version="5.2.3" /> 
+             <dependency id="Microsoft.SharePointOnline.CSOM" version="16.1.4727.1200" /> 
         </dependencies>
+        <frameworkAssemblies> 
+             <frameworkAssembly assemblyName="System" targetFramework="" /> 
+             <frameworkAssembly assemblyName="System.Configuration" targetFramework="" /> 
+             <frameworkAssembly assemblyName="System.Core" targetFramework="" /> 
+             <frameworkAssembly assemblyName="System.Data" targetFramework="" /> 
+             <frameworkAssembly assemblyName="System.Data.DataSetExtensions" targetFramework="" /> 
+             <frameworkAssembly assemblyName="System.IdentityModel" targetFramework="" /> 
+             <frameworkAssembly assemblyName="System.IdentityModel.Selectors" targetFramework="" /> 
+             <frameworkAssembly assemblyName="System.Net.Http" targetFramework="" /> 
+             <frameworkAssembly assemblyName="System.Net.Http.Formatting" targetFramework="" /> 
+             <frameworkAssembly assemblyName="System.ServiceModel" targetFramework="" /> 
+             <frameworkAssembly assemblyName="System.Web" targetFramework="" /> 
+             <frameworkAssembly assemblyName="System.Web.Extensions" targetFramework="" /> 
+             <frameworkAssembly assemblyName="System.Xml" targetFramework="" /> 
+             <frameworkAssembly assemblyName="System.Xml.Linq" targetFramework="" /> 
+             <frameworkAssembly assemblyName="Microsoft.IdentityModel" targetFramework="" /> 
+             <frameworkAssembly assemblyName="Microsoft.IdentityModel.Extensions" targetFramework="" /> 
+        </frameworkAssemblies> 
     </metadata>
     <files>
-        <file src="..\Source\Strategik.CoreFramework\bin\debug\Strategik.CoreFramework.dll" target="lib\Strategik.CoreFramework.dll" />
-        <file src="..\Source\Strategik.CoreFramework.PnP\bin\debug\Strategik.CoreFramework.PnP.dll" target="lib\Strategik.CoreFramework.PnP.dll" />
-        <file src="..\Source\Strategik.Definitions\bin\debug\Strategik.Definitions.dll" target="lib\Strategik.Definitions.dll" />
-		<file src="..\Source\Strategik.CoreFramework.TestInfrastructure\bin\debug\Strategik.CoreFramework.Tests.Infrastructure.dll" target="lib\Strategik.CoreFramework.Tests.Infrastructure.dll" /> 
-		<file src="..\Source\Strategik.CoreFramework\bin\debug\Strategik.CoreFramework.pdb" target="lib\Strategik.CoreFramework.pdb" />
-        <file src="..\Source\Strategik.CoreFramework.PnP\bin\debug\Strategik.CoreFramework.PnP.pdb" target="lib\Strategik.CoreFramework.PnP.pdb" />
-        <file src="..\Source\Strategik.Definitions\bin\debug\Strategik.Definitions.pdb" target="lib\Strategik.Definitions.pdb" />
-		<file src="..\Source\Strategik.CoreFramework.TestInfrastructure\bin\debug\Strategik.CoreFramework.Tests.Infrastructure.dll" target="lib\Strategik.CoreFramework.Tests.Infrastructure.dll" /> 
+        <file src="..\Source\Strategik.CoreFramework\bin\debug\Strategik.CoreFramework.dll" target="lib\net45\Strategik.CoreFramework.dll" />
+        <file src="..\Source\Strategik.CoreFramework.PnP\bin\debug\Strategik.CoreFramework.PnP.dll" target="lib\net45\Strategik.CoreFramework.PnP.dll" />
+        <file src="..\Source\Strategik.Definitions\bin\debug\Strategik.Definitions.dll" target="lib\net45\Strategik.Definitions.dll" />
+		<file src="..\Source\Strategik.CoreFramework.TestInfrastructure\bin\debug\Strategik.CoreFramework.Tests.Infrastructure.dll" target="lib\net45\Strategik.CoreFramework.Tests.Infrastructure.dll" /> 
+		<file src="..\Source\Strategik.CoreFramework\bin\debug\Strategik.CoreFramework.pdb" target="lib\net45\Strategik.CoreFramework.pdb" />
+        <file src="..\Source\Strategik.CoreFramework.PnP\bin\debug\Strategik.CoreFramework.PnP.pdb" target="lib\net45\Strategik.CoreFramework.PnP.pdb" />
+        <file src="..\Source\Strategik.Definitions\bin\debug\Strategik.Definitions.pdb" target="lib\net45\Strategik.Definitions.pdb" />
+		<file src="..\Source\Strategik.CoreFramework.TestInfrastructure\bin\debug\Strategik.CoreFramework.Tests.Infrastructure.dll" target="lib\net45\Strategik.CoreFramework.Tests.Infrastructure.dll" /> 
 		<file src="**\*.cs" target="src" />
 		<!-- PnP dependency with debug symbols -->
-		<file src="..\Source\Strategik.CoreFramework.PnP.Dependencies\OfficeDevPnP.Core.dll" target="lib\OfficeDevPnP.Core.dll" />
-		<file src="..\Source\Strategik.CoreFramework.PnP.Dependencies\OfficeDevPnP.Core.pdb" target="lib\OfficeDevPnP.Core.pdb" />
-
+		<file src="..\Source\Strategik.CoreFramework.PnP.Dependencies\OfficeDevPnP.Core.dll" target="lib\net45\OfficeDevPnP.Core.dll" />
+		<file src="..\Source\Strategik.CoreFramework.PnP.Dependencies\OfficeDevPnP.Core.pdb" target="lib\net45\OfficeDevPnP.Core.pdb" />
     </files>
 </package>
