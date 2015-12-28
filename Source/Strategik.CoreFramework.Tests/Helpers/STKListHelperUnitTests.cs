@@ -78,6 +78,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
             {
                 STKListHelper helper = new STKListHelper(context);
                 List<STKList> lists = helper.ReadLists(true);
+                
             }
         }
 
