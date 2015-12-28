@@ -50,7 +50,7 @@ namespace Strategik.Definitions.Security.Permissions
         CancelCheckout = 9,
         ManagePersonalViews = 10,
         ManageLists = 12,
-        ViewFormPages = 13,
+        ViewApplicationPages = 13,
         AnonymousSearchAccessList = 14,
         Open = 17,
         ViewPages = 18,

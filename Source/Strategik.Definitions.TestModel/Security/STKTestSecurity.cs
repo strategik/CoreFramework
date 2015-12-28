@@ -61,6 +61,12 @@ namespace Strategik.Definitions.TestModel.Security
             roleDefinition.PermissionLevel.Permissions.Add(STKPermission.CreateAlerts);
             roleDefinitions.Add(roleDefinition);
 
+            roleDefinitions.Add(new STKReadRoleDefinition());
+            roleDefinitions.Add(new STKContributeNoDeleteRoleDefinition());
+            roleDefinitions.Add(new STKContributeRoleDefinition());
+            roleDefinitions.Add(new STKSiteOwnerNoSubsitesRoleDefinition());
+            roleDefinitions.Add(new STKFullControlRoleDefinition());
+
             return roleDefinitions;
         }
 

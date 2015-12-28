@@ -37,6 +37,37 @@ namespace Strategik.Definitions.Security.Permissions
     /// </summary>
     public class STKContributeNoDeletePermissionLevel: STKPermissionLevel
     {
+        public STKContributeNoDeletePermissionLevel()
+        {
+            Define();
+        }
 
+        private void Define()
+        {
+            // List Permissions
+            base.Permissions.Add(STKPermission.AddListItems);
+            base.Permissions.Add(STKPermission.EditListItems);
+        //    base.Permissions.Add(STKPermission.DeleteListItems);
+            base.Permissions.Add(STKPermission.ViewListItems);
+            base.Permissions.Add(STKPermission.OpenItems);
+            base.Permissions.Add(STKPermission.ViewVersions);
+            base.Permissions.Add(STKPermission.CreateAlerts);
+            base.Permissions.Add(STKPermission.ViewApplicationPages);
+
+            // Site Permissions
+            base.Permissions.Add(STKPermission.BrowseDirectories);
+            base.Permissions.Add(STKPermission.CreateSSCSite);
+            base.Permissions.Add(STKPermission.ViewPages);
+            base.Permissions.Add(STKPermission.UseRemoteAPIs);
+            base.Permissions.Add(STKPermission.UseClientIntegration);
+            base.Permissions.Add(STKPermission.Open);
+            base.Permissions.Add(STKPermission.EditMyUserInfo);
+            base.Permissions.Add(STKPermission.BrowseUserInfo);
+
+            //Personal Permissions
+            base.Permissions.Add(STKPermission.ManagePersonalViews);
+            base.Permissions.Add(STKPermission.AddDelPrivateWebParts);
+            base.Permissions.Add(STKPermission.UpdatePersonalWebParts);
+        }
     }
 }
