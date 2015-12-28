@@ -38,6 +38,7 @@ namespace Strategik.CoreFramework.Tests
         public const String CoreFramework_Helpers = "CoreFramework.Helpers";
         public const String CoreFramework_Helpers_TenantHelper = "CoreFramework.Helpers.TenantHelper";
         public const String CoreFramework_Helpers_SecurityHelper = "CoreFramework.Helpers.SecurityHelper";
+        public const String CoreFramework_Helpers_ListHelper = "CoreFramework.Helpers.ListHelper";
         public const String TestNotImplemented = "Unit Test not implemented";
     }
 }

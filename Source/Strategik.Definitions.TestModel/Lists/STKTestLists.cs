@@ -64,6 +64,9 @@ namespace Strategik.Definitions.TestModel.Lists
             lists.Add(new STKTaskList());
             lists.Add(new STKProjectTaskList());
 
+            // Promoted Links - requires special provisioning
+            lists.Add(new STKPromotedLinksList());
+
             // Libraries
             lists.Add(new STKPictureLibrary());
             lists.Add(new STKDocumentLibrary());

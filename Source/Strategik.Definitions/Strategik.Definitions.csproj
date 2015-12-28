@@ -167,6 +167,7 @@
     <Compile Include="Lists\STKListView.cs" />
     <Compile Include="Lists\STKProjectTaskList.cs" />
     <Compile Include="Lists\STKList.cs" />
+    <Compile Include="Lists\STKPromotedLinksList.cs" />
     <Compile Include="Lists\STKTaskList.cs" />
     <Compile Include="Lists\SKUserInformationList.cs" />
     <Compile Include="Mail\STKEmailTemplate.cs" />

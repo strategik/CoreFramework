@@ -63,6 +63,8 @@ namespace Strategik.Definitions.Lists
         WorkflowHistory = 140,
         WorkflowProcess = 118,
         XMLForm = 115,
-        CustomList = 10000
+        CustomList = 10000,
+        PromotedLinks = 170
+
     }
 }

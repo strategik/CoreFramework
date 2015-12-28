@@ -110,6 +110,8 @@ namespace Strategik.Definitions.Lists
         public List<STKListView> Views { get; set; }
         public List<STKWorkflow> Workflows { get; set; }
 
+        public Guid TemplateFeatureId { get; set; }
+
         #endregion Properties
 
         #region Constructors
@@ -140,6 +142,7 @@ namespace Strategik.Definitions.Lists
             this.CustomFields = new List<STKField>();
             Folders = new List<STKFolderContentType>();
             Items = new List<STKListItem>();
+            TemplateFeatureId = Guid.Empty;
 
             _builtInFieldsRead = new List<String>();
             _builtInFieldsRead.Add(ID_Field);
@@ -149,6 +152,7 @@ namespace Strategik.Definitions.Lists
             _builtInFieldsRead.Add(Created_Field);
             _builtInFieldsRead.Add(Modified_Field);
             _builtInFieldsRead.Add(ContentType_Field);
+
 
             _builtInFieldsWrite = new List<String>();
             _builtInFieldsWrite.Add(Title_Field);

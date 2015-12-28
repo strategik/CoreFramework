@@ -56,6 +56,11 @@ namespace Strategik.Definitions.Lists
                 Url = (list.LeafUrl != null) ? list.LeafUrl : list.Title
             };
 
+            if (list.TemplateFeatureId != Guid.Empty) // Required for lists susch as the Promoted links
+            {
+                listInstanceTemplate.TemplateFeatureID = list.TemplateFeatureId;
+            }
+
             // Fields
             foreach (STKField field in list.Fields)
             {

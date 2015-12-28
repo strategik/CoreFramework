@@ -40,7 +40,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
     public class STKListHelperUnitTests
     {
         [TestMethod]
-        [TestCategory(STKTestConstants.CoreFramework_Helpers)]
+        [TestCategory(STKTestConstants.CoreFramework_Helpers_ListHelper)]
         public void TestListHelperConnect()
         {
             // Check we are testing the the correct site
@@ -55,7 +55,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
         }
 
         [TestMethod]
-        [TestCategory(STKTestConstants.CoreFramework_Helpers)]
+        [TestCategory(STKTestConstants.CoreFramework_Helpers_ListHelper)]
         public void TestEnsureLists()
         {
             // Should execute without exception
@@ -68,7 +68,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
         }
 
         [TestMethod]
-        [TestCategory(STKTestConstants.CoreFramework_Helpers)]
+        [TestCategory(STKTestConstants.CoreFramework_Helpers_ListHelper)]
         public void TestReadLists()
         {
             // Make sure the lists we need have been provisioned
@@ -82,7 +82,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
         }
 
         [TestMethod]
-        [TestCategory(STKTestConstants.CoreFramework_Helpers)]
+        [TestCategory(STKTestConstants.CoreFramework_Helpers_ListHelper)]
         public void TestEnsureAndReadLists()
         {
             TestEnsureLists();
@@ -90,7 +90,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
         }
 
         [TestMethod]
-        [TestCategory(STKTestConstants.CoreFramework_Helpers)]
+        [TestCategory(STKTestConstants.CoreFramework_Helpers_ListHelper)]
         public void TestReadSharePointList()
         {
             Assert.Fail(STKTestConstants.TestNotImplemented);
@@ -98,7 +98,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
 
 
         [TestMethod]
-        [TestCategory(STKTestConstants.CoreFramework_Helpers)]
+        [TestCategory(STKTestConstants.CoreFramework_Helpers_ListHelper)]
         public void TestProvisionTaskList()
         {
             using (ClientContext context = STKTestsConfig.CreateClientContext())
@@ -109,7 +109,7 @@ namespace Strategik.CoreFramework.Tests.Helpers
         }
 
         [TestMethod]
-        [TestCategory(STKTestConstants.CoreFramework_Helpers)]
+        [TestCategory(STKTestConstants.CoreFramework_Helpers_ListHelper)]
         public void TestProvisionCustomisedTaskList()
         {
             using (ClientContext context = STKTestsConfig.CreateClientContext())
@@ -126,5 +126,16 @@ namespace Strategik.CoreFramework.Tests.Helpers
             }
         }
 
+
+        [TestMethod]
+        [TestCategory(STKTestConstants.CoreFramework_Helpers_ListHelper)]
+        public void TestProvisionPromotedLinksList()
+        {
+            using (ClientContext context = STKTestsConfig.CreateClientContext())
+            {
+                STKListHelper helper = new STKListHelper(context);
+                helper.EnsureList(new STKPromotedLinksList());
+            }
+        }
     }
 }
