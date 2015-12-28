@@ -33,11 +33,11 @@ using System.Threading.Tasks;
 namespace Strategik.Definitions.Security.Permissions
 {
     /// <summary>
-    /// Can contribute to a site but not delete items
+    /// A site owner but not allowed to create subsites
     /// </summary>
-    public class STKContributeNoDeletePermissionLevel: STKPermissionLevel
+    public class STKSiteOwnerNoSubsitesPermissionLevel: STKPermissionLevel
     {
-        public STKContributeNoDeletePermissionLevel()
+        public STKSiteOwnerNoSubsitesPermissionLevel()
         {
             Define();
         }
@@ -45,29 +45,42 @@ namespace Strategik.Definitions.Security.Permissions
         private void Define()
         {
             // List Permissions
-            //
+            base.Permissions.Add(STKPermission.ManageLists);
+            //base.Permissions.Add(STKPermission.Ove) override list behaviours
             base.Permissions.Add(STKPermission.AddListItems);
             base.Permissions.Add(STKPermission.EditListItems);
-        //    base.Permissions.Add(STKPermission.DeleteListItems);
+            base.Permissions.Add(STKPermission.DeleteListItems);
             base.Permissions.Add(STKPermission.ViewListItems);
+            base.Permissions.Add(STKPermission.ApproveItems);
             base.Permissions.Add(STKPermission.OpenItems);
             base.Permissions.Add(STKPermission.ViewVersions);
+            base.Permissions.Add(STKPermission.DeleteVersions);
             base.Permissions.Add(STKPermission.CreateAlerts);
             base.Permissions.Add(STKPermission.ViewApplicationPages);
 
             // Site Permissions
+            base.Permissions.Add(STKPermission.ManagePermissions);
+            base.Permissions.Add(STKPermission.ViewUsageData);
+           // base.Permissions.Add(STKPermission.ManageSubwebs); // Create sub sites???
+            base.Permissions.Add(STKPermission.ManageWeb);
+            base.Permissions.Add(STKPermission.AddAndCustomizePages);
+            base.Permissions.Add(STKPermission.ApplyThemeAndBorder);
+            base.Permissions.Add(STKPermission.ApplyStyleSheets);
+            base.Permissions.Add(STKPermission.CreateGroups);
             base.Permissions.Add(STKPermission.BrowseDirectories);
             base.Permissions.Add(STKPermission.CreateSSCSite);
             base.Permissions.Add(STKPermission.ViewPages);
+            base.Permissions.Add(STKPermission.EnumeratePermissions);
+            base.Permissions.Add(STKPermission.BrowseUserInfo);
+            base.Permissions.Add(STKPermission.ManageAlerts);
             base.Permissions.Add(STKPermission.UseRemoteAPIs);
             base.Permissions.Add(STKPermission.UseClientIntegration);
             base.Permissions.Add(STKPermission.Open);
             base.Permissions.Add(STKPermission.EditMyUserInfo);
-            base.Permissions.Add(STKPermission.BrowseUserInfo);
 
             //Personal Permissions
             base.Permissions.Add(STKPermission.ManagePersonalViews);
-            base.Permissions.Add(STKPermission.AddDelPrivateWebParts);
+            base.Permissions.Add(STKPermission.UpdatePersonalWebParts);
             base.Permissions.Add(STKPermission.UpdatePersonalWebParts);
         }
     }
