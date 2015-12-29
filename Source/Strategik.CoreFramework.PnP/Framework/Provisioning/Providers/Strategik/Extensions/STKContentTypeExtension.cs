@@ -48,12 +48,20 @@ namespace Strategik.Definitions.ContentTypes
 
             foreach (STKField siteColumn in contentType.SiteColumns)
             {
-                contentTypeTemplate.FieldRefs.Add(siteColumn.GeneratePnPFieldRefTemplate());
+                // only add the columns defined in this content type (not any of our parents)
+                if (siteColumn.ContentType.SharePointContentTypeId == contentType.SharePointContentTypeId)
+                {
+                    contentTypeTemplate.FieldRefs.Add(siteColumn.GeneratePnPFieldRefTemplate());
+                }
             }
 
             foreach (STKFieldLink siteColumnLink in contentType.SiteColumnLinks)
             {
-                contentTypeTemplate.FieldRefs.Add(siteColumnLink.GeneratePnPTemplate());
+                // only add the the fieldlinks defined in this content type (not any of our parents)
+                if (siteColumnLink.ContentType.SharePointContentTypeId == contentType.SharePointContentTypeId)
+                {
+                    contentTypeTemplate.FieldRefs.Add(siteColumnLink.GeneratePnPTemplate());
+                }
             }
 
             return contentTypeTemplate;

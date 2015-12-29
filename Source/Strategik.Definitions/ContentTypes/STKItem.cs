@@ -22,6 +22,9 @@
 
 #endregion License
 
+using Strategik.Definitions.Fields;
+using System;
+
 namespace Strategik.Definitions.ContentTypes
 {
     /// <summary>
@@ -29,13 +32,95 @@ namespace Strategik.Definitions.ContentTypes
     /// </summary>
     public class STKItem : STKContentType
     {
+        #region Fields
+
+        // Item - these fields will always be present for any content type on a list
+        public STKNumberField IdColumn;
+        public STKDateField CreatedColumn;
+        public STKDateField LastUpdatedColumn;
+        public STKUserField EditorColumn;
+        public STKUserField AuthorColumn;
+        public STKTextField TitleColumn;
+        public STKTextField ContentTypeColumn;
+
+        #endregion
+
         #region Constructor
 
         public STKItem()
         {
+            Define();
+        }
+
+        private void Define()
+        {
             base.SharePointContentTypeId = "0x01";
             base.IsBuiltInContentType = true;
             base.IsItemContentType = true;
+            STKContentType definingType = new STKItem();
+
+            // Initialise the default columns
+            IdColumn = new STKNumberField()
+            {
+                ContentType = definingType,
+                StaticName = "ID",
+                IsBuiltInSiteColumn = true,
+                ReadOnly = true
+            };
+            base.SiteColumns.Add(IdColumn);
+
+            CreatedColumn = new STKDateField()
+            {
+                ContentType =definingType,
+                StaticName = "Created",
+                IsBuiltInSiteColumn = true,
+                ReadOnly = true
+            };
+            base.SiteColumns.Add(CreatedColumn);
+
+            LastUpdatedColumn = new STKDateField()
+            {
+                ContentType = definingType,
+                StaticName = "LastUpdated",
+                IsBuiltInSiteColumn = true,
+                ReadOnly = true
+            };
+            base.SiteColumns.Add(LastUpdatedColumn);
+
+            EditorColumn = new STKUserField()
+            {
+                ContentType = definingType,
+                StaticName = "Editor",
+                IsBuiltInSiteColumn = true,
+                ReadOnly = true
+            };
+            base.SiteColumns.Add(EditorColumn);
+
+            AuthorColumn = new STKUserField()
+            {
+                ContentType = definingType,
+                StaticName = "Author",
+                IsBuiltInSiteColumn = true,
+                ReadOnly = true
+            };
+            base.SiteColumns.Add(AuthorColumn);
+
+            TitleColumn = new STKTextField()
+            {
+                ContentType = definingType,
+                StaticName = "Title",
+                IsBuiltInSiteColumn = true,
+            };
+            base.SiteColumns.Add(TitleColumn);
+
+            ContentTypeColumn = new STKTextField()
+            {
+                ContentType = definingType,
+                StaticName = "ContentType",
+                IsBuiltInSiteColumn = true,
+            };
+            base.SiteColumns.Add(ContentTypeColumn);
+
         }
 
         #endregion Constructor

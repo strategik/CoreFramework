@@ -148,6 +148,12 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
 
             Log.Debug(LogSource, "Starting Provisioning {0} field {1}", field.GetType().Name, field.Name);
 
+            if (field.IsBuiltInSiteColumn == true)
+            {
+                Log.Debug(LogSource, "Field {0} is a built in site column - skipping provisioning", field.Name);
+                return;
+            }
+
             // Check we have a valid definition 
             field.Validate();
 
@@ -160,7 +166,6 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Strategik
 
             ProvisioningTemplate template = new STKPnPTemplate();
             
-
             template.SiteFields.Add(field.GeneratePnPTemplate());
 
             _web.ApplyProvisioningTemplate(template);

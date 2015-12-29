@@ -54,6 +54,8 @@ namespace Strategik.Definitions.Fields
             if (String.IsNullOrEmpty(field.Name)) throw new Exception("Field name is empty " + field.UniqueId);
             if (String.IsNullOrEmpty(field.DisplayName)) throw new Exception("Field display name is empty " + field.UniqueId);
 
+            if (field.IsSiteColumn && field.IsBuiltInSiteColumn == false && field.ContentType == null) throw new Exception("No content type specified for custom site column");
+
             //TODO: Complete field validation
         }
 

@@ -23,6 +23,7 @@
 #endregion License
 
 using Strategik.Definitions.Base;
+using Strategik.Definitions.ContentTypes;
 using Strategik.Definitions.Shared;
 using System;
 using System.IO;
@@ -37,6 +38,7 @@ namespace Strategik.Definitions.Fields
     {
         #region Properties
 
+        public STKContentType ContentType { get; set; }
         public bool AddToDefaultView { get; set; }
 
         public String AuthoringInfo { get; set; }
@@ -62,8 +64,9 @@ namespace Strategik.Definitions.Fields
         // Used to explicity indicate that this field should be defined as a site column
         public bool IsSiteColumn { get; set; }
 
-        public bool ReadOnly { get; set; }
+        public bool ReadOnly { get; set; } // Do not write to this field
 
+        public bool DoNotRead { get; set; } // Do not read from this field
         public bool Required { get; set; }
 
         /// <summary>

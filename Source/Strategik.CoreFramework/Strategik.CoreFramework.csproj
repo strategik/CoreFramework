@@ -206,6 +206,7 @@
     <Compile Include="Helpers\STKFieldHelper.cs" />
     <Compile Include="Helpers\STKFileHelper.cs" />
     <Compile Include="Helpers\STKListHelper.cs" />
+    <Compile Include="Helpers\STKListItemHelper.cs" />
     <Compile Include="Helpers\STKSecurityHelper.cs" />
     <Compile Include="Helpers\STKSiteColumnHelper.cs" />
     <Compile Include="Helpers\STKSiteHelper.cs" />

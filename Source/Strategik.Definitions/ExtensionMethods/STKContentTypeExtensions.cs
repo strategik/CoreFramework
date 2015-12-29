@@ -59,6 +59,11 @@ namespace Strategik.Definitions.ContentTypes
             {
                 field.Validate();
             }
+
+            foreach (STKFieldLink fieldLink in contentType.SiteColumnLinks)
+            {
+                fieldLink.Validate();
+            }
         }
 
         #endregion Content Type Validation
@@ -82,6 +87,8 @@ namespace Strategik.Definitions.ContentTypes
         {
             if (fieldLink == null) throw new ArgumentNullException("fieldLink");
             if (String.IsNullOrEmpty(fieldLink.DisplayName)) throw new Exception("FieldLink Display Name is empty " + fieldLink.SiteColumnId);
+
+            if (fieldLink.IsBuiltInSiteColumnLink == false && fieldLink.ContentType == null) throw new Exception("Parent content type is not set for fieldlink");
         }
 
         #endregion

@@ -212,6 +212,7 @@
     <Compile Include="Shared\STKSPWebTemplate.cs" />
     <Compile Include="Shared\STKViewStyle.cs" />
     <Compile Include="Shared\STKViewType.cs" />
+    <Compile Include="SiteColumns\STKBuiltInSiteColumns.cs" />
     <Compile Include="Sites\STKSite.cs" />
     <Compile Include="Sites\STKSiteProperties.cs" />
     <Compile Include="Sites\STKWeb.cs" />

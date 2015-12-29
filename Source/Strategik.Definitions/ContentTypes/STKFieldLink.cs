@@ -43,6 +43,10 @@ namespace Strategik.Definitions.ContentTypes
 
         public bool IsHidden { get; set; }
 
+        public bool IsBuiltInSiteColumnLink { get; set; }
+
+        public STKContentType ContentType { get; set; }
+
         #endregion Properties
     }
 }
