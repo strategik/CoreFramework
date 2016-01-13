@@ -586,10 +586,12 @@ namespace Strategik.CoreFramework.Helpers
             {
                 _context = _authHelper.GetAdminContext();
             }
-            _office365Tenant = new Office365Tenant(_context);
-            _context.Load(_office365Tenant);
-            _context.ExecuteQueryRetry();
+            // Requires global admin ??
+            //_office365Tenant = new Office365Tenant(_context);
+            //_context.Load(_office365Tenant);
+            //_context.ExecuteQueryRetry();
 
+            // Requires SharePoint admin
             _tenant = new Tenant(_context);
             _context.Load(_tenant);
             _context.ExecuteQueryRetry();
